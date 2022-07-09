@@ -49,4 +49,12 @@ public class HeroCtrl : MonoBehaviour
         }
     }
 
+    public void Attack()
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+            return;
+
+        animator.SetTrigger("Attack");
+    }
+
 }
