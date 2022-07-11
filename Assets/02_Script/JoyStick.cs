@@ -18,7 +18,7 @@ public class JoyStick : MonoBehaviour
     float jsCacDist = 0.0f;
 
     private void Start()
-    {
+    {    
         Vector3[] v = new Vector3[4];
         joySBackObj.GetComponent<RectTransform>().GetWorldCorners(v);
         //[0]:좌측하단 [1]:좌측상단 [2]:우측상단 [3]:우측하단
@@ -42,8 +42,10 @@ public class JoyStick : MonoBehaviour
             OnEndDragJoyStick((PointerEventData)data);
         });
         trigger.triggers.Add(entry);
+      
     }
 
+  
     void OnDragJoyStick(PointerEventData _data) //Delegate
     {
         jsCacVec = Input.mousePosition - orignPos;
@@ -57,9 +59,14 @@ public class JoyStick : MonoBehaviour
         else
             joyStickImg.transform.position = orignPos + axis * jsCacDist;
 
+        //얼마나 스틱을 움직였나에 따라 달리기 가능
+        bool sprint = false;
+        if (radius * 0.7 < jsCacDist)
+            sprint = true;
+
         //캐릭터 이동 처리
         if (heroCtrl != null)
-            heroCtrl.SetJoyStickMv(axis);
+            heroCtrl.SetJoyStickMv(axis, sprint);
     }
 
     void OnEndDragJoyStick(PointerEventData _data) //Delegate
@@ -73,4 +80,5 @@ public class JoyStick : MonoBehaviour
         if (heroCtrl != null)
             heroCtrl.SetJoyStickMv(axis);
     }
+   
 }
