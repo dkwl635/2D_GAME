@@ -114,7 +114,7 @@ public class Monster : MonoBehaviour
             return;
 
         //데미지 이펙트
-        GameMgr.Inst.Pop_DamageTxt(value, damageTxtPos.position);
+        GameMgr.Inst.DamageTxt_Stack.GetObj().SetDamageTxt(value, damageTxtPos.position);
 
 
         //넉백 타겟과의 반대 방향으로

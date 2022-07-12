@@ -29,5 +29,6 @@ public class DamageTxt : MonoBehaviour
     void OffDamageTxt()
     {
         gameObject.SetActive(false);
+        GameMgr.Inst.DamageTxt_Stack.ReturnObj(this);
     }
 }
