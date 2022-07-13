@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class HeroCtrl : MonoBehaviour
 {
     Transform tr;
     Transform heroModel;
     Animator animator;
+    Rigidbody2D rigidbody;
+    HeroCtrlMgr HeroCtrlMgr; //UI¿ë
+    SortingGroup sortingGroup;
 
     Vector3 mvDir = Vector3.zero;
   
@@ -18,12 +22,18 @@ public class HeroCtrl : MonoBehaviour
     public GameObject attackPoint;
     public int AttackPower = 10;
 
+    public int hp = 1000;
+    public int maxHp = 1000;
+
 
     private void Awake()
     {
-        tr = GetComponent<Transform>();
+        tr = transform;
         heroModel = tr.GetChild(0);
         animator = GetComponentInChildren<Animator>();
+        HeroCtrlMgr = GetComponent<HeroCtrlMgr>();
+        rigidbody = GetComponent<Rigidbody2D>();
+        sortingGroup = GetComponentInChildren<SortingGroup>();
     }
 
     private void Start()
@@ -33,8 +43,15 @@ public class HeroCtrl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
-        tr.position += mvDir * Time.fixedDeltaTime * speed;
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
+            rigidbody.velocity = mvDir * speed;
+        else
+            rigidbody.velocity = Vector2.zero;
+    }
+
+    private void Update()
+    {
+        sortingGroup.sortingOrder = -1 * (int)tr.position.y;
     }
 
     public void SetJoyStickMv(Vector3 dir, bool sprint = false)
@@ -87,4 +104,10 @@ public class HeroCtrl : MonoBehaviour
         
     }
 
+    public void TakeDamage(int value)
+    {
+     
+        hp -= value;
+        HeroCtrlMgr.SetHpImg(hp, maxHp);
+    }
 }

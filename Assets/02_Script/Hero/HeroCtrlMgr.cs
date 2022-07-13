@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class HeroCtrlMgr : MonoBehaviour
 {
@@ -9,7 +10,12 @@ public class HeroCtrlMgr : MonoBehaviour
     JoyStick JoyStick;
     HeroCtrl HeroCtrl; //히어로 오브젝트에 관한
 
+
+    [Header("UI")]
     public Button attackBtn;
+    [Header("HP_UI")]
+    public Image hpGage;
+    public TextMeshProUGUI hpTxt;
 
     private void Start()
     {
@@ -26,5 +32,11 @@ public class HeroCtrlMgr : MonoBehaviour
         HeroCtrl.Attack();
     }
 
+    public void SetHpImg(int hp, int maxHp)
+    {
+        hpGage.fillAmount = (float)hp / (float)maxHp;
+        hpTxt.text = hp.ToString();
+
+    }
 
 }

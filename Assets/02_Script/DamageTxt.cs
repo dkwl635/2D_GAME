@@ -6,7 +6,6 @@ public class DamageTxt : MonoBehaviour
 {
    public  TextMeshPro textMeshPro;
 
-
     private void OnEnable()
     {
         textMeshPro.fontSize = 1;
@@ -29,6 +28,6 @@ public class DamageTxt : MonoBehaviour
     void OffDamageTxt()
     {
         gameObject.SetActive(false);
-        GameMgr.Inst.DamageTxt_Stack.ReturnObj(this);
+        GameMgr.Inst.DamageTxtEffect.ReturnObj(this);
     }
 }
