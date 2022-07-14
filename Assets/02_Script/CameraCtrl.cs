@@ -70,8 +70,7 @@ public class CameraCtrl : MonoBehaviour
 
         transform.position = cameraPos;
 
-       
-
+    
     }
 
 }

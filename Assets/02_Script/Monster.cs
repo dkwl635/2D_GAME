@@ -5,8 +5,8 @@ using UnityEngine;
 public class Monster : MonoBehaviour
 {
     public Transform targetTr; //타겟 : 플레이어 
+    public SpriteRenderer spriteRenderer;
     Animator animator;
-    public  SpriteRenderer spriteRenderer;
     Rigidbody2D rigidbody;  //HIT 시 넉백을 구현하고자 넣어보았다.
     Collider2D collider;
 
@@ -22,7 +22,7 @@ public class Monster : MonoBehaviour
     [SerializeField] float attakcDis = 2.0f;    //공격 사거리
 
     [Header("MonsterStatus")]
-   public float speed = 2.0f; //이동 속도
+    public float speed = 2.0f; //이동 속도
     public int hp = 30;
     public int attackPower = 10;
     
@@ -32,6 +32,7 @@ public class Monster : MonoBehaviour
 
     public LayerMask heroLayer;
     Vector3 targetToThis = Vector3.zero; //타겟과의 거리를 구하기 위해
+    Vector3 dir = Vector3.zero; // 방향
 
     private void Awake()
     {
@@ -54,15 +55,15 @@ public class Monster : MonoBehaviour
         {
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) return; //이동 애니메이션일때만 이동가능하게 하기 위해
 
-            rigidbody.velocity = Vector2.zero; //속도값은 필요가없기때문에
-            Vector3 dir = targetToThis.normalized;     //방향값
-            transform.position += dir * Time.fixedDeltaTime * speed; //이동
+            rigidbody.velocity = Vector2.zero; //속도값은 한번 초기화
+            rigidbody.velocity = dir  * speed; //이동
         }
     }
 
     private void Update()
     {
         targetToThis = targetTr.position - transform.position; //타겟과의 거리관계
+        dir = targetToThis.normalized;     //방향값
 
         float dis = targetToThis.sqrMagnitude;  //거리 길이 변환
         //길이에 따른 상태 변환
@@ -93,6 +94,8 @@ public class Monster : MonoBehaviour
 
         //새로운 상태 적용
         monster_State = newStatue;
+        //속도 초기화
+        rigidbody.velocity = Vector2.zero;
 
         switch (monster_State)
         {
@@ -142,6 +145,7 @@ public class Monster : MonoBehaviour
 
 
         //넉백 타겟과의 반대 방향으로
+        rigidbody.velocity = Vector2.zero;
         rigidbody.AddForce(targetToThis.normalized * -1 * 1000.0f);
 
         //애니메이션 실행 ... 이미 애니메이션 실행중이면 
@@ -156,10 +160,14 @@ public class Monster : MonoBehaviour
     }
     IEnumerator Die_Co()
     {
+
+        GameMgr.Inst.MonsterKill();
+        
         float a = 1;
         Color color = Color.white;
         collider.enabled = false;
-        while (a > 0)
+
+        while (a > 0) //투명해지면서 사라지는
         {
             yield return null;
             a -= Time.deltaTime;

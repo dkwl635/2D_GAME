@@ -106,7 +106,6 @@ public class HeroCtrl : MonoBehaviour
 
     public void TakeDamage(int value)
     {
-     
         hp -= value;
         HeroCtrlMgr.SetHpImg(hp, maxHp);
     }
