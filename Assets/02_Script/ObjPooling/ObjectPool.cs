@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ObjectPool_Stack<T> : MonoBehaviour where T : MonoBehaviour
 {
-    private Stack<T> poolList = new Stack<T>(); //¹è¿­
-    public GameObject classObj;	//ÇÁ¸®ÆÕ
-    private int maxPoolSize = 10;	//°¹¼ö
+	private Stack<T> poolList = new Stack<T>(); //¹è¿­
+	public GameObject classObj; //ÇÁ¸®ÆÕ
+	private int maxPoolSize = 10;   //°¹¼ö
 
 	//°´Ã¼ »ý¼º
    private void Start()

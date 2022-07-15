@@ -13,10 +13,13 @@ public class GameMgr : MonoBehaviour
     public DamageTxtEffect DamageTxtEffect;
     public Monsters_P monsters_P;
     public PlayerHitEffect_P playerHitEffect_P;
+    public GameObject expBallObj;
+
 
     [Header("UI")]
     public TextMeshProUGUI monsterKillCountTxt;
     public GameObject startTxtObj;
+    public GameObject lvUpPanel;
 
     //MonsterSpawn
     //°è»ê¿ë
@@ -34,9 +37,13 @@ public class GameMgr : MonoBehaviour
     private void Start()
     {
         heroTr = hero.transform;
+        hero.LevelUP_Event += OnLevelUpPanel;
+
 
         startTxtObj.SetActive(true);
         StartCoroutine(MonsterSpawner());  
+
+
     }
 
     IEnumerator MonsterSpawner()
@@ -99,5 +106,21 @@ public class GameMgr : MonoBehaviour
     {
         monsterkillCount++;
         monsterKillCountTxt.text = monsterkillCount +" / " + maxMonsterCount;
+    }
+
+    public void SpawnExpBall(Vector2 spawnPos, int expValue)
+    {
+        ExpBall expBall = GameObject.Instantiate(expBallObj).GetComponent<ExpBall>();
+
+        expBall.transform.position = spawnPos;
+        expBall.SetExpBall(hero, expValue);
+
+    }
+
+    void OnLevelUpPanel()
+    {
+        Time.timeScale = 0.0f;
+        lvUpPanel.gameObject.SetActive(true);
+
     }
 }

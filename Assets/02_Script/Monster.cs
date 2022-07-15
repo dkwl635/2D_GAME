@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    public Transform targetTr; //타겟 : 플레이어 
+    HeroCtrl targetHero;
+    Transform targetTr; //타겟 : 플레이어 
     public SpriteRenderer spriteRenderer;
     Animator animator;
     Rigidbody2D rigidbody;  //HIT 시 넉백을 구현하고자 넣어보았다.
@@ -25,9 +26,11 @@ public class Monster : MonoBehaviour
     public float speed = 2.0f; //이동 속도
     public int hp = 30;
     public int attackPower = 10;
-    
+    public Vector2 attackSize = Vector2.zero;
+
     public Transform damageTxtPos;
     
+
 
 
     public LayerMask heroLayer;
@@ -45,6 +48,7 @@ public class Monster : MonoBehaviour
 
     private void OnEnable()
     {
+        targetHero = GameMgr.Inst.hero;
         targetTr = GameMgr.Inst.hero.transform;
         collider.enabled = true;
     }
@@ -160,9 +164,12 @@ public class Monster : MonoBehaviour
     }
     IEnumerator Die_Co()
     {
-
+        //게임메니저 
         GameMgr.Inst.MonsterKill();
-        
+        //경험치볼 생성
+        GameMgr.Inst.SpawnExpBall(transform.position, 2);
+
+
         float a = 1;
         Color color = Color.white;
         collider.enabled = false;
@@ -181,6 +188,7 @@ public class Monster : MonoBehaviour
     //DIE 이벤트
     public void Die_Event()
     {
+
         gameObject.SetActive(false);
         spriteRenderer.color = Color.white;
         GameMgr.Inst.monsters_P.ReturnObj(this);
@@ -189,15 +197,20 @@ public class Monster : MonoBehaviour
     public void Attack_Event()
     {
         //공격포인터 중심에서 네모 크기 만큼 펼쳐 충동된 콜라이더 가져오기
-        Collider2D hit = Physics2D.OverlapBox(transform.position +  targetToThis.normalized , new Vector2(1.5f, 1.5f), 0, heroLayer) ;
-        if(hit)
+        Collider2D hit = Physics2D.OverlapBox(transform.position +  targetToThis.normalized , attackSize, 0, heroLayer) ;
+        if(hit && hit.CompareTag("Player"))
         {
-            hit.SendMessage("TakeDamage", attackPower);      
+            //hit.SendMessage("TakeDamage", attackPower);      
+            targetHero.TakeDamage(attackPower);            
             GameMgr.Inst.playerHitEffect_P.GetObj().SetEffect(hit.transform.position , HitType.nomarl);
         }
         
 
     }
-    
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(transform.position + targetToThis.normalized, attackSize);
+    }
 
 }

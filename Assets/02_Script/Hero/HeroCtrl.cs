@@ -22,8 +22,18 @@ public class HeroCtrl : MonoBehaviour
     public GameObject attackPoint;
     public int AttackPower = 10;
 
+    [Header("PlayerStatus")]
     public int hp = 1000;
     public int maxHp = 1000;
+    public int def = 0;
+    public int Lv = 1;
+    public int curExp = 0;
+    public int maxExp = 10;
+
+    public LayerMask monsterLayer;
+
+    public delegate void Event();
+    public Event LevelUP_Event;
 
 
     private void Awake()
@@ -97,16 +107,46 @@ public class HeroCtrl : MonoBehaviour
     public void Attack_Event()
     {
         //공격포인터 중심에서 네모 크기 만큼 펼쳐 충동된 콜라이더 가져오기
-        Collider2D[] hits = Physics2D.OverlapBoxAll(attackPoint.transform.position, new Vector2(2, 2), 0);
+        Collider2D[] hits = Physics2D.OverlapBoxAll(attackPoint.transform.position, new Vector2(2, 2), 0 , monsterLayer);
         
         for (int i = 0; i < hits.Length; i++)            //데미지 주기 
             hits[i].SendMessage("TakeDamage", AttackPower);
         
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(attackPoint.transform.position, new Vector2(2, 2));
+    }
+
     public void TakeDamage(int value)
     {
-        hp -= value;
-        HeroCtrlMgr.SetHpImg(hp, maxHp);
+        if (value - def <= 0)
+            return;
+
+        hp -= (value - def);
+        HeroCtrlMgr.SetHpImg(hp, (float)hp / (float)maxHp);
+    }
+
+    public void GetExp(int value)
+    {
+        curExp += value;
+
+        if(maxExp <= curExp)
+        {
+            curExp = 0;
+            maxExp = (int)(maxExp * 1.5f);
+
+            LevelUp();
+        }
+
+        HeroCtrlMgr.SetExpImg(Lv, curExp == 0 ? 0 : (float)curExp / (float)maxExp );
+
+    }
+
+    void LevelUp()
+    {
+        Lv ++;
+        LevelUP_Event?.Invoke();
     }
 }

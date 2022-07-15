@@ -16,6 +16,10 @@ public class HeroCtrlMgr : MonoBehaviour
     [Header("HP_UI")]
     public Image hpGage;
     public TextMeshProUGUI hpTxt;
+    [Header("LV_UI")]
+    public Image lvGage;
+    public TextMeshProUGUI lvTxt;
+
 
     private void Start()
     {
@@ -32,11 +36,18 @@ public class HeroCtrlMgr : MonoBehaviour
         HeroCtrl.Attack();
     }
 
-    public void SetHpImg(int hp, int maxHp)
+    public void SetHpImg(int hp, float value)
     {
-        hpGage.fillAmount = (float)hp / (float)maxHp;
+        hpGage.fillAmount = value;
         hpTxt.text = hp.ToString();
 
     }
+
+    public void SetExpImg(int lv, float value)
+    {
+        lvGage.fillAmount = value;
+        lvTxt.text = "Lv " + lv;
+    }
+   
 
 }
