@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 public class HeroCtrl : MonoBehaviour
 {
     Transform tr;
-    Transform heroModel;
+    public Transform heroModel;
     Animator animator;
     Rigidbody2D rigidbody;
     HeroCtrlMgr HeroCtrlMgr; //UI용
@@ -38,8 +38,7 @@ public class HeroCtrl : MonoBehaviour
 
     private void Awake()
     {
-        tr = transform;
-        heroModel = tr.GetChild(0);
+        tr = transform;       
         animator = GetComponentInChildren<Animator>();
         HeroCtrlMgr = GetComponent<HeroCtrlMgr>();
         rigidbody = GetComponent<Rigidbody2D>();
@@ -67,6 +66,7 @@ public class HeroCtrl : MonoBehaviour
     public void SetJoyStickMv(Vector3 dir, bool sprint = false)
     {
         mvDir = dir; //이동 방향 적용
+        Debug.Log(mvDir);
 
         //애니메이터 적용
         if (mvDir.Equals(Vector3.zero)) animator.SetBool("move", false);

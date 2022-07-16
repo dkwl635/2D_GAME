@@ -139,7 +139,7 @@ public class Monster : MonoBehaviour
 
     }
 
-    void TakeDamage(int value = 10) //데미지를 받는 함수
+  public  void TakeDamage(int value = 10) //데미지를 받는 함수
     {
         if (hp <= 0)
             return;
