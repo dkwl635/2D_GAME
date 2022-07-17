@@ -6,35 +6,69 @@ using TMPro;
 public class LevelUpPanel : MonoBehaviour
 {
     HeroCtrl hero;
+    public TextMeshProUGUI lable;
+    public Animation lableAnimation;
+
+
+    public Skill skill;
+    public Transform skillGroup;
+    public GameObject skillLvUpBtnObj;
+
+    public SkillLvUpBtn[] skillLvUpBtns = new SkillLvUpBtn[3];
+
+    bool gameStart = true;
+
+    private void Awake()
+    {
+       
+    }
 
     private void Start()
     {
-        hero = GameMgr.Inst.hero;
+        hero = GameMgr.Inst.hero;            
     }
 
-    public void AtkUpBtn()
-   {
-        hero.AttackPower += 1;
-        OffPanel();
-   }
-
-    public void DefUpBtn()
+    private void OnEnable()
     {
-        hero.def += 1;
-        OffPanel();
+        if (gameStart)
+        {
+            lable.text = "Game Start";
+            gameStart = false;
+        }
+        else
+            lable.text = "Level Up!!";
+
+        skillLvUpBtns[0].SetBtn(skill, OffPanel);
     }
 
-    public void SpeedUpBtn()
+    float realTimeDalta = 0.0f;
+    float animationTime = 0.0f;
+    private void Update()
     {
-        Debug.Log("이동속도 증가" );
-        OffPanel();
+        float curTime = Time.realtimeSinceStartup;
+        float deltaTime = curTime - realTimeDalta;
+        realTimeDalta = curTime;
+
+        animationTime += deltaTime;
+
+
+        LableTxt_Update();
     }
 
-  public  void OffPanel()
+
+    public void OffPanel()
     {
         this.gameObject.SetActive(false);
         Time.timeScale = 1.0f;
 
+        realTimeDalta = 0.0f;
+        animationTime = 0.0f;
+    }
+
+    void LableTxt_Update()
+    {
+        AnimationState a = lableAnimation["LvUpTxt"];  
+        a.normalizedTime = animationTime % a.length;
     }
 
 }

@@ -27,9 +27,8 @@ public class Monster : MonoBehaviour
     public int hp = 30;
     public int attackPower = 10;
     public Vector2 attackSize = Vector2.zero;
-
     public Transform damageTxtPos;
-    
+
 
 
 
@@ -55,13 +54,14 @@ public class Monster : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (monster_State.Equals(Monster_State.Move)) //이동 관련
-        {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) return; //이동 애니메이션일때만 이동가능하게 하기 위해
+       
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) //이동 애니메이션일때만 이동가능하게 하기 위해
+            {
+                rigidbody.velocity = Vector2.zero; //속도값은 한번 초기화
+                rigidbody.velocity = dir * speed; //이동    
+            }
 
-            rigidbody.velocity = Vector2.zero; //속도값은 한번 초기화
-            rigidbody.velocity = dir  * speed; //이동
-        }
+       
     }
 
     private void Update()
@@ -80,6 +80,9 @@ public class Monster : MonoBehaviour
 
 
         spriteRenderer.sortingOrder = -1 * (int)transform.position.y;
+
+      
+
 
     }
 
@@ -114,6 +117,7 @@ public class Monster : MonoBehaviour
                 {
                     animator.SetBool("Move", false);
                     animator.SetTrigger("Attack");
+        
                 }
                 break;
             case Monster_State.Die:
@@ -144,20 +148,20 @@ public class Monster : MonoBehaviour
         if (hp <= 0)
             return;
 
+        hp -= value;
+        rigidbody.velocity = Vector2.zero;
         //데미지 이펙트
         GameMgr.Inst.DamageTxtEffect.GetObj().SetDamageTxt(value, damageTxtPos.position);
 
+        //공격중이고 죽을체력이아니면
+        if (monster_State.Equals(Monster_State.Attack) && hp > 0)
+            return;
 
-        //넉백 타겟과의 반대 방향으로
-        rigidbody.velocity = Vector2.zero;
-        rigidbody.AddForce(targetToThis.normalized * -1 * 1000.0f);
-
-        //애니메이션 실행 ... 이미 애니메이션 실행중이면 
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
-            animator.SetTrigger("Hit");
-
-        hp -= value;
-        if (hp <= 0)    
+        //애니메이션 실행 ... 이미 애니메이션 실행중이면
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Hit"))             
+            animator.SetTrigger("Hit"); 
+        
+          if (hp <= 0)    
             MonsterState_Update(Monster_State.Die);
         
 
@@ -169,6 +173,9 @@ public class Monster : MonoBehaviour
         //경험치볼 생성
         GameMgr.Inst.SpawnExpBall(transform.position, 2);
 
+        //넉백 타겟과의 반대 방향으로
+        rigidbody.velocity = Vector2.zero;
+        rigidbody.AddForce(targetToThis.normalized * -1 * 3000.0f);
 
         float a = 1;
         Color color = Color.white;
@@ -195,7 +202,7 @@ public class Monster : MonoBehaviour
     }
 
     public void Attack_Event()
-    {
+    { 
         //공격포인터 중심에서 네모 크기 만큼 펼쳐 충동된 콜라이더 가져오기
         Collider2D hit = Physics2D.OverlapBox(transform.position +  targetToThis.normalized , attackSize, 0, heroLayer) ;
         if(hit && hit.CompareTag("Player"))
@@ -204,8 +211,8 @@ public class Monster : MonoBehaviour
             targetHero.TakeDamage(attackPower);            
             GameMgr.Inst.playerHitEffect_P.GetObj().SetEffect(hit.transform.position , HitType.nomarl);
         }
-        
 
+       
     }
 
     private void OnDrawGizmos()

@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+
+
 public class GameMgr : MonoBehaviour
 {
     static public GameMgr Inst;
+
 
     public HeroCtrl hero;
     Transform heroTr;
@@ -40,11 +43,13 @@ public class GameMgr : MonoBehaviour
         hero.LevelUP_Event += OnLevelUpPanel;
 
 
-        startTxtObj.SetActive(true);
-        StartCoroutine(MonsterSpawner());  
+        //startTxtObj.SetActive(true);
+        StartCoroutine(MonsterSpawner());
 
-
+        OnLevelUpPanel();
     }
+
+    
 
     IEnumerator MonsterSpawner()
     {
@@ -121,6 +126,8 @@ public class GameMgr : MonoBehaviour
     {
         Time.timeScale = 0.0f;
         lvUpPanel.gameObject.SetActive(true);
-
     }
+
+   
+    
 }

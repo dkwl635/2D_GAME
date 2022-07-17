@@ -21,6 +21,7 @@ public class HeroCtrl : MonoBehaviour
     [Header("Attack")]
     public GameObject attackPoint;
     public int AttackPower = 10;
+    public int skillPower = 1;
 
     [Header("PlayerStatus")]
     public int hp = 1000;
@@ -53,7 +54,7 @@ public class HeroCtrl : MonoBehaviour
     private void FixedUpdate()
     {
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
-            rigidbody.velocity = mvDir * speed;
+            rigidbody.velocity = mvDir * speed ;
         else
             rigidbody.velocity = Vector2.zero;
     }
@@ -66,7 +67,7 @@ public class HeroCtrl : MonoBehaviour
     public void SetJoyStickMv(Vector3 dir, bool sprint = false)
     {
         mvDir = dir; //이동 방향 적용
-        Debug.Log(mvDir);
+      
 
         //애니메이터 적용
         if (mvDir.Equals(Vector3.zero)) animator.SetBool("move", false);
