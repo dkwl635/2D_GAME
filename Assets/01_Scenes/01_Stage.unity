@@ -227,7 +227,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2451178353718200019, guid: 86e2e2b68545d7b4d915cecdc6a76307, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2451178353718200019, guid: 86e2e2b68545d7b4d915cecdc6a76307, type: 3}
       propertyPath: m_AnchorMin.x
@@ -235,7 +235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2451178353718200019, guid: 86e2e2b68545d7b4d915cecdc6a76307, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2451178353718200019, guid: 86e2e2b68545d7b4d915cecdc6a76307, type: 3}
       propertyPath: m_SizeDelta.x
@@ -275,11 +275,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2451178353718200019, guid: 86e2e2b68545d7b4d915cecdc6a76307, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 425
       objectReference: {fileID: 0}
     - target: {fileID: 2451178353718200019, guid: 86e2e2b68545d7b4d915cecdc6a76307, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 2451178353718200019, guid: 86e2e2b68545d7b4d915cecdc6a76307, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2122,7 +2122,7 @@ MonoBehaviour:
   hero: {fileID: 0}
   skill_Lv: 0
   skill_MaxLv: 0
-  skillPw: 01000000020000000200000004000000040000000600000006000000
+  skillPw: 01000000010000000200000004000000040000000600000006000000
   skillSprite: {fileID: 21300000, guid: a8ded94fe033b1c4fac77c8e71f33c7c, type: 3}
   Lv_Group:
   - {fileID: 1058033309}
@@ -4346,7 +4346,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -89}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 850, y: 580}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1510551237
 MonoBehaviour:
@@ -4983,7 +4983,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1780076961
 RectTransform:
   m_ObjectHideFlags: 0
@@ -35550,7 +35550,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 95180258029996909}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0

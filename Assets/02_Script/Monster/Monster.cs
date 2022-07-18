@@ -53,15 +53,13 @@ public class Monster : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
-       
+    {    
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) //이동 애니메이션일때만 이동가능하게 하기 위해
             {
                 rigidbody.velocity = Vector2.zero; //속도값은 한번 초기화
                 rigidbody.velocity = dir * speed; //이동    
             }
-
-       
+   
     }
 
     private void Update()

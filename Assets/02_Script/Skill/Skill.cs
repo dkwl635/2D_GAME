@@ -67,7 +67,7 @@ public class Skill : MonoBehaviour
     public void SkillStart()
     {
        // StopAllCoroutines();
-        StartCoroutine(SkillStart_Co());
+        //StartCoroutine(SkillStart_Co());
     }
 
 
@@ -112,6 +112,8 @@ public class Skill : MonoBehaviour
 
     public void TakeMonsterDamage(Monster monster)
     {
+
+        Debug.Log(SkillDamage());
         monster.TakeDamage(SkillDamage());
     }
 
