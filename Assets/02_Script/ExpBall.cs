@@ -26,16 +26,13 @@ public class ExpBall : MonoBehaviour
             timer += Time.deltaTime;
             //곡선 이동 시작
             transform.position = Pos(originPos, randPos, hero.transform.position, timer);
-            
-            
+                   
             if(timer >= 1.0f)   //이동 완료
             {
                 hero.GetExp(exp);//경험치 
                 Destroy(this.gameObject);
             }
-
-        }
-            
+        }           
     }
 
     public void SetExpBall(HeroCtrl hero, int exp)

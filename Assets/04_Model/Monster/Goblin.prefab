@@ -159,6 +159,7 @@ MonoBehaviour:
   heroLayer:
     serializedVersion: 2
     m_Bits: 64
+  Test: 0
 --- !u!50 &3580675266013753123
 Rigidbody2D:
   serializedVersion: 4
@@ -195,4 +196,4 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.5}
   serializedVersion: 2
-  m_Radius: 0.8
+  m_Radius: 0.7

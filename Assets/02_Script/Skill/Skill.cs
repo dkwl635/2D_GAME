@@ -7,8 +7,9 @@ public class Skill : MonoBehaviour
     public HeroCtrl hero;
     public int skill_Lv = 0;
     public int skill_MaxLv = 0;
+    public bool getSkill = false;
 
-    string[] skillLvInfo = new string[7];
+   [HideInInspector]public string[] skillLvInfo = new string[7];
 
     public int[] skillPw = { 1,1, 2, 2, 4, 4, 6, 6 };
     public string SkillInfo
@@ -20,7 +21,7 @@ public class Skill : MonoBehaviour
 
     //창 회전스킬
     public GameObject[] Lv_Group;
-    GameObject CurSkillObj { get { if (skill_Lv <= 2)return Lv_Group[0]; else return Lv_Group[skill_Lv / 2]; } }
+    GameObject CurSkillObj { get { if (skill_Lv == 0)return Lv_Group[0]; else return Lv_Group[skill_Lv / 2]; } }
 
     private void Awake()
     {
@@ -47,10 +48,6 @@ public class Skill : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        
-    }
 
     private Vector3 AngleToDirection(float angle)
     {
@@ -66,8 +63,8 @@ public class Skill : MonoBehaviour
 
     public void SkillStart()
     {
-       // StopAllCoroutines();
-        //StartCoroutine(SkillStart_Co());
+        StopAllCoroutines();
+        StartCoroutine(SkillStart_Co());
     }
 
 
@@ -101,6 +98,22 @@ public class Skill : MonoBehaviour
         StopAllCoroutines();
         CurSkillObj.SetActive(false);
         skill_Lv++;
+
+        SkillStart();
+    }
+
+    public void SKillLvDown()
+    {
+        StopAllCoroutines();
+        CurSkillObj.SetActive(false);
+
+        if (skill_Lv == 0)
+        {
+            getSkill = false;
+            return;
+        }
+
+        skill_Lv--;
 
         SkillStart();
     }

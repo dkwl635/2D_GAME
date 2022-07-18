@@ -18,6 +18,7 @@ public class GameMgr : MonoBehaviour
     public PlayerHitEffect_P playerHitEffect_P;
     public GameObject expBallObj;
 
+    public MonsterData[] monsterDatas;
 
     [Header("UI")]
     public TextMeshProUGUI monsterKillCountTxt;
@@ -31,22 +32,31 @@ public class GameMgr : MonoBehaviour
     float x;
     float y;
 
+    public bool Test = false;
+
+  
 
     private void Awake()
     {
         Inst = this;
+
     }
 
     private void Start()
     {
         heroTr = hero.transform;
-        hero.LevelUP_Event += OnLevelUpPanel;
+        hero.LevelUP_Event += OnLevelUpPanel;   
+
+        if (Test) //테스트용 방지
+            return;
 
 
         //startTxtObj.SetActive(true);
         StartCoroutine(MonsterSpawner());
 
         OnLevelUpPanel();
+
+
     }
 
     
@@ -62,7 +72,7 @@ public class GameMgr : MonoBehaviour
         {
             yield return spanwTime;
             Monster newMonster = monsters_P.GetObj();
-            newMonster.SetStatus(30);
+            newMonster.SetStatus(monsterDatas[0]);
             newMonster.transform.position = RandomSpanw();
 
             monsterSpawnCount++;
@@ -124,6 +134,9 @@ public class GameMgr : MonoBehaviour
 
     void OnLevelUpPanel()
     {
+        if (Test)
+            return;
+
         Time.timeScale = 0.0f;
         lvUpPanel.gameObject.SetActive(true);
     }

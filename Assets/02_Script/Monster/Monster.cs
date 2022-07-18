@@ -28,13 +28,13 @@ public class Monster : MonoBehaviour
     public int attackPower = 10;
     public Vector2 attackSize = Vector2.zero;
     public Transform damageTxtPos;
-
-
-
-
     public LayerMask heroLayer;
     Vector3 targetToThis = Vector3.zero; //타겟과의 거리를 구하기 위해
     Vector3 dir = Vector3.zero; // 방향
+
+   public RuntimeAnimatorController runtimeAnimatorController;
+
+    public bool Test = false;
 
     private void Awake()
     {
@@ -47,13 +47,21 @@ public class Monster : MonoBehaviour
 
     private void OnEnable()
     {
-        targetHero = GameMgr.Inst.hero;
-        targetTr = GameMgr.Inst.hero.transform;
+        if(GameMgr.Inst)
+        {
+            targetHero = GameMgr.Inst.hero;
+            targetTr = GameMgr.Inst.hero.transform;
+        }
+       
+        animator.runtimeAnimatorController = runtimeAnimatorController;
         collider.enabled = true;
     }
 
     private void FixedUpdate()
-    {    
+    {
+        if (Test) //테스트용 방지
+            return;
+
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) //이동 애니메이션일때만 이동가능하게 하기 위해
             {
                 rigidbody.velocity = Vector2.zero; //속도값은 한번 초기화
@@ -64,6 +72,9 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
+        if (Test) //테스트용 방지
+            return;
+
         targetToThis = targetTr.position - transform.position; //타겟과의 거리관계
         dir = targetToThis.normalized;     //방향값
 
@@ -84,9 +95,11 @@ public class Monster : MonoBehaviour
 
     }
 
-    public void SetStatus(int hp)
+    public void SetStatus(MonsterData monsterData)
     {
-        this.hp = hp;
+        runtimeAnimatorController = monsterData.monsterAnimator;
+
+        this.hp = monsterData.hp;
         monster_State = Monster_State.Idle;     
         gameObject.SetActive(true);
     }
