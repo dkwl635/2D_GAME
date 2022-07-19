@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: 1_Goblin
   m_EditorClassIdentifier: 
   monsterAnimator: {fileID: 9100000, guid: df8982361eed7e446bf221f7c9dcd13d, type: 2}
-  offset: {x: 0, y: 0}
-  coliderSize: 0
+  offset: {x: 0, y: -0.5}
+  coliderSize: 0.7
+  attackBoxSize: {x: 2, y: 2}
   hp: 30
-  AttPw: 0
+  AttPw: 10

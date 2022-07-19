@@ -9,7 +9,7 @@ public class Monster : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     Animator animator;
     Rigidbody2D rigidbody;  //HIT 시 넉백을 구현하고자 넣어보았다.
-    Collider2D collider;
+    CircleCollider2D collider;
 
     enum Monster_State //몬스터 상태
     {
@@ -32,9 +32,12 @@ public class Monster : MonoBehaviour
     Vector3 targetToThis = Vector3.zero; //타겟과의 거리를 구하기 위해
     Vector3 dir = Vector3.zero; // 방향
 
-   public RuntimeAnimatorController runtimeAnimatorController;
+    public RuntimeAnimatorController runtimeAnimatorController;
 
     public bool Test = false;
+
+
+
 
     private void Awake()
     {
@@ -42,7 +45,7 @@ public class Monster : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidbody = GetComponent<Rigidbody2D>();
-        collider = GetComponent<Collider2D>();
+        collider = GetComponent<CircleCollider2D>();  
     }
 
     private void OnEnable()
@@ -98,6 +101,11 @@ public class Monster : MonoBehaviour
     public void SetStatus(MonsterData monsterData)
     {
         runtimeAnimatorController = monsterData.monsterAnimator;
+
+        collider.offset = monsterData.offset;
+        collider.radius = monsterData.coliderSize;
+
+        attackSize = monsterData.attackBoxSize;
 
         this.hp = monsterData.hp;
         monster_State = Monster_State.Idle;     

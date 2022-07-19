@@ -15,7 +15,8 @@ public class TestMgr : MonoBehaviour
     public GameObject monsterSpawnPos;
 
     public Skill[] skills;
-    public TestSkillBtn TestSkillBtn;
+    public TestSkillBtn TestSkillBtn1;
+    public TestSkillBtn TestSkillBtn2;
 
    
 
@@ -27,7 +28,8 @@ public class TestMgr : MonoBehaviour
         monsterSpawn_2.onClick.AddListener(SpawnMonster_2);
 
 
-        TestSkillBtn.SetSkill(skills[0]);
+        TestSkillBtn1.SetSkill(skills[0]);
+        TestSkillBtn2.SetSkill(skills[1]);
     }
 
     private void Update()
@@ -39,7 +41,7 @@ public class TestMgr : MonoBehaviour
     public void SpawnMonster_1()    //허수아비 스폰
     {
         Monster newMonster = GameMgr.monsters_P.GetObj();
-        newMonster.SetStatus(GameMgr.monsterDatas[0]);
+        newMonster.SetStatus(GameMgr.monsterDatas[3]);
         newMonster.Test = true;
         newMonster.transform.position = monsterSpawnPos.transform.position;
     }
@@ -47,7 +49,7 @@ public class TestMgr : MonoBehaviour
     public void SpawnMonster_2()    //따라오는몬스터 스폰
     {
         Monster newMonster = GameMgr.monsters_P.GetObj();
-        newMonster.SetStatus(GameMgr.monsterDatas[0]);
+        newMonster.SetStatus(GameMgr.monsterDatas[Random.Range(0,4)]);
         newMonster.Test = false;
         newMonster.transform.position = monsterSpawnPos.transform.position;
     }

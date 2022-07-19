@@ -45,12 +45,12 @@ GameObject:
   - component: {fileID: 3580675266013753123}
   - component: {fileID: 7511268195877652282}
   m_Layer: 7
-  m_Name: Goblin
+  m_Name: 1_Goblin
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3580675266013753114
 Transform:
   m_ObjectHideFlags: 0

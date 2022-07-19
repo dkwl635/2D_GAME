@@ -45,12 +45,12 @@ GameObject:
   - component: {fileID: 4515040684210333959}
   - component: {fileID: 4258548580144210952}
   m_Layer: 7
-  m_Name: Mushroom
+  m_Name: 0_Mushroom
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4515040684210334014
 Transform:
   m_ObjectHideFlags: 0

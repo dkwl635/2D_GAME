@@ -12,7 +12,9 @@ public class MonsterData : ScriptableObject
     public float coliderSize;
 
     [Header("Status")]
+    public Vector2 attackBoxSize;
     public int hp;
+    public int attDis;
     public int AttPw;
    
 

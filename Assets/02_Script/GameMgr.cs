@@ -72,7 +72,7 @@ public class GameMgr : MonoBehaviour
         {
             yield return spanwTime;
             Monster newMonster = monsters_P.GetObj();
-            newMonster.SetStatus(monsterDatas[0]);
+            newMonster.SetStatus(monsterDatas[2]);
             newMonster.transform.position = RandomSpanw();
 
             monsterSpawnCount++;

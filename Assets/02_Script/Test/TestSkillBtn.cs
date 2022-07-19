@@ -48,7 +48,7 @@ public class TestSkillBtn : MonoBehaviour
 
     void SkillDown()
     {
-        Skill.SKillLvDown();
+        Skill.SkillLvDown();
         SetText();
     }
     void SetText()
