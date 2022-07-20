@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Skill : MonoBehaviour
@@ -9,7 +10,7 @@ public class Skill : MonoBehaviour
     public int skill_MaxLv = 0;
     public bool getSkill = false;
 
-   [HideInInspector]public string[] skillLvInfo = new string[7];
+   public string[] skillLvInfo = new string[7];
 
     public int[] skillPw = { 1, 2, 2, 4, 4, 6, 6 };
     public string SkillInfo
@@ -30,12 +31,12 @@ public class Skill : MonoBehaviour
         Skill_Init();
     }
 
+    
     public virtual void Skill_Init(){}
     
   
     public void SkillStart()
     {
-        StopAllCoroutines();
         StartCoroutine(SkillStart_Co());
     }
 
@@ -54,36 +55,44 @@ public class Skill : MonoBehaviour
         yield return null;
     }
 
-    public virtual void SkillLvUp() 
-    {
-        StopAllCoroutines();
-        SkillRefresh();
+    public virtual void SkillLvUp()
+    {        
         skill_Lv++;
-
+        SkillRefresh();
         SkillStart();
     }
     
     public virtual void SkillLvDown() 
     {
-        StopAllCoroutines();
-        SkillRefresh();
-    
         if (skill_Lv == 0)
         {
             getSkill = false;
-            return;
+            SkillRefresh();
         }
-
-        skill_Lv--;
-
-        SkillStart();
+        else
+        {
+            skill_Lv--;
+            SkillRefresh();
+            SkillStart();
+        }          
     }
-   
-    public virtual void SkillRefresh()
+
+    public virtual void SkillRefresh() { }
+
+    protected GameObject FindNearestObjectByTag(string tag)//가장 가까운 유닛찾기
     {
-       
-    }
+        // 탐색할 오브젝트 목록을 List 로 저장합니다.
+        var objects = GameObject.FindGameObjectsWithTag(tag).ToList();
 
-  
+        // LINQ 메소드를 이용해 가장 가까운 적을 찾습니다.
+        var neareastObject = objects
+            .OrderBy(obj =>
+            {
+                return Vector3.Distance(hero.transform.position, obj.transform.position);
+            })
+        .FirstOrDefault(); //첫번째 요소 반환 없으면 null;
+
+        return neareastObject;
+    }
 
 }

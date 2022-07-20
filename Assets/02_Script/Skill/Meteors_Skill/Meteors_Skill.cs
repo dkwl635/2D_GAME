@@ -10,14 +10,7 @@ public class Meteors_Skill : Skill
 
     public override void Skill_Init()
     {
-        skillLvInfo[0] = "주변에 메테오 공격";
-        skillLvInfo[1] = "공격력 증가";
-        skillLvInfo[2] = "메테오의 갯수 증가";
-        skillLvInfo[3] = "공격력 증가";
-        skillLvInfo[4] = "메테오의 갯수 증가";
-        skillLvInfo[5] = "공격력 증가";
-        skillLvInfo[6] = "메테오의 갯수 증가";
-
+      
         for (int i = 0; i < meteorObj.Length; i++)
         {
             SkillDamageCollider skillDamageBoxes = meteorObj[i].GetComponentInChildren<SkillDamageCollider>(true);
@@ -36,11 +29,19 @@ public class Meteors_Skill : Skill
             yield return new WaitForSeconds(0.1f);
         }
 
-
         yield return new WaitForSeconds(5.0f);
 
         StartCoroutine(SkillStart_Co());
     }
-   
+
+    public override void SkillRefresh()
+    {
+        StopAllCoroutines();
+
+        for (int i = 0; i < meteorObj.Length; i++)
+        {
+            meteorObj[i].SetActive(false);
+        }
+    }
 
 }

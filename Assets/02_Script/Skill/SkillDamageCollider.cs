@@ -10,7 +10,7 @@ public class SkillDamageCollider : MonoBehaviour
 
    protected Collider2D collider2D;
 
-    private void Awake()
+    public virtual void Awake()
     {
         collider2D = GetComponent<Collider2D>();
     }

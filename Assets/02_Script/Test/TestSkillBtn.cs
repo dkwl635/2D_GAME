@@ -53,7 +53,6 @@ public class TestSkillBtn : MonoBehaviour
     }
     void SetText()
     {
-
         ShowBtn();
         if (!Skill.getSkill)
         {

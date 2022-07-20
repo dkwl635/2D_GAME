@@ -15,8 +15,10 @@ public class TestMgr : MonoBehaviour
     public GameObject monsterSpawnPos;
 
     public Skill[] skills;
-    public TestSkillBtn TestSkillBtn1;
-    public TestSkillBtn TestSkillBtn2;
+
+    public Transform scrollerTr;
+    public GameObject skillBtnObj;
+  
 
    
 
@@ -27,9 +29,12 @@ public class TestMgr : MonoBehaviour
         monsterSpawn_1.onClick.AddListener(SpawnMonster_1);
         monsterSpawn_2.onClick.AddListener(SpawnMonster_2);
 
-
-        TestSkillBtn1.SetSkill(skills[0]);
-        TestSkillBtn2.SetSkill(skills[1]);
+        for (int i = 0; i < skills.Length; i++)
+        {
+            GameObject obj = Instantiate(skillBtnObj, scrollerTr);
+            obj.GetComponent<TestSkillBtn>().SetSkill(skills[i]);
+        }
+        
     }
 
     private void Update()

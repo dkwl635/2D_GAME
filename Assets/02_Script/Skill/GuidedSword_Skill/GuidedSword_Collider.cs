@@ -8,7 +8,7 @@ public class GuidedSword_Collider : SkillDamageCollider
     public GuidedSword_Event DeQuObj;
 
 
-    SpriteRenderer img;
+    public SpriteRenderer img;
     bool move = false;
 
     public Monster target;
@@ -22,11 +22,11 @@ public class GuidedSword_Collider : SkillDamageCollider
     {
         if(move)
         {
-            if (!target.Equals(null) && target.hp > 0)
+            if (target && target.hp > 0)
             {
-                dir = (target.transform.position - transform.position).normalized;
-                target = null;
+                dir = (target.transform.position - transform.position).normalized;     
             }
+            else target = null;
 
             transform.position += (Vector3)dir * Time.deltaTime  * speed;
 
@@ -65,26 +65,28 @@ public class GuidedSword_Collider : SkillDamageCollider
         collider2D.enabled = true;
     }
     
-    public void SetSword(Transform origin)
+    public void InitSword(Transform origin)
     {
         originPos = origin;
+    }
+
+    public void SetSword(Sprite sprite, float speed)
+    {
+        img.sprite = sprite;
+        this.speed = speed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Monster"))
         {
-            OnTriggerMonster?.Invoke(collision.GetComponent<Monster>());
+            OnTriggerMonster?.Invoke(collision.GetComponent<Monster>());          
+            target = null;
             gameObject.SetActive(false);
         }
 
     }
 
-    Vector2 Pos(Vector2 start, Vector2 mid, Vector2 end, float time)    
-    {
-        Vector2 a = Vector2.Lerp(start, mid, time);
-        Vector2 b = Vector2.Lerp(mid, end, time);
-        return Vector2.Lerp(a, b, time);
-    }
+ 
 
 }

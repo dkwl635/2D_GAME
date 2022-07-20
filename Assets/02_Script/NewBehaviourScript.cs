@@ -16,3 +16,16 @@ public class NewBehaviourScript : MonoBehaviour
         
     }
 }
+
+interface IInterface
+{
+    [System.Serializable]
+    public struct name
+    {
+        string info;
+        Sprite img;
+    }
+    public name BtnSet();
+   
+
+}
