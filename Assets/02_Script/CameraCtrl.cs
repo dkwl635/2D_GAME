@@ -31,14 +31,22 @@ public class CameraCtrl : MonoBehaviour
     {
         mapSize.x = tilemap.size.x / 2;
         mapSize.y = tilemap.size.y / 2;
-        mapSize.z = tilemap.size.z / 2;
+       
 
         camWMin = Camera.main.ViewportToWorldPoint(Vector3.zero);
         camWMax = Camera.main.ViewportToWorldPoint(Vector3.one);
 
         
-        camSizeX =  camWMax.x - transform.position.x + 4;
-        camSizeY = camWMax.y - transform.position.y + 4;
+        camSizeX =  camWMax.x - transform.position.x + 1;
+        camSizeY = camWMax.y - transform.position.y + 1;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(Vector3.zero, new Vector3( tilemap.size.x / 2, 0, 0));
+        Gizmos.DrawLine(Vector3.zero, new Vector3(-(tilemap.size.x) / 2, 0, 0));
+        Gizmos.DrawLine(Vector3.zero, new Vector3(0, tilemap.size.y / 2, 0));
+        Gizmos.DrawLine(Vector3.zero, new Vector3(0, -(tilemap.size.y / 2), 0));
     }
 
     private void LateUpdate()
