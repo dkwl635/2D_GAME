@@ -12,9 +12,7 @@ public class Shield_Skill : Skill
     public override IEnumerator SkillStart_Co()
     {
         while(true)
-        {
-            yield return new WaitForSeconds(skillPw[skill_Lv]);
-
+        {        
             GameObject monsterObj = FindNearestObjectByTag("Monster");
             if(monsterObj)
             {
@@ -28,7 +26,7 @@ public class Shield_Skill : Skill
                 yield return new WaitForSeconds(0.5f);
                 Shield.gameObject.SetActive(false);
             }
-
+            yield return new WaitForSeconds(skillPw[skill_Lv]);
         }
     }
 

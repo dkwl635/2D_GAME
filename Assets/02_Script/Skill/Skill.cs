@@ -17,6 +17,10 @@ public class Skill : MonoBehaviour
     {
         get { return skillLvInfo[skill_Lv]; }
     }
+    public float skillCool;
+    public float SkillCool { get { return skillCool * hero.skillCool; } }
+    
+    
 
     public Sprite skillSprite;
 

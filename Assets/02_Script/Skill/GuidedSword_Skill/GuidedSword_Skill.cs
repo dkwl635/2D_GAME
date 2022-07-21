@@ -46,16 +46,16 @@ public class GuidedSword_Skill : Skill
      
         while (true)
         {     
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(SkillCool);
 
             if (sword_Qu.Count > 0)
-            {
-                GuidedSword_Collider sword = sword_Qu.Dequeue();
+            {        
                 GameObject targetObj = FindNearestObjectByTag("Monster");
                 if (targetObj != null)
                 {
+                    GuidedSword_Collider sword = sword_Qu.Dequeue();
                     sword.SetTarget(targetObj.GetComponent<Monster>());
-                }
+                }             
             }
         }
        
@@ -89,7 +89,7 @@ public class GuidedSword_Skill : Skill
 
     IEnumerator DequObj_Co(GuidedSword_Collider sword)
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(SkillCool);
      
         sword_Qu.Enqueue(sword);
         sword.transform.gameObject.SetActive(true);

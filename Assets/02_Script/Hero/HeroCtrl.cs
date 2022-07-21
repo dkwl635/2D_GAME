@@ -24,13 +24,24 @@ public class HeroCtrl : MonoBehaviour
     public int skillPower = 1;
 
     [Header("PlayerStatus")]
-    public int hp = 1000;
+    [SerializeField] int hp = 1000;
     public int maxHp = 1000;
     public int def = 0;
     public int Lv = 1;
     public int curExp = 0;
     public int maxExp = 10;
+    public float skillCool = 1.0f;
 
+    public int Hp
+    {
+        get { return hp; }
+        set
+        {
+            hp = value;
+            HeroCtrlMgr.SetHpImg(hp, (float)hp / (float)maxHp);
+        }
+    }
+    
     public LayerMask monsterLayer;
 
     public delegate void Event();
@@ -124,9 +135,9 @@ public class HeroCtrl : MonoBehaviour
     {
         if (value - def <= 0)
             return;
-
-        hp -= (value - def);
-        HeroCtrlMgr.SetHpImg(hp, (float)hp / (float)maxHp);
+        
+       Hp = Hp - (value - def);
+          
     }
 
     public void GetExp(int value)

@@ -26,7 +26,7 @@ public class Spark_Skill : Skill
             sparkObj[i].gameObject.SetActive(true);            
         }
 
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(SkillCool);
 
         StartCoroutine(SkillStart_Co());
     }

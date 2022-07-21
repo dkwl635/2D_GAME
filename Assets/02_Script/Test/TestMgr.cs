@@ -2,23 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TestMgr : MonoBehaviour
 {
     GameMgr GameMgr;
-
+    public HeroCtrl hero;
     public GameObject testCanavas;
+
+    public Button closeBtn;
+    public Button skillBtn;
+    public Button abilityBtn;
 
     public Button monsterSpawn_1;
     public Button monsterSpawn_2;
 
     public GameObject monsterSpawnPos;
-
+    [Header("Skill")]
     public Skill[] skills;
-
+    public GameObject skillCtrlBox;
     public Transform scrollerTr;
     public GameObject skillBtnObj;
-  
+
+    [Header("AbilityPanel")]
+    public GameObject AbilityPanel;
+    public TMP_InputField attack_Input;
+    public TMP_InputField hp_Input;
+    public TMP_InputField skPw_Input;
+    public TMP_InputField skCool_Input;
+    public TMP_InputField def_Input;
 
    
 
@@ -28,6 +40,17 @@ public class TestMgr : MonoBehaviour
 
         monsterSpawn_1.onClick.AddListener(SpawnMonster_1);
         monsterSpawn_2.onClick.AddListener(SpawnMonster_2);
+
+        closeBtn.onClick.AddListener(AllBoxOff);
+        skillBtn.onClick.AddListener(OnSkillCtrlBox);
+        abilityBtn.onClick.AddListener(OnAbilitylBox);
+
+        attack_Input.onValueChanged.AddListener(SetAttackPower);
+        hp_Input.onValueChanged.AddListener(SetHp);
+        skPw_Input.onValueChanged.AddListener(SetSkillPower);
+        skCool_Input.onValueChanged.AddListener(SetSkillCool);
+        def_Input.onValueChanged.AddListener(SetDef);
+
 
         for (int i = 0; i < skills.Length; i++)
         {
@@ -65,5 +88,62 @@ public class TestMgr : MonoBehaviour
         testCanavas.SetActive(!testCanavas.activeSelf);
     }
 
+    void OnSkillCtrlBox()
+    {
+        AllBoxOff();
+        skillCtrlBox.SetActive(true);
+    }
 
+    void OnAbilitylBox()
+    {
+        AllBoxOff();
+        AbilityPanel.SetActive(true);
+    }
+
+
+    void AllBoxOff()
+    {
+        skillCtrlBox.SetActive(false);
+        AbilityPanel.SetActive(false);
+    }
+
+    void SetAttackPower(string str)
+    {
+        if (string.IsNullOrEmpty(str))
+            return;
+        int value = int.Parse(str);      
+        hero.AttackPower = value;
+    }
+
+    void SetHp(string str)
+    {
+        if (string.IsNullOrEmpty(str))
+            return;
+        int value = int.Parse(str);
+        hero.Hp = value;
+     
+    }
+    void SetSkillPower(string str)
+    {
+        if (string.IsNullOrEmpty(str))
+            return;
+        int value = int.Parse(str);
+        hero.skillPower = value;
+    }
+
+    void SetSkillCool(string str)
+    {
+        if (string.IsNullOrEmpty(str))
+            return;
+        int value = int.Parse(str);
+        hero.skillCool = value * 0.01f;
+    }
+
+    void SetDef(string str)
+    {
+        if (string.IsNullOrEmpty(str))
+            return;
+        int value = int.Parse(str);
+        hero.def = value;
+    }
 }
