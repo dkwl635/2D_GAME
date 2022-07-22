@@ -7,8 +7,6 @@ using TMPro;
 public class GameMgr : MonoBehaviour
 {
     static public GameMgr Inst;
-
-
     public HeroCtrl hero;
     Transform heroTr;
 
@@ -25,6 +23,15 @@ public class GameMgr : MonoBehaviour
     public GameObject startTxtObj;
     public GameObject lvUpPanel;
 
+
+    [Header("StageData")]
+    public StageData[] stageDatas;
+    public GameObject stageInfo;
+    public int stageLevel;
+
+    [Header("Skill")]
+    public Skill[] skills;
+    
     //MonsterSpawn
     //계산용
     int monsterkillCount;
@@ -50,21 +57,39 @@ public class GameMgr : MonoBehaviour
         if (Test) //테스트용 방지
             return;
 
-
+        StageStart();
         //startTxtObj.SetActive(true);
         StartCoroutine(MonsterSpawner());
 
-        OnLevelUpPanel();
-
+        //OnLevelUpPanel();
 
     }
 
     
 
+    void StageStart()
+    {
+        Time.timeScale = 0.0f;
+        stageInfo.SetActive(true);
+    }
+    public void StageGameStart()
+    {
+        Time.timeScale = 1.0f;
+        stageInfo.SetActive(false);
+
+        for (int i = 0; i < skills.Length; i++)
+        {
+            if (skills[i].getSkill)
+                skills[i].SkillStart();
+        }
+
+    }
+
+
     IEnumerator MonsterSpawner()
     {
         WaitForSeconds spanwTime = new WaitForSeconds(2.0f);
-        maxMonsterCount = 20;
+        maxMonsterCount = stageDatas[stageLevel].monsterCount;
         monsterKillCountTxt.text = "0 / " + maxMonsterCount;
 
         int monsterSpawnCount = 0;
@@ -72,11 +97,10 @@ public class GameMgr : MonoBehaviour
         {
             yield return spanwTime;
             Monster newMonster = monsters_P.GetObj();
-            newMonster.SetStatus(monsterDatas[2]);
+            newMonster.SetStatus(stageDatas[stageLevel].monsterDatas[Random.Range(0, stageDatas[stageLevel].monsterDatas.Length)]);
             newMonster.transform.position = RandomSpanw();
 
             monsterSpawnCount++;
-
         }
     }
 

@@ -2,21 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using CardHelp;
+using LavelUpCard;
 
-public class Skill : MonoBehaviour
+public class Skill : MonoBehaviour , SetCard , LevelUp
 {
     public HeroCtrl hero;
     public int skill_Lv = 0;
     public int skill_MaxLv = 0;
     public bool getSkill = false;
 
-   public string[] skillLvInfo = new string[7];
+    public string[] skillLvInfo = new string[7];
 
     public int[] skillPw = { 1, 2, 2, 4, 4, 6, 6 };
     public string SkillInfo
     {
         get { return skillLvInfo[skill_Lv]; }
     }
+
+    string CardInfo 
+    {
+        get
+        {
+            if (getSkill)
+               return skillLvInfo[skill_Lv + 1];
+            else
+                return skillLvInfo[0];
+        }
+    }
+
     public float skillCool;
     public float SkillCool { get { return skillCool * hero.skillCool; } }
     
@@ -99,4 +113,31 @@ public class Skill : MonoBehaviour
         return neareastObject;
     }
 
+    public CardData GetCard()
+    {
+        CardData card;
+        card.img = skillSprite;
+        card.info = CardInfo;
+        return card;
+    }
+
+    public bool LevelPossible()
+    {
+        if (skill_Lv == skill_MaxLv)
+            return false;
+        else
+            return true;
+    }
+
+    public void LevelUp()
+    {
+        if (getSkill)
+            SkillLvUp();
+        else
+        {
+            getSkill = true;
+            this.gameObject.SetActive(true);
+        }
+          
+    }
 }

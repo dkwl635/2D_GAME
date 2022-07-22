@@ -24,8 +24,8 @@ public class HeroCtrl : MonoBehaviour
     public int skillPower = 1;
 
     [Header("PlayerStatus")]
-    [SerializeField] int hp = 1000;
-    public int maxHp = 1000;
+    [SerializeField] int hp = 100;
+    public int maxHp = 100;
     public int def = 0;
     public int Lv = 1;
     public int curExp = 0;

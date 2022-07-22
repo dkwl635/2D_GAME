@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Monster : MonoBehaviour
 {
     HeroCtrl targetHero;
@@ -106,8 +107,11 @@ public class Monster : MonoBehaviour
         collider.radius = monsterData.coliderSize;
 
         attackSize = monsterData.attackBoxSize;
-
+        attackPower = monsterData.AttPw;
         this.hp = monsterData.hp;
+
+        speed = monsterData.Speed;
+
         monster_State = Monster_State.Idle;     
         gameObject.SetActive(true);
     }
@@ -190,7 +194,7 @@ public class Monster : MonoBehaviour
         //게임메니저 
         GameMgr.Inst.MonsterKill();
         //경험치볼 생성
-        GameMgr.Inst.SpawnExpBall(transform.position, 2);
+        //GameMgr.Inst.SpawnExpBall(transform.position, 2);
 
         //넉백 타겟과의 반대 방향으로
         rigidbody.velocity = Vector2.zero;
@@ -239,4 +243,5 @@ public class Monster : MonoBehaviour
         Gizmos.DrawWireCube(transform.position + targetToThis.normalized, attackSize);
     }
 
+  
 }
