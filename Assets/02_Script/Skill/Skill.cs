@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using CardHelp;
-using LavelUpCard;
 
-public class Skill : MonoBehaviour , SetCard , LevelUp
+
+public class Skill : MonoBehaviour , ICardLvUp
 {
     public HeroCtrl hero;
     public int skill_Lv = 0;
@@ -123,7 +123,9 @@ public class Skill : MonoBehaviour , SetCard , LevelUp
 
     public bool LevelPossible()
     {
-        if (skill_Lv == skill_MaxLv)
+        Debug.Log(name);
+
+        if (!getSkill || skill_Lv == skill_MaxLv)
             return false;
         else
             return true;
@@ -137,6 +139,7 @@ public class Skill : MonoBehaviour , SetCard , LevelUp
         {
             getSkill = true;
             this.gameObject.SetActive(true);
+            SkillStart();
         }
           
     }

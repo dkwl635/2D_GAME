@@ -10,17 +10,16 @@ namespace CardHelp
         public string info;
     }
 
+    public interface ICardLvUp
+    {
+        public bool LevelPossible();
+        public void LevelUp();
+        public CardData GetCard();
+    }
+
     public interface SetCard
     {    
         public CardData GetCard();
     }
 }
 
-namespace LavelUpCard
-{
-    public interface LevelUp
-    {
-        public bool LevelPossible();
-        public void LevelUp();
-    }
-}

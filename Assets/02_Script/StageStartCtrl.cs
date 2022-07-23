@@ -7,8 +7,8 @@ public class StageStartCtrl : MonoBehaviour
 {
     public int stageLevel = 0;
 
-    public GameObject monsterCard;
-    public GameObject SkillCard;
+    public GameObject monsterCardPanel;
+    public GameObject skillCardPanel;
 
     public Button nextBtn;
 
@@ -25,13 +25,13 @@ public class StageStartCtrl : MonoBehaviour
 
     private void OnEnable()
     {
-        monsterCard.gameObject.SetActive(true);
-        SkillCard.gameObject.SetActive(false);
+        monsterCardPanel.gameObject.SetActive(true);
+        skillCardPanel.gameObject.SetActive(false);
         stageData = GameMgr.Inst.stageDatas[stageLevel];
         stageLevel = GameMgr.Inst.stageLevel;
         skills = GameMgr.Inst.skills;
 
-
+        nextBtn.gameObject.SetActive(true);
 
         for (int i = 0; i < stageData.monsterDatas.Length; i++)
         {
@@ -43,8 +43,8 @@ public class StageStartCtrl : MonoBehaviour
    
     void NextBtn()
     {
-        monsterCard.gameObject.SetActive(false);
-        SkillCard.gameObject.SetActive(true);
+        monsterCardPanel.gameObject.SetActive(false);
+        skillCardPanel.gameObject.SetActive(true);
 
         for (int i = 0; i < Skillcards.Length; i++)
         {

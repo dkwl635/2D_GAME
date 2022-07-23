@@ -161,8 +161,8 @@ public class GameMgr : MonoBehaviour
         if (Test)
             return;
 
-        Time.timeScale = 0.0f;
         lvUpPanel.gameObject.SetActive(true);
+
     }
 
    

@@ -194,7 +194,7 @@ public class Monster : MonoBehaviour
         //게임메니저 
         GameMgr.Inst.MonsterKill();
         //경험치볼 생성
-        //GameMgr.Inst.SpawnExpBall(transform.position, 2);
+        GameMgr.Inst.SpawnExpBall(transform.position, 2);
 
         //넉백 타겟과의 반대 방향으로
         rigidbody.velocity = Vector2.zero;

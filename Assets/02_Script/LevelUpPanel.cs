@@ -2,47 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using CardHelp;
 
 public class LevelUpPanel : MonoBehaviour
 {
+    public static LevelUpPanel inst;
+
     HeroCtrl hero;
+    [Header("LvUpLable")]
     public TextMeshProUGUI lable;
     public Animation lableAnimation;
 
+    [Header("LvUpObj")]
+    public GameObject[] lvUpObjs;
+    List<ICardLvUp> cardList = new List<ICardLvUp>();
 
-    public Skill skill;
-    public Transform skillGroup;
-    public GameObject skillLvUpBtnObj;
+    [Header("LvUpCard")]
+    public LvUpCard[] lvUpCard;
 
-    public SkillLvUpBtn[] skillLvUpBtns = new SkillLvUpBtn[3];
 
-    bool gameStart = true;
+    float realTimeDalta = 0.0f;
+    float animationTime = 0.0f;
 
     private void Awake()
     {
-       
+        inst = this;
+
+        hero = GameMgr.Inst.hero;
+
+        for (int i = 0; i < lvUpObjs.Length; i++)
+        {
+            cardList.Add(lvUpObjs[i].GetComponent<ICardLvUp>());
+        }
+
+      
     }
 
     private void Start()
     {
-        hero = GameMgr.Inst.hero;            
+      
     }
 
-    private void OnEnable()
-    {
-        if (gameStart)
-        {
-            lable.text = "Game Start";
-            gameStart = false;
-        }
-        else
-            lable.text = "Level Up!!";
 
-        skillLvUpBtns[0].SetBtn(skill, OffPanel);
-    }
-
-    float realTimeDalta = 0.0f;
-    float animationTime = 0.0f;
+    
     private void Update()
     {
         float curTime = Time.realtimeSinceStartup;
@@ -51,8 +53,13 @@ public class LevelUpPanel : MonoBehaviour
 
         animationTime += deltaTime;
 
-
         LableTxt_Update();
+    }
+    private void OnEnable()
+    {      
+        CheckLevelPossible();
+        SetLvUpCard();
+        Time.timeScale = 0.0f;
     }
 
 
@@ -60,15 +67,59 @@ public class LevelUpPanel : MonoBehaviour
     {
         this.gameObject.SetActive(false);
         Time.timeScale = 1.0f;
-
-        realTimeDalta = 0.0f;
-        animationTime = 0.0f;
     }
 
     void LableTxt_Update()
     {
         AnimationState a = lableAnimation["LvUpTxt"];  
         a.normalizedTime = animationTime % a.length;
+    }
+
+
+
+
+    void CheckLevelPossible()
+    {
+        for (int i = 0; i < cardList.Count;)
+        {         
+            Debug.Log(i);
+            if (cardList[i].LevelPossible() == false) //레벨업이 가능한지 체크 후 제거
+                cardList.RemoveAt(i);
+            else
+                i++;
+        }
+    }
+
+    void SetLvUpCard()
+    {     
+        //레벨업이 3개이하 일경우
+        if(cardList.Count <= 3)
+        {
+            for (int i = 0; i < cardList.Count; i++)
+            {
+                lvUpCard[i].SetCard(cardList[i]);
+            }
+        }
+        else
+        {
+            List<int> random = new List<int>();
+            while(random.Count <3)
+            {
+                int a = Random.Range(0, cardList.Count);
+                if (random.Contains(a))
+                    continue;
+                else
+                    random.Add(a);
+            }
+
+            for (int i = 0; i < random.Count; i++)
+            {
+                Debug.Log(random[i]);   
+                lvUpCard[i].SetCard(cardList[random[i]]);
+            }
+
+
+        }
     }
 
 }
