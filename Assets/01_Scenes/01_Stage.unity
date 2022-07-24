@@ -3961,7 +3961,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 940, y: 370}
+  m_SizeDelta: {x: 0, y: 370}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &737848618
 MonoBehaviour:
@@ -7316,6 +7316,8 @@ MonoBehaviour:
   - {fileID: 1041071433}
   - {fileID: 1628399667}
   - {fileID: 699436805}
+  abilities:
+  - {fileID: 11400000, guid: 00b8bbeffb0b3334eb59a3a35bf8100f, type: 2}
 --- !u!1 &1794306841
 GameObject:
   m_ObjectHideFlags: 0

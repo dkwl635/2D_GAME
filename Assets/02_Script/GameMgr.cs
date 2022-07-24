@@ -165,6 +165,10 @@ public class GameMgr : MonoBehaviour
 
     }
 
+    public void AddAblilty(Ability.AbilityType abilityType , int value)
+    {
+
+    }
    
     
 }

@@ -20,6 +20,7 @@ public class LevelUpPanel : MonoBehaviour
     [Header("LvUpCard")]
     public LvUpCard[] lvUpCard;
 
+    public Ability[] abilities;
 
     float realTimeDalta = 0.0f;
     float animationTime = 0.0f;
@@ -34,7 +35,12 @@ public class LevelUpPanel : MonoBehaviour
         {
             cardList.Add(lvUpObjs[i].GetComponent<ICardLvUp>());
         }
-
+        Debug.Log(cardList.Count);
+        for (int i = 0; i < abilities.Length; i++)
+        {
+            cardList.Add(abilities[i]);
+            Debug.Log(cardList.Count);
+        }
       
     }
 
@@ -82,7 +88,7 @@ public class LevelUpPanel : MonoBehaviour
     {
         for (int i = 0; i < cardList.Count;)
         {         
-            Debug.Log(i);
+   
             if (cardList[i].LevelPossible() == false) //레벨업이 가능한지 체크 후 제거
                 cardList.RemoveAt(i);
             else
