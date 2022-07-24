@@ -32,7 +32,7 @@ public class Skill : MonoBehaviour , ICardLvUp
     }
 
     public float skillCool;
-    public float SkillCool { get { return skillCool * hero.skillCool; } }
+    public float SkillCool { get { return skillCool * hero.SkillCool; } }
     
     
 
@@ -123,8 +123,7 @@ public class Skill : MonoBehaviour , ICardLvUp
 
     public bool LevelPossible()
     {
-        Debug.Log(name);
-
+     
         if (!getSkill || skill_Lv == skill_MaxLv)
             return false;
         else

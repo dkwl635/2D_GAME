@@ -15,12 +15,13 @@ public class LevelUpPanel : MonoBehaviour
 
     [Header("LvUpObj")]
     public GameObject[] lvUpObjs;
-    List<ICardLvUp> cardList = new List<ICardLvUp>();
+    public Ability[] abilities;
+    List<ICardLvUp> skillCardList = new List<ICardLvUp>();
+    List<ICardLvUp> abilityCardList = new List<ICardLvUp>();
 
     [Header("LvUpCard")]
     public LvUpCard[] lvUpCard;
-
-    public Ability[] abilities;
+   
 
     float realTimeDalta = 0.0f;
     float animationTime = 0.0f;
@@ -33,24 +34,16 @@ public class LevelUpPanel : MonoBehaviour
 
         for (int i = 0; i < lvUpObjs.Length; i++)
         {
-            cardList.Add(lvUpObjs[i].GetComponent<ICardLvUp>());
+            skillCardList.Add(lvUpObjs[i].GetComponent<ICardLvUp>());
         }
-        Debug.Log(cardList.Count);
+
         for (int i = 0; i < abilities.Length; i++)
         {
-            cardList.Add(abilities[i]);
-            Debug.Log(cardList.Count);
+            abilityCardList.Add(abilities[i]);
         }
-      
+
     }
 
-    private void Start()
-    {
-      
-    }
-
-
-    
     private void Update()
     {
         float curTime = Time.realtimeSinceStartup;
@@ -62,7 +55,7 @@ public class LevelUpPanel : MonoBehaviour
         LableTxt_Update();
     }
     private void OnEnable()
-    {      
+    {
         CheckLevelPossible();
         SetLvUpCard();
         Time.timeScale = 0.0f;
@@ -77,7 +70,7 @@ public class LevelUpPanel : MonoBehaviour
 
     void LableTxt_Update()
     {
-        AnimationState a = lableAnimation["LvUpTxt"];  
+        AnimationState a = lableAnimation["LvUpTxt"];
         a.normalizedTime = animationTime % a.length;
     }
 
@@ -86,32 +79,33 @@ public class LevelUpPanel : MonoBehaviour
 
     void CheckLevelPossible()
     {
-        for (int i = 0; i < cardList.Count;)
-        {         
-   
-            if (cardList[i].LevelPossible() == false) //레벨업이 가능한지 체크 후 제거
-                cardList.RemoveAt(i);
+        for (int i = 0; i < skillCardList.Count;)
+        {
+            if (skillCardList[i].LevelPossible() == false) //레벨업이 가능한지 체크 후 제거
+                skillCardList.RemoveAt(i);
             else
                 i++;
         }
     }
 
     void SetLvUpCard()
-    {     
-        //레벨업이 3개이하 일경우
-        if(cardList.Count <= 3)
+    {
+        int count = 3;
+        List<int> random = new List<int>();
+    
+        if(skillCardList.Count < 3)
         {
-            for (int i = 0; i < cardList.Count; i++)
+            for (int i = 0; i < skillCardList.Count; i++)
             {
-                lvUpCard[i].SetCard(cardList[i]);
+                lvUpCard[i].SetCard(skillCardList[i]);
+                count--;
             }
         }
         else
         {
-            List<int> random = new List<int>();
-            while(random.Count <3)
+            while (random.Count < 2)
             {
-                int a = Random.Range(0, cardList.Count);
+                int a = Random.Range(0, skillCardList.Count);
                 if (random.Contains(a))
                     continue;
                 else
@@ -120,12 +114,30 @@ public class LevelUpPanel : MonoBehaviour
 
             for (int i = 0; i < random.Count; i++)
             {
-                Debug.Log(random[i]);   
-                lvUpCard[i].SetCard(cardList[random[i]]);
+                lvUpCard[i].SetCard(skillCardList[random[i]]);
+                count--;
             }
-
-
         }
-    }
 
+        random.Clear();
+        while (random.Count < count)
+        {
+            int a = Random.Range(0, abilityCardList.Count);
+            if (random.Contains(a))
+                continue;
+            else
+                random.Add(a);
+
+            int num = 3 - random.Count;
+
+            for (int i = 0; i < random.Count; i++)
+            {
+                lvUpCard[num + i].SetCard(abilityCardList[random[i]]);
+                count--;
+            }
+        }
+
+
+
+    }
 }

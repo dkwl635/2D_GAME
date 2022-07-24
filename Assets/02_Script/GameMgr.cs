@@ -165,8 +165,40 @@ public class GameMgr : MonoBehaviour
 
     }
 
-    public void AddAblilty(Ability.AbilityType abilityType , int value)
+    public void AddAblilty(AbilityType abilityType , int value)
     {
+        switch (abilityType)
+        {
+            case AbilityType.Hp:
+                {
+                    hero.maxHp += value;
+                    hero.Hp += value;
+                }
+                break;
+            case AbilityType.AttackPw:
+                {
+                    hero.AttackPower += value;
+                }
+                break;
+            case AbilityType.Def:
+                {
+                    hero.def += value;
+                }
+                break;
+            case AbilityType.SkillPw:
+                {
+                    hero.skillPower += value;
+                }
+                break;
+            case AbilityType.SkillCool:
+                {
+                    hero.SkillCool -= value;
+                }
+                break;
+            default:
+                break;
+        }
+
 
     }
    

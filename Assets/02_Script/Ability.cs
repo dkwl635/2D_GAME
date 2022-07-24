@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using CardHelp;
 
-
+public enum AbilityType
+{
+    Hp,
+    AttackPw,
+    Def,
+    SkillPw,
+    SkillCool
+}
 [CreateAssetMenu(fileName = "AbilityData", menuName = "Scriptable Object Asset/AbilityData")]
 public class Ability : ScriptableObject , ICardLvUp
 {
-   public enum AbilityType
-    {
-       Hp,
-       AttackPw,
-       Def,
-       SkillPw,
-       SkillCool
-    }
-
     public AbilityType abilityType;
     public Sprite sprite;
     public string Info;

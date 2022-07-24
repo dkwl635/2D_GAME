@@ -136,7 +136,11 @@ public class TestMgr : MonoBehaviour
         if (string.IsNullOrEmpty(str))
             return;
         int value = int.Parse(str);
-        hero.skillCool = value * 0.01f;
+
+        if (value > 100)
+            value = 100;
+
+        hero.SkillCool = value;
     }
 
     void SetDef(string str)

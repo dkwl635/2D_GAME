@@ -13,10 +13,10 @@ public class HeroCtrl : MonoBehaviour
     SortingGroup sortingGroup;
 
     Vector3 mvDir = Vector3.zero;
-  
+
     [Header("Move")]
     [SerializeField] private float speed = 2;
-  
+
     private Vector3 originScale;
     [Header("Attack")]
     public GameObject attackPoint;
@@ -30,8 +30,8 @@ public class HeroCtrl : MonoBehaviour
     public int Lv = 1;
     public int curExp = 0;
     public int maxExp = 10;
-    public float skillCool = 1.0f;
-
+    [SerializeField] float skillCool = 100.0f;
+        
     public int Hp
     {
         get { return hp; }
@@ -41,7 +41,13 @@ public class HeroCtrl : MonoBehaviour
             HeroCtrlMgr.SetHpImg(hp, (float)hp / (float)maxHp);
         }
     }
-    
+
+    public float SkillCool
+    {
+        get { return skillCool * 0.01f; }
+        set { skillCool = value; }
+    }
+
     public LayerMask monsterLayer;
 
     public delegate void Event();
