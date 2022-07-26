@@ -23,6 +23,13 @@ public class Ability : ScriptableObject , ICardLvUp
 
     public int[] addAbility;
 
+    public int saveLv = 0;
+
+    private void OnEnable()
+    {
+        lv = saveLv;
+    }
+
     public bool LevelPossible()
     {
         if (lv == maxLv)

@@ -20,6 +20,9 @@ public class HeroCtrlMgr : MonoBehaviour
     public Image lvGage;
     public TextMeshProUGUI lvTxt;
 
+    [Header("Inven")]
+    public TextMeshProUGUI coin;
+
 
     private void Start()
     {
@@ -49,5 +52,8 @@ public class HeroCtrlMgr : MonoBehaviour
         lvTxt.text = "Lv " + lv;
     }
    
-
+    public void SetCoin(int coin)
+    {
+        this.coin.text = coin.ToString();
+    }
 }

@@ -14,6 +14,7 @@ public class GameMgr : MonoBehaviour
     public DamageTxtEffect DamageTxtEffect;
     public Monsters_P monsters_P;
     public PlayerHitEffect_P playerHitEffect_P;
+    public Coin_P coin_P;
     public GameObject expBallObj;
 
     public MonsterData[] monsterDatas;
@@ -154,6 +155,18 @@ public class GameMgr : MonoBehaviour
         expBall.transform.position = spawnPos;
         expBall.SetExpBall(hero, expValue);
 
+    }
+
+    public void SpawnCoin(Vector2 spawnPos)
+    {
+        spawnPos = spawnPos + Random.insideUnitCircle * 2;
+
+        coin_P.GetObj().SetCoin(spawnPos);
+    }
+
+    public void GetCoin(int coin)
+    {
+        hero.Coin += coin;
     }
 
     void OnLevelUpPanel()

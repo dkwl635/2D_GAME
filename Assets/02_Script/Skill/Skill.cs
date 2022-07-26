@@ -137,9 +137,10 @@ public class Skill : MonoBehaviour , ICardLvUp
         else
         {
             getSkill = true;
-            this.gameObject.SetActive(true);
-            SkillStart();
+            this.gameObject.SetActive(true);         
         }
-          
+
+       
+
     }
 }

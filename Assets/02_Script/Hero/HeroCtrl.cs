@@ -20,10 +20,11 @@ public class HeroCtrl : MonoBehaviour
     private Vector3 originScale;
     [Header("Attack")]
     public GameObject attackPoint;
+    public Vector2 attackBox = new Vector2(3, 3);
     public int AttackPower = 10;
     public int skillPower = 1;
 
-    [Header("PlayerStatus")]
+    [Header("PlayerAbility")]
     [SerializeField] int hp = 100;
     public int maxHp = 100;
     public int def = 0;
@@ -31,7 +32,22 @@ public class HeroCtrl : MonoBehaviour
     public int curExp = 0;
     public int maxExp = 10;
     [SerializeField] float skillCool = 100.0f;
-        
+
+
+    [Header("Inven")]
+    [SerializeField] int coin = 0;
+    
+
+    public int Coin
+    {
+        get { return coin; }
+        set
+        {
+            coin = value;
+            HeroCtrlMgr.SetCoin(Coin);
+        }
+    }
+
     public int Hp
     {
         get { return hp; }
@@ -125,7 +141,7 @@ public class HeroCtrl : MonoBehaviour
     public void Attack_Event()
     {
         //공격포인터 중심에서 네모 크기 만큼 펼쳐 충동된 콜라이더 가져오기
-        Collider2D[] hits = Physics2D.OverlapBoxAll(attackPoint.transform.position, new Vector2(2, 2), 0 , monsterLayer);
+        Collider2D[] hits = Physics2D.OverlapBoxAll(attackPoint.transform.position, attackBox, 0 , monsterLayer);
         
         for (int i = 0; i < hits.Length; i++)            //데미지 주기 
             hits[i].SendMessage("TakeDamage", AttackPower);
@@ -134,7 +150,7 @@ public class HeroCtrl : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(attackPoint.transform.position, new Vector2(2, 2));
+        Gizmos.DrawWireCube(attackPoint.transform.position, attackBox);
     }
 
     public void TakeDamage(int value)

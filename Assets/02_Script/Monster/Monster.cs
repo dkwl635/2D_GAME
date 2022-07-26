@@ -195,6 +195,9 @@ public class Monster : MonoBehaviour
         GameMgr.Inst.MonsterKill();
         //경험치볼 생성
         GameMgr.Inst.SpawnExpBall(transform.position, 2);
+        //코인 생성
+        if(Random.Range(0, 2) == 0)
+            GameMgr.Inst.SpawnCoin(transform.position);
 
         //넉백 타겟과의 반대 방향으로
         rigidbody.velocity = Vector2.zero;
@@ -218,7 +221,6 @@ public class Monster : MonoBehaviour
     //DIE 이벤트
     public void Die_Event()
     {
-
         gameObject.SetActive(false);
         spriteRenderer.color = Color.white;
         GameMgr.Inst.monsters_P.ReturnObj(this);

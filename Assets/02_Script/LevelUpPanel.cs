@@ -128,16 +128,14 @@ public class LevelUpPanel : MonoBehaviour
             else
                 random.Add(a);
 
-            int num = 3 - random.Count;
-
-            for (int i = 0; i < random.Count; i++)
-            {
-                lvUpCard[num + i].SetCard(abilityCardList[random[i]]);
-                count--;
-            }
         }
 
-
+        int num = 3 - random.Count;
+        for (int i = 0; i < random.Count; i++)
+        {
+            lvUpCard[num + i].SetCard(abilityCardList[random[i]]);
+            count--;
+        }
 
     }
 }
