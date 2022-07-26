@@ -36,7 +36,7 @@ public class HeroCtrl : MonoBehaviour
 
     [Header("Inven")]
     [SerializeField] int coin = 0;
-    
+    Dictionary<EquipmentType, EquipmentItem> equipmentItems = new Dictionary<EquipmentType, EquipmentItem>();
 
     public int Coin
     {

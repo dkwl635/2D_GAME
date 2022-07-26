@@ -119213,7 +119213,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &720665515854158570
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -119274,6 +119274,8 @@ MonoBehaviour:
   - {fileID: 996203875}
   portionItems:
   - {fileID: 11400000, guid: 7394e774e7c154345995c3331d5a35fc, type: 2}
+  - {fileID: 11400000, guid: 4947b311b023b324cb8e281e1c219f09, type: 2}
+  - {fileID: 11400000, guid: 34795665b1251d240836c7d480bb6418, type: 2}
   coinTxt: {fileID: 737954785}
 --- !u!1 &720665515887862809
 GameObject:
