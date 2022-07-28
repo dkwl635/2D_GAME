@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+using UnityEngine.UI;
 
 public class GameMgr : MonoBehaviour
 {
@@ -15,7 +15,7 @@ public class GameMgr : MonoBehaviour
     public Monsters_P monsters_P;
     public PlayerHitEffect_P playerHitEffect_P;
     public Coin_P coin_P;
-    public GameObject expBallObj;
+    public ExpBall_P expBall_P;
 
     public MonsterData[] monsterDatas;
 
@@ -23,7 +23,9 @@ public class GameMgr : MonoBehaviour
     public TextMeshProUGUI monsterKillCountTxt;
     public GameObject startTxtObj;
     public GameObject lvUpPanel;
-
+    public Button eqInfoBoxBtn;
+    public GameObject eqInfoBox;
+    public TextMeshProUGUI eqInfoTxt;
 
     [Header("StageData")]
     public StageData[] stageDatas;
@@ -59,11 +61,9 @@ public class GameMgr : MonoBehaviour
             return;
 
         StageStart();
-        //startTxtObj.SetActive(true);
         StartCoroutine(MonsterSpawner());
-
-        //OnLevelUpPanel();
-
+     
+        eqInfoBoxBtn.onClick.AddListener(OffEqItemInfoBox);
     }
 
     
@@ -150,11 +150,7 @@ public class GameMgr : MonoBehaviour
 
     public void SpawnExpBall(Vector2 spawnPos, int expValue)
     {
-        ExpBall expBall = GameObject.Instantiate(expBallObj).GetComponent<ExpBall>();
-
-        expBall.transform.position = spawnPos;
-        expBall.SetExpBall(hero, expValue);
-
+        expBall_P.GetObj().SetExpBall(spawnPos, hero, expValue);
     }
 
     public void SpawnCoin(Vector2 spawnPos)
@@ -211,9 +207,52 @@ public class GameMgr : MonoBehaviour
             default:
                 break;
         }
+    }
+    public void ShowEqItemInfo(EquipmentType type, Vector2 pos)
+    {
+        eqInfoBox.transform.position = pos;
+        eqInfoBox.SetActive(true);
+        eqInfoTxt.text = "";
+        string str = "";
+        str += hero.equipmentItems[type].itemName;
+        if (type == EquipmentType.Weapon_L || type == EquipmentType.Weapon_R)
+        {
+            str += "\n공격력 + " + hero.equipmentItems[type].value;
+        }
+        else if (type == EquipmentType.Shield || type == EquipmentType.Armor || type == EquipmentType.Plant)
+        {
+            str += "\n방어력 + " + hero.equipmentItems[type].value;
+        }
 
+        eqInfoTxt.text = str;
 
     }
-   
-    
+
+    public void ShowEqItemInfo(EquipmentItem item, Vector2 pos)
+    {
+        eqInfoBox.transform.position = pos;
+        eqInfoBox.SetActive(true);
+        eqInfoTxt.text = "";
+        string str = "";
+        EquipmentType type = item.Type;
+        str += item.itemName;
+        if (type == EquipmentType.Weapon_L || type == EquipmentType.Weapon_R)
+        {
+            str += "\n공격력 + " + item.value;
+        }
+        else if (type == EquipmentType.Shield || type == EquipmentType.Armor || type == EquipmentType.Plant)
+        {
+            str += "\n방어력 + " + item.value;
+        }
+
+        eqInfoTxt.text = str;
+
+    }
+
+
+    public void OffEqItemInfoBox()
+    {
+        eqInfoBox.SetActive(false);
+    }
+
 }

@@ -10,6 +10,12 @@ public class ShopPortionCard : Card
 
     public TextMeshProUGUI priceTxt;
     public Button buyBtn;
+
+    private void Start()
+    {
+        buyBtn.onClick.AddListener(BuyItem);
+    }
+
     public void SetCard(PortionItem item)
     {
         buyItme = item;
@@ -19,10 +25,7 @@ public class ShopPortionCard : Card
         priceTxt.text = "АЁАн : " + item.price;
 
 
-        if (GameMgr.Inst.hero.Coin >= buyItme.price)
-            buyBtn.interactable = true;
-
-
+        Refresh();
         ShopMgr.Inst.BuyEvent += Refresh;
     }
 
@@ -33,6 +36,12 @@ public class ShopPortionCard : Card
         else
             buyBtn.interactable = false;
     }
-  
+
+    public void BuyItem()
+    {
+       
+        ShopMgr.Inst.BuyPortion(buyItme);
+        ShopMgr.Inst.BuyEvent();
+    }
 
 }

@@ -5,8 +5,9 @@ using UnityEngine.Rendering;
 
 public class HeroCtrl : MonoBehaviour
 {
+    public Transform heroModelTr;
+    public HeroModel heroModel;
     Transform tr;
-    public Transform heroModel;
     Animator animator;
     Rigidbody2D rigidbody;
     HeroCtrlMgr HeroCtrlMgr; //UI용
@@ -36,7 +37,37 @@ public class HeroCtrl : MonoBehaviour
 
     [Header("Inven")]
     [SerializeField] int coin = 0;
-    Dictionary<EquipmentType, EquipmentItem> equipmentItems = new Dictionary<EquipmentType, EquipmentItem>();
+    public Dictionary<EquipmentType, EquipmentItem> equipmentItems = new Dictionary<EquipmentType, EquipmentItem>();
+    
+    public int AddAttPw
+    {
+        get 
+        {
+            int value = 0;
+            if (equipmentItems.ContainsKey(EquipmentType.Weapon_R))
+                value += equipmentItems[EquipmentType.Weapon_R].value;
+            if (equipmentItems.ContainsKey(EquipmentType.Weapon_L))
+                value += equipmentItems[EquipmentType.Weapon_L].value;
+
+            return value;
+        }
+    }
+
+    public int AddDef
+    {
+        get
+        {
+            int value = 0;
+            if (equipmentItems.ContainsKey(EquipmentType.Shield))
+                value += equipmentItems[EquipmentType.Shield].value;
+            if (equipmentItems.ContainsKey(EquipmentType.Armor))
+                value += equipmentItems[EquipmentType.Armor].value;
+            if (equipmentItems.ContainsKey(EquipmentType.Plant))
+                value += equipmentItems[EquipmentType.Plant].value;
+
+            return value;
+        }
+    }
 
     public int Coin
     {
@@ -77,11 +108,15 @@ public class HeroCtrl : MonoBehaviour
         HeroCtrlMgr = GetComponent<HeroCtrlMgr>();
         rigidbody = GetComponent<Rigidbody2D>();
         sortingGroup = GetComponentInChildren<SortingGroup>();
+        heroModel = GetComponent<HeroModel>();
     }
 
     private void Start()
     {
-        originScale = heroModel.localScale;
+        originScale = heroModelTr.localScale;
+
+        Hp = maxHp;
+        
     }
 
     private void FixedUpdate()
@@ -120,12 +155,12 @@ public class HeroCtrl : MonoBehaviour
 
         //이미지 좌우 변경
         if (mvDir.x < 0)
-            heroModel.localScale = originScale;
+            heroModelTr.localScale = originScale;
         else if(mvDir.x > 0)
         {
             Vector3 temp = originScale;
             temp.x *= -1;
-            heroModel.localScale = temp;
+            heroModelTr.localScale = temp;
         }
     }
 
@@ -182,5 +217,16 @@ public class HeroCtrl : MonoBehaviour
     {
         Lv ++;
         LevelUP_Event?.Invoke();
+    }
+
+    public void SetEqItem(EquipmentItem item)
+    {
+        heroModel.SetEqItem(item);
+
+        if (equipmentItems.ContainsKey(item.Type))
+            equipmentItems[item.Type] = item;
+        else
+            equipmentItems.Add(item.Type, item);
+
     }
 }

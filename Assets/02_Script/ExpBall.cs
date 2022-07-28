@@ -30,15 +30,18 @@ public class ExpBall : MonoBehaviour
             if(timer >= 1.0f)   //이동 완료
             {
                 hero.GetExp(exp);//경험치 
-                Destroy(this.gameObject);
+                gameObject.SetActive(false);
+                GameMgr.Inst.expBall_P.ReturnObj(this);
             }
         }           
     }
 
-    public void SetExpBall(HeroCtrl hero, int exp)
+    public void SetExpBall(Vector2 pos, HeroCtrl hero, int exp)
     {
+        transform.position = pos;
         this.exp = exp;
         this.hero = hero;
+        gameObject.SetActive(true);
     }
 
     Vector2 Pos(Vector2 start, Vector2 mid, Vector2 end, float time)    //베지어 곡선을 만들기위한 계산

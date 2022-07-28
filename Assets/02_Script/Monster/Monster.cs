@@ -196,7 +196,7 @@ public class Monster : MonoBehaviour
         //경험치볼 생성
         GameMgr.Inst.SpawnExpBall(transform.position, 2);
         //코인 생성
-        if(Random.Range(0, 2) == 0)
+        if(Random.Range(0, 3) == 0)
             GameMgr.Inst.SpawnCoin(transform.position);
 
         //넉백 타겟과의 반대 방향으로
