@@ -112,7 +112,7 @@ public class TestMgr : MonoBehaviour
         if (string.IsNullOrEmpty(str))
             return;
         int value = int.Parse(str);      
-        hero.AttackPower = value;
+        hero.attackPower = value;
     }
 
     void SetHp(string str)

@@ -125,7 +125,7 @@ public class HeroCtrlMgr : MonoBehaviour
         string str = "능력치\n\n";
 
         str += "체력 : " + HeroCtrl.maxHp; 
-        str += "\n공격력 : " + HeroCtrl.AttackPower;
+        str += "\n공격력 : " + HeroCtrl.attackPower;
         if (HeroCtrl.AddAttPw > 0)
             str += " + " + HeroCtrl.AddAttPw + "(추가 공격력)";
         str += "\n방어력 : " + HeroCtrl.def;

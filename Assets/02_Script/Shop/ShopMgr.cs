@@ -97,7 +97,7 @@ public class ShopMgr : MonoBehaviour
         switch (item.AbilityType)
         {
             case AbilityType.AttackPw:
-                GameMgr.Inst.hero.AttackPower += item.value;
+                GameMgr.Inst.hero.attackPower += item.value;
                 break;
             case AbilityType.Def:
                 GameMgr.Inst.hero.def += item.value;

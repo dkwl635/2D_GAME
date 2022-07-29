@@ -22,18 +22,18 @@ public class HeroCtrl : MonoBehaviour
     [Header("Attack")]
     public GameObject attackPoint;
     public Vector2 attackBox = new Vector2(3, 3);
-    public int AttackPower = 10;
-    public int skillPower = 1;
+
 
     [Header("PlayerAbility")]
     [SerializeField] int hp = 100;
     public int maxHp = 100;
+    public int attackPower = 10;
     public int def = 0;
-    public int Lv = 1;
-    public int curExp = 0;
-    public int maxExp = 10;
+    public int skillPower = 1;
+    [SerializeField] int Lv = 1;
+    [SerializeField] int curExp = 0;
+    [SerializeField] int maxExp = 10;
     [SerializeField] float skillCool = 100.0f;
-
 
     [Header("Inven")]
     [SerializeField] int coin = 0;
@@ -179,7 +179,7 @@ public class HeroCtrl : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapBoxAll(attackPoint.transform.position, attackBox, 0 , monsterLayer);
         
         for (int i = 0; i < hits.Length; i++)            //데미지 주기 
-            hits[i].SendMessage("TakeDamage", AttackPower);
+            hits[i].SendMessage("TakeDamage", attackPower + AddAttPw);
         
     }
 
@@ -190,10 +190,10 @@ public class HeroCtrl : MonoBehaviour
 
     public void TakeDamage(int value)
     {
-        if (value - def <= 0)
+        if (value - (def + AddDef) <= 0)
             return;
         
-       Hp = Hp - (value - def);
+       Hp = Hp - (value - (def + AddDef));
           
     }
 

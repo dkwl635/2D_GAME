@@ -49,6 +49,7 @@ public class GameMgr : MonoBehaviour
     float x;
     float y;
 
+    public EquipmentItem startWeapon;
     public bool Test = false;
 
   
@@ -74,7 +75,8 @@ public class GameMgr : MonoBehaviour
 
     public void GameStart()
     {
-        LobbyPanel.SetActive(false);     
+        LobbyPanel.SetActive(false);
+        hero.SetEqItem(startWeapon);
         RoundStart();
     }
 
@@ -84,7 +86,7 @@ public class GameMgr : MonoBehaviour
         StageMonsterInfoShow();
         StartCoroutine(MonsterSpawner());
         InGameUIs.SetActive(true);
-        nextBtn.gameObject.SetActive(true);
+        nextBtn.gameObject.SetActive(false);
         ShopMgr.Inst.Shop = false;
         
     }
@@ -230,7 +232,7 @@ public class GameMgr : MonoBehaviour
                 break;
             case AbilityType.AttackPw:
                 {
-                    hero.AttackPower += value;
+                    hero.attackPower += value;
                 }
                 break;
             case AbilityType.Def:
