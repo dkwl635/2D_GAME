@@ -32,7 +32,7 @@ public class Skill : MonoBehaviour , ICardLvUp
     }
 
     public float skillCool;
-    public float SkillCool { get { return skillCool * hero.SkillCool; } }
+    public float SkillCool { get { return skillCool * (hero.SkillCool *0.01f); } }
     
     
 
@@ -71,6 +71,11 @@ public class Skill : MonoBehaviour , ICardLvUp
     public virtual IEnumerator SkillStart_Co()
     {
         yield return null;
+    }
+
+    public virtual void StopSkill()
+    {
+       
     }
 
     public virtual void SkillLvUp()
@@ -139,8 +144,5 @@ public class Skill : MonoBehaviour , ICardLvUp
             getSkill = true;
             this.gameObject.SetActive(true);         
         }
-
-       
-
     }
 }

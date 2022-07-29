@@ -18,8 +18,9 @@ public class LevelUpPanel : MonoBehaviour
     public Ability[] abilities;
     List<ICardLvUp> skillCardList = new List<ICardLvUp>();
     List<ICardLvUp> abilityCardList = new List<ICardLvUp>();
+    List<ICardLvUp> skillLvUpAbleList = new List<ICardLvUp>();
 
-    [Header("LvUpCard")]
+  [Header("LvUpCard")]
     public LvUpCard[] lvUpCard;
    
 
@@ -79,33 +80,32 @@ public class LevelUpPanel : MonoBehaviour
 
     void CheckLevelPossible()
     {
-        for (int i = 0; i < skillCardList.Count;)
+        skillLvUpAbleList.Clear();
+        for (int i = 0; i < skillCardList.Count; i++)
         {
-            if (skillCardList[i].LevelPossible() == false) //레벨업이 가능한지 체크 후 제거
-                skillCardList.RemoveAt(i);
-            else
-                i++;
+            if (skillCardList[i].LevelPossible() == true) //레벨업이 가능한지 체크 후
+                skillLvUpAbleList.Add(skillCardList[i]);      
         }
     }
 
     void SetLvUpCard()
     {
-        int count = 3;
+        int idx = 0;
         List<int> random = new List<int>();
     
-        if(skillCardList.Count < 3)
+        if(skillLvUpAbleList.Count < 3)
         {
-            for (int i = 0; i < skillCardList.Count; i++)
+            for (int i = 0; i < skillLvUpAbleList.Count; i++)
             {
-                lvUpCard[i].SetCard(skillCardList[i]);
-                count--;
+                lvUpCard[i].SetCard(skillLvUpAbleList[i]);
+                idx++;
             }
         }
         else
         {
-            while (random.Count < 2)
+            while (random.Count <= 2)
             {
-                int a = Random.Range(0, skillCardList.Count);
+                int a = Random.Range(0, skillLvUpAbleList.Count);
                 if (random.Contains(a))
                     continue;
                 else
@@ -114,27 +114,26 @@ public class LevelUpPanel : MonoBehaviour
 
             for (int i = 0; i < random.Count; i++)
             {
-                lvUpCard[i].SetCard(skillCardList[random[i]]);
-                count--;
+                lvUpCard[i].SetCard(skillLvUpAbleList[random[i]]);
+                idx--;
             }
         }
 
+
         random.Clear();
-        while (random.Count < count)
+        while (random.Count < 4 - idx)
         {
             int a = Random.Range(0, abilityCardList.Count);
             if (random.Contains(a))
                 continue;
             else
                 random.Add(a);
-
         }
 
-        int num = 3 - random.Count;
+        
         for (int i = 0; i < random.Count; i++)
         {
-            lvUpCard[num + i].SetCard(abilityCardList[random[i]]);
-            count--;
+            lvUpCard[idx + i].SetCard(abilityCardList[random[i]]);
         }
 
     }

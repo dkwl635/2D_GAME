@@ -20,14 +20,21 @@ public class GameMgr : MonoBehaviour
     public MonsterData[] monsterDatas;
 
     [Header("UI")]
-    public TextMeshProUGUI monsterKillCountTxt;
-    public GameObject startTxtObj;
+    public GameObject LobbyPanel;
+    public GameObject InGameUIs;
     public GameObject lvUpPanel;
-    public Button eqInfoBoxBtn;
+    public GameObject startTxtObj;
     public GameObject eqInfoBox;
+    public Button gameStartBtn;
+    public Button eqInfoBoxBtn;
+    public Button nextBtn;
+
+    public TextMeshProUGUI monsterKillCountTxt; 
     public TextMeshProUGUI eqInfoTxt;
+ 
 
     [Header("StageData")]
+    public TextMeshProUGUI stageLvTxt;
     public StageData[] stageDatas;
     public GameObject stageInfo;
     public int stageLevel;
@@ -60,19 +67,51 @@ public class GameMgr : MonoBehaviour
         if (Test) //테스트용 방지
             return;
 
-        StageStart();
-        StartCoroutine(MonsterSpawner());
-     
+        gameStartBtn.onClick.AddListener(GameStart);
         eqInfoBoxBtn.onClick.AddListener(OffEqItemInfoBox);
+        nextBtn.onClick.AddListener(RoundStart);
     }
 
-    
+    public void GameStart()
+    {
+        LobbyPanel.SetActive(false);     
+        RoundStart();
+    }
 
-    void StageStart()
+    public void RoundStart()
+    {
+        
+        StageMonsterInfoShow();
+        StartCoroutine(MonsterSpawner());
+        InGameUIs.SetActive(true);
+        nextBtn.gameObject.SetActive(true);
+        ShopMgr.Inst.Shop = false;
+        
+    }
+
+    public void RoundEnd()
+    {
+        //스킬 전체 종료
+        for (int i = 0; i < skills.Length; i++)
+        {
+            if (skills[i].getSkill)
+                skills[i].SkillRefresh();
+        }
+        //상점 등장
+        ShopMgr.Inst.Shop = true;
+
+        stageLevel++;
+        stageLvTxt.text = "1-" + (stageLevel + 1);
+
+        nextBtn.gameObject.SetActive(true);
+    }
+
+    void StageMonsterInfoShow()
     {
         Time.timeScale = 0.0f;
         stageInfo.SetActive(true);
     }
+
     public void StageGameStart()
     {
         Time.timeScale = 1.0f;
@@ -83,7 +122,6 @@ public class GameMgr : MonoBehaviour
             if (skills[i].getSkill)
                 skills[i].SkillStart();
         }
-
     }
 
 
@@ -92,6 +130,7 @@ public class GameMgr : MonoBehaviour
         WaitForSeconds spanwTime = new WaitForSeconds(2.0f);
         maxMonsterCount = stageDatas[stageLevel].monsterCount;
         monsterKillCountTxt.text = "0 / " + maxMonsterCount;
+        monsterkillCount = 0;
 
         int monsterSpawnCount = 0;
         while (maxMonsterCount > monsterSpawnCount)
@@ -145,8 +184,13 @@ public class GameMgr : MonoBehaviour
     public void MonsterKill()
     {
         monsterkillCount++;
-        monsterKillCountTxt.text = monsterkillCount +" / " + maxMonsterCount;
+        monsterKillCountTxt.text = monsterkillCount + " / " + maxMonsterCount;
+
+        if (monsterkillCount == maxMonsterCount)
+            RoundEnd();
+
     }
+
 
     public void SpawnExpBall(Vector2 spawnPos, int expValue)
     {
@@ -249,10 +293,12 @@ public class GameMgr : MonoBehaviour
 
     }
 
-
     public void OffEqItemInfoBox()
     {
         eqInfoBox.SetActive(false);
     }
 
+  
+
 }
+

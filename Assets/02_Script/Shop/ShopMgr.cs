@@ -34,11 +34,15 @@ public class ShopMgr : MonoBehaviour
 
     EquipmentItem waitItem;
 
+
+    public bool Shop
+    {
+        set { shopObj.SetActive(value); }
+    }
+
     private void Awake()
     {
         Inst = this;
-
-        
     }
 
     private void Start()
@@ -48,12 +52,13 @@ public class ShopMgr : MonoBehaviour
         noBtn.onClick.AddListener(No_Btn);
     }
 
+   
 
     public void ShopOpen()
     {
         if (shopCanvas.activeSelf)
             return;
-        Debug.Log("ShopOpen");
+      
 
         yesOrNoBox.gameObject.SetActive(false);
         shopCanvas.gameObject.SetActive(true);
@@ -88,7 +93,7 @@ public class ShopMgr : MonoBehaviour
     public void BuyPortion(PortionItem item)
     {
         GameMgr.Inst.hero.Coin -= item.price;
-
+        BuyEvent();
         switch (item.AbilityType)
         {
             case AbilityType.AttackPw:
@@ -114,7 +119,7 @@ public class ShopMgr : MonoBehaviour
     public void Ok_Btn()
     {
         GameMgr.Inst.hero.Coin -= waitItem.price;
-
+        BuyEvent();
         GameMgr.Inst.hero.SetEqItem(waitItem);
         waitItem = null;
 

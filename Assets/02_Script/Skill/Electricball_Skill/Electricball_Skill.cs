@@ -9,8 +9,7 @@ public class Electricball_Skill : Skill
 
     public override void Skill_Init()
     {
-
-            electricball.OnTriggerMonster += TakeMonsterDamage;
+      electricball.OnTriggerMonster += TakeMonsterDamage;
     }
 
     private void Update()

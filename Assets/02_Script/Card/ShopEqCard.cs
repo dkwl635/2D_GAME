@@ -88,8 +88,7 @@ public class ShopEqCard : Card,IPointerClickHandler
   
    public void BuyItem()
     {       
-        ShopMgr.Inst.BuyEqItem(buyItme);
-        ShopMgr.Inst.BuyEvent();
+        ShopMgr.Inst.BuyEqItem(buyItme);      
     }
 
     public void OnPointerClick(PointerEventData eventData)

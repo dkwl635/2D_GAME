@@ -38,10 +38,8 @@ public class ShopPortionCard : Card
     }
 
     public void BuyItem()
-    {
-       
-        ShopMgr.Inst.BuyPortion(buyItme);
-        ShopMgr.Inst.BuyEvent();
+    {  
+        ShopMgr.Inst.BuyPortion(buyItme); 
     }
 
 }

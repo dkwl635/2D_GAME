@@ -18,6 +18,7 @@ public class Spark_Skill : Skill
 
     public override IEnumerator SkillStart_Co()
     {
+        Debug.Log("aa");
         for (int i = 0; i < count[skill_Lv]; i++)
         {
             Vector2 dir =  Random.insideUnitCircle;

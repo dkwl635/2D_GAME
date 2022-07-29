@@ -91,7 +91,7 @@ public class HeroCtrl : MonoBehaviour
 
     public float SkillCool
     {
-        get { return skillCool * 0.01f; }
+        get { return skillCool; }
         set { skillCool = value; }
     }
 

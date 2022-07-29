@@ -31,7 +31,7 @@ public class HeroCtrlMgr : MonoBehaviour
 
     private void Start()
     {
-        JoyStick = GameObject.FindObjectOfType<JoyStick>(); //JoyStick 가져오기
+        JoyStick = GameObject.FindObjectOfType<JoyStick>(true); //JoyStick 가져오기
         HeroCtrl = GetComponent<HeroCtrl>(); //HeroCtrl 가져오기
 
         JoyStick.heroCtrl = HeroCtrl;
@@ -132,7 +132,7 @@ public class HeroCtrlMgr : MonoBehaviour
         if (HeroCtrl.AddDef > 0)
             str += " + " + HeroCtrl.AddDef + "(추가 방어력)";
         str += "\n\n추가 스킬 데미지 : " + HeroCtrl.skillPower;
-        str += "\n스킬 쿨타임 : " + HeroCtrl.SkillCool * 100 + "%";
+        str += "\n스킬 쿨타임 : " + HeroCtrl.SkillCool + "%";
 
         infoTxt.text = str;
     }

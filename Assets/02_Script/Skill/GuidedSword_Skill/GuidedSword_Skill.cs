@@ -78,8 +78,8 @@ public class GuidedSword_Skill : Skill
             }
 
         sword_Qu.Clear();
-        StopAllCoroutines();
 
+        StopAllCoroutines();
     }
 
     void DequObj(GuidedSword_Collider sword)

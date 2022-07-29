@@ -14,11 +14,7 @@ public class ExpBall : MonoBehaviour
 
     int exp = 0;    //적용 경험치
 
-    void Start()
-    {
-        originPos = transform.position; //현재 위치 적용
-    }
-
+    
     private void Update()
     {
         if (start)
@@ -39,8 +35,10 @@ public class ExpBall : MonoBehaviour
     public void SetExpBall(Vector2 pos, HeroCtrl hero, int exp)
     {
         transform.position = pos;
+        originPos = pos;
         this.exp = exp;
         this.hero = hero;
+        timer = 0.0f;
         gameObject.SetActive(true);
     }
 
@@ -58,6 +56,7 @@ public class ExpBall : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             randPos = (Vector2)transform.position + Random.insideUnitCircle * 5; //좌표 만들기
+            
             start = true;
         }
 
