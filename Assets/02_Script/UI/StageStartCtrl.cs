@@ -27,8 +27,8 @@ public class StageStartCtrl : MonoBehaviour
     {
         monsterCardPanel.gameObject.SetActive(true);
         skillCardPanel.gameObject.SetActive(false);
-        stageData = GameMgr.Inst.stageDatas[stageLevel];
         stageLevel = GameMgr.Inst.stageLevel;
+        stageData = GameMgr.Inst.stageDatas[stageLevel];
         skills = GameMgr.Inst.skills;
 
         nextBtn.gameObject.SetActive(true);
@@ -48,6 +48,12 @@ public class StageStartCtrl : MonoBehaviour
 
         for (int i = 0; i < Skillcards.Length; i++)
         {
+            if(skills[i].skill_MaxLv == skills[i].skill_Lv)
+            {
+                Skillcards[i].gameObject.SetActive(false);
+                continue;
+            }
+
             Skillcards[i].SetCard(skills[i].GetCard());
             Skillcards[i].skill = skills[i];
             Skillcards[i].gameObject.SetActive(true);

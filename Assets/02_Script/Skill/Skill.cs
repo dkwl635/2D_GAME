@@ -128,7 +128,6 @@ public class Skill : MonoBehaviour , ICardLvUp
 
     public bool LevelPossible()
     {
-     
         if (!getSkill || skill_Lv == skill_MaxLv)
             return false;
         else
