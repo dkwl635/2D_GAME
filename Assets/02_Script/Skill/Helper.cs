@@ -23,3 +23,10 @@ namespace CardHelp
     }
 }
 
+namespace MonsterHelper
+{
+    public interface ITakeDamage
+    {
+        public void TakeDamage(int value);
+    }
+}

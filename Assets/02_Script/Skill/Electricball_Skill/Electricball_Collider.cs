@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MonsterHelper;
 
 public class Electricball_Collider : SkillDamageCollider
 {
@@ -17,7 +18,7 @@ public class Electricball_Collider : SkillDamageCollider
     {
         if (collision.CompareTag("Monster"))
         {
-            OnTriggerMonster?.Invoke(collision.GetComponent<Monster>());
+            OnTriggerMonster?.Invoke(collision.GetComponent<ITakeDamage>());
         }
     }
 

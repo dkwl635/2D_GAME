@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using MonsterHelper;
 using UnityEngine;
-using UnityEngine.Events;
+
 
 public class SkillDamageCollider : MonoBehaviour
 {   
-    public delegate void Event(Monster monster);
+    public delegate void Event(ITakeDamage monster);
     public Event OnTriggerMonster;
 
    protected Collider2D collider2D;

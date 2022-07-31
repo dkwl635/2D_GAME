@@ -54,7 +54,7 @@ public class GuidedSword_Skill : Skill
                 if (targetObj != null)
                 {
                     GuidedSword_Collider sword = sword_Qu.Dequeue();
-                    sword.SetTarget(targetObj.GetComponent<Monster>());
+                    sword.SetTarget(targetObj);
                 }             
             }
         }

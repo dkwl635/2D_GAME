@@ -1,3 +1,4 @@
+using MonsterHelper;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,7 +45,7 @@ public class Spark_Collider : SkillDamageCollider
     {
         if (collision.CompareTag("Monster"))
         {
-            OnTriggerMonster?.Invoke(collision.GetComponent<Monster>());
+            OnTriggerMonster?.Invoke(collision.GetComponent<ITakeDamage>());
             collider2D.enabled = false;
             animator.SetTrigger("Hit");
             speed = 0.0f;

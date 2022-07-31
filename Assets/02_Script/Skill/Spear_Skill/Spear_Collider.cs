@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using MonsterHelper;
 using UnityEngine;
 
 public class Spear_Collider : SkillDamageCollider
@@ -8,7 +7,7 @@ public class Spear_Collider : SkillDamageCollider
     {
         if (collision.CompareTag("Monster"))
         {
-            OnTriggerMonster?.Invoke(collision.GetComponent<Monster>());
+            OnTriggerMonster?.Invoke(collision.GetComponent<ITakeDamage>());
         }
     }
 }

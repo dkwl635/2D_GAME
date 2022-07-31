@@ -719,18 +719,29 @@ MonoBehaviour:
   DamageTxtEffect: {fileID: 156512507}
   monsters_P: {fileID: 1859995952}
   playerHitEffect_P: {fileID: 1571959408}
-  expBallObj: {fileID: 7805726934647013900, guid: 4b7f1532ac8532d45a2edf1bce675aac, type: 3}
+  coin_P: {fileID: 0}
+  expBall_P: {fileID: 0}
   monsterDatas:
   - {fileID: 11400000, guid: c30d3963859aafe4caaa1ada79c37ca7, type: 2}
   - {fileID: 11400000, guid: cab942e652121b14b871d7be03fb9fd7, type: 2}
   - {fileID: 11400000, guid: a903a992c3d171b4881f974784111225, type: 2}
   - {fileID: 11400000, guid: ae6d2e7541240eb44b2b073a34f84476, type: 2}
-  monsterKillCountTxt: {fileID: 769323953}
-  startTxtObj: {fileID: 2033105019}
+  LobbyPanel: {fileID: 0}
+  InGameUIs: {fileID: 0}
   lvUpPanel: {fileID: 1780076960}
+  startTxtObj: {fileID: 2033105019}
+  eqInfoBox: {fileID: 0}
+  gameStartBtn: {fileID: 0}
+  eqInfoBoxBtn: {fileID: 0}
+  nextBtn: {fileID: 0}
+  monsterKillCountTxt: {fileID: 769323953}
+  eqInfoTxt: {fileID: 0}
+  stageLvTxt: {fileID: 0}
   stageDatas: []
   stageInfo: {fileID: 0}
   stageLevel: 0
+  skills: []
+  startWeapon: {fileID: 0}
   Test: 1
 --- !u!1 &340093198
 GameObject:
@@ -2953,17 +2964,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 725484839}
   m_CullTransparentMesh: 1
---- !u!114 &735971990 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2451178353718200031, guid: 86e2e2b68545d7b4d915cecdc6a76307, type: 3}
-  m_PrefabInstance: {fileID: 1363518844}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9139e630e7014de4ea69a706ba827448, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &763619720
 GameObject:
   m_ObjectHideFlags: 0
@@ -6865,17 +6865,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 1
   m_VerticalFit: 1
---- !u!114 &1530929654 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2451178353718200031, guid: 86e2e2b68545d7b4d915cecdc6a76307, type: 3}
-  m_PrefabInstance: {fileID: 138538258}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9139e630e7014de4ea69a706ba827448, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1555508664
 GameObject:
   m_ObjectHideFlags: 0
@@ -7503,13 +7492,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lable: {fileID: 340093200}
   lableAnimation: {fileID: 340093202}
-  skill: {fileID: 0}
-  skillGroup: {fileID: 1510551236}
-  skillLvUpBtnObj: {fileID: 2451178353718200018, guid: 86e2e2b68545d7b4d915cecdc6a76307, type: 3}
-  skillLvUpBtns:
-  - {fileID: 1530929654}
-  - {fileID: 735971990}
-  - {fileID: 1943478818}
+  lvUpObjs: []
+  abilities: []
+  lvUpCard: []
 --- !u!1 &1826795030
 GameObject:
   m_ObjectHideFlags: 0
@@ -7708,7 +7693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f12e3674cb6055d408a0c1f8c2644e93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  classObj: {fileID: 4515040684210333955, guid: 1596767e348bfbd4284497931505db5e, type: 3}
+  classObj: {fileID: 4515040684210333955, guid: ea89a939298081c46a8100ef6ced2266, type: 3}
 --- !u!1 &1867684495
 GameObject:
   m_ObjectHideFlags: 0
@@ -7963,17 +7948,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1926043297}
   m_CullTransparentMesh: 1
---- !u!114 &1943478818 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2451178353718200031, guid: 86e2e2b68545d7b4d915cecdc6a76307, type: 3}
-  m_PrefabInstance: {fileID: 492252885}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9139e630e7014de4ea69a706ba827448, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2020062623
 GameObject:
   m_ObjectHideFlags: 0
@@ -38144,18 +38118,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5ec47c84fba5114a89db7c29c7d57ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heroModelTr: {fileID: 0}
   heroModel: {fileID: 1091229042187279705}
   speed: 2
   attackPoint: {fileID: 2020062623}
-  AttackPower: 5
-  skillPower: 1
+  attackBox: {x: 3, y: 3}
   hp: 1000
   maxHp: 1000
+  attackPower: 10
   def: 0
+  skillPower: 1
   Lv: 1
   curExp: 0
   maxExp: 10
   skillCool: 1
+  coin: 0
   monsterLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -38176,6 +38153,12 @@ MonoBehaviour:
   hpTxt: {fileID: 584137328}
   lvGage: {fileID: 858049291}
   lvTxt: {fileID: 725484841}
+  infoBtn: {fileID: 0}
+  infoBox: {fileID: 0}
+  coin: {fileID: 0}
+  infoTxt: {fileID: 0}
+  EqUI: []
+  EqUISprite: []
 --- !u!50 &95180258029996913
 Rigidbody2D:
   serializedVersion: 4

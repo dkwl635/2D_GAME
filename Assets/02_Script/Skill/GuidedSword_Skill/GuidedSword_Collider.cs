@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MonsterHelper;
 
 public class GuidedSword_Collider : SkillDamageCollider
 {
@@ -11,7 +12,7 @@ public class GuidedSword_Collider : SkillDamageCollider
     public SpriteRenderer img;
     bool move = false;
 
-    public Monster target;
+    public GameObject target;
     public float speed = 10.0f;
     Transform originPos;
     Vector2 dir = Vector2.zero;
@@ -22,7 +23,7 @@ public class GuidedSword_Collider : SkillDamageCollider
     {
         if(move)
         {
-            if (target && target.hp > 0)
+            if (target && target.activeSelf)
             {
                 dir = (target.transform.position - transform.position).normalized;     
             }
@@ -57,9 +58,9 @@ public class GuidedSword_Collider : SkillDamageCollider
        
     }
 
-    public void SetTarget(Monster monster)
+    public void SetTarget(GameObject target)
     {
-        target = monster;
+        this.target = target;
         move = true;
         lifeTime = 3.0f;
         collider2D.enabled = true;
@@ -80,7 +81,7 @@ public class GuidedSword_Collider : SkillDamageCollider
     {
         if (collision.CompareTag("Monster"))
         {
-            OnTriggerMonster?.Invoke(collision.GetComponent<Monster>());          
+            OnTriggerMonster?.Invoke(collision.GetComponent<ITakeDamage>());          
             target = null;
             gameObject.SetActive(false);
         }

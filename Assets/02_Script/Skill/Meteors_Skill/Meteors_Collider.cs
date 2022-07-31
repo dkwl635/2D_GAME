@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MonsterHelper;
 
 public class Meteors_Collider : SkillDamageCollider
 {
@@ -33,7 +34,7 @@ public class Meteors_Collider : SkillDamageCollider
     {
         if (collision.CompareTag("Monster"))
         {       
-            OnTriggerMonster?.Invoke(collision.GetComponent<Monster>());
+            OnTriggerMonster?.Invoke(collision.GetComponent<ITakeDamage>());
         }
     }
 }

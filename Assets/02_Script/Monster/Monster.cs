@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MonsterHelper;
 
-
-public class Monster : MonoBehaviour
+public class Monster : MonoBehaviour , ITakeDamage
 {
     HeroCtrl targetHero;
     Transform targetTr; //타겟 : 플레이어 
@@ -33,6 +33,7 @@ public class Monster : MonoBehaviour
     Vector3 targetToThis = Vector3.zero; //타겟과의 거리를 구하기 위해
     Vector3 dir = Vector3.zero; // 방향
 
+    //몬스터별 애니메이터 변경하기 위한
     public RuntimeAnimatorController runtimeAnimatorController;
 
     public bool Test = false;

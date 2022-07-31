@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using CardHelp;
-
+using MonsterHelper;
 
 public class Skill : MonoBehaviour , ICardLvUp
 {
@@ -63,9 +63,9 @@ public class Skill : MonoBehaviour , ICardLvUp
         return skillPw[skill_Lv] + hero.skillPower;
     }
 
-    public void TakeMonsterDamage(Monster monster)
+    public void TakeMonsterDamage(ITakeDamage damage)
     {
-        monster.TakeDamage(SkillDamage());
+        damage.TakeDamage(SkillDamage());
     }
 
     public virtual IEnumerator SkillStart_Co()
