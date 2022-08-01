@@ -33,12 +33,11 @@ public class Skill : MonoBehaviour , ICardLvUp
 
     public float skillCool;
     public float SkillCool { get { return skillCool * (hero.SkillCool *0.01f); } }
-    
-    
-
+   
     public Sprite skillSprite;
 
-   
+    public Coroutine skill_Co;
+
     private void Awake()
     {
         hero = FindObjectOfType<HeroCtrl>();  
@@ -55,7 +54,13 @@ public class Skill : MonoBehaviour , ICardLvUp
   
     public void SkillStart()
     {
-        StartCoroutine(SkillStart_Co());
+        if(skill_Co != null)
+        {
+           StopCoroutine(skill_Co);
+            skill_Co = null;
+        }
+           
+       skill_Co =  StartCoroutine(SkillStart_Co());
     }
 
     public int SkillDamage()

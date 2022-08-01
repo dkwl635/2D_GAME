@@ -39,6 +39,7 @@ public class ExpBall : MonoBehaviour
         this.exp = exp;
         this.hero = hero;
         timer = 0.0f;
+        start = false;
         gameObject.SetActive(true);
     }
 

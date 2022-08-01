@@ -16,4 +16,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8379bcd4f1db10b4fb3e1aaf81558217, type: 2}
   - {fileID: 11400000, guid: ea5ad377efc5e7540abc0088e6d3723c, type: 2}
   - {fileID: 11400000, guid: a08a4f8a19ec7424fad24fe6a3f5d473, type: 2}
-  monsterCount: 20
+  monsterCount: 35

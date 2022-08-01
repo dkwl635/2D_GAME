@@ -38,10 +38,15 @@ public class GameMgr : MonoBehaviour
     public StageData[] stageDatas;
     public GameObject stageInfo;
     public int stageLevel;
+    public int round;
 
     [Header("Skill")]
     public Skill[] skills;
-    
+
+    [Header("BossMon")]
+    public GameObject[] bossMonster;
+    public GameObject bossSpawntxt;
+
     //MonsterSpawn
     //°è»ê¿ë
     int monsterkillCount;
@@ -81,8 +86,7 @@ public class GameMgr : MonoBehaviour
     }
 
     public void RoundStart()
-    {
-        
+    {     
         StageMonsterInfoShow();
         StartCoroutine(MonsterSpawner());
         InGameUIs.SetActive(true);
@@ -134,6 +138,13 @@ public class GameMgr : MonoBehaviour
         monsterKillCountTxt.text = "0 / " + maxMonsterCount;
         monsterkillCount = 0;
 
+        if(stageLevel == 0)
+        {
+            StartCoroutine(BossSpanw());
+        }
+
+        //test
+        maxMonsterCount = 1;
         int monsterSpawnCount = 0;
         while (maxMonsterCount > monsterSpawnCount)
         {
@@ -300,6 +311,30 @@ public class GameMgr : MonoBehaviour
         eqInfoBox.SetActive(false);
     }
 
+    IEnumerator BossSpanw()
+    {
+        Vector2 vector2 = bossSpawntxt.transform.position;
+        bossSpawntxt.SetActive(true);
+
+        bool spawn = true;
+
+        float time = 0.0f;
+        while (time < 10.0f)
+        {
+            time += Time.deltaTime;
+            bossSpawntxt.transform.position += Vector3.right;
+
+            if(spawn && time >= 1.5f)
+            {
+                spawn = false;
+                GameObject boss = Instantiate(bossMonster[round], RandomSpanw(), Quaternion.identity);
+            }
+
+            yield return null;
+        }
+        bossSpawntxt.transform.position = vector2;
+        bossSpawntxt.gameObject.SetActive(false);
+    }
   
 
 }

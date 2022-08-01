@@ -31,7 +31,7 @@ public class Meteors_Skill : Skill
 
         yield return new WaitForSeconds(SkillCool);
 
-        StartCoroutine(SkillStart_Co());
+        SkillStart();
     }
 
     public override void SkillRefresh()

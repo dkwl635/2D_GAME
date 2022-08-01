@@ -40,8 +40,8 @@ public class Spear_Skill : Skill
         CurSkillObj.SetActive(false);
 
         yield return new WaitForSeconds(SkillCool);
-        Debug.Log("SkillCool");
-        StartCoroutine(SkillStart_Co());
+
+        SkillStart();
      
     }
 
@@ -56,14 +56,7 @@ public class Spear_Skill : Skill
     }
 
 
-    private Vector3 AngleToDirection(float angle)
-    {
-        Vector3 direction = hero.transform.position;
-        var quaternion = Quaternion.Euler(0, 0, angle);
-        Vector3 newDirection = quaternion * direction;
 
-        return newDirection;
-    }
 
 
 

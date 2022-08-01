@@ -192,8 +192,10 @@ public class HeroCtrl : MonoBehaviour
     {
         if (value - (def + AddDef) <= 0)
             return;
-        
-       Hp = Hp - (value - (def + AddDef));
+
+        GameMgr.Inst.playerHitEffect_P.GetObj().SetEffect(transform.position, HitType.nomarl);
+
+        Hp = Hp - (value - (def + AddDef));
           
     }
 

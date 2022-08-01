@@ -95,8 +95,7 @@ public class Monster : MonoBehaviour , ITakeDamage
 
         spriteRenderer.sortingOrder = -1 * (int)transform.position.y;
 
-      
-
+  
 
     }
 
@@ -235,7 +234,7 @@ public class Monster : MonoBehaviour , ITakeDamage
         {
             //hit.SendMessage("TakeDamage", attackPower);      
             targetHero.TakeDamage(attackPower);            
-            GameMgr.Inst.playerHitEffect_P.GetObj().SetEffect(hit.transform.position , HitType.nomarl);
+           
         }
 
        
