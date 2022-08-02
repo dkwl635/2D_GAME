@@ -23,22 +23,25 @@ public class GameMgr : MonoBehaviour
     public GameObject LobbyPanel;
     public GameObject InGameUIs;
     public GameObject lvUpPanel;
+    public GameObject GameOverPanel;
     public GameObject startTxtObj;
     public GameObject eqInfoBox;
     public Button gameStartBtn;
     public Button eqInfoBoxBtn;
     public Button nextBtn;
+    public Button resetScoreBtn;
 
     public TextMeshProUGUI monsterKillCountTxt; 
     public TextMeshProUGUI eqInfoTxt;
+    public TextMeshProUGUI bestScoreTxt;
  
 
     [Header("StageData")]
     public TextMeshProUGUI stageLvTxt;
     public StageData[] stageDatas;
     public GameObject stageInfo;
-    public int stageLevel;
-    public int round;
+    public int stage;
+    public static int BestStage;
 
     [Header("Skill")]
     public Skill[] skills;
@@ -55,27 +58,36 @@ public class GameMgr : MonoBehaviour
     float y;
 
     public EquipmentItem startWeapon;
-    public bool Test = false;
 
-  
+    public bool bossSpawn = false;
 
     private void Awake()
     {
         Inst = this;
-
     }
 
     private void Start()
     {
-        heroTr = hero.transform;
-        hero.LevelUP_Event += OnLevelUpPanel;   
-
-        if (Test) //테스트용 방지
-            return;
+        
+        BestStage = PlayerPrefs.GetInt("BestStage", 0);
+       
+        if (BestStage == 0)
+        {
+            bestScoreTxt.text = "-";
+            resetScoreBtn.gameObject.SetActive(false);
+        }
+        else
+        {
+            stageLvTxt.text = (BestStage / 4 + 1) + "-" + (BestStage % 4 + 1);
+        }    
 
         gameStartBtn.onClick.AddListener(GameStart);
         eqInfoBoxBtn.onClick.AddListener(OffEqItemInfoBox);
         nextBtn.onClick.AddListener(RoundStart);
+        resetScoreBtn.onClick.AddListener(ResetScore);
+
+        heroTr = hero.transform;
+        hero.LevelUP_Event += OnLevelUpPanel;
     }
 
     public void GameStart()
@@ -106,8 +118,8 @@ public class GameMgr : MonoBehaviour
         //상점 등장
         ShopMgr.Inst.Shop = true;
 
-        stageLevel++;
-        stageLvTxt.text = "1-" + (stageLevel + 1);
+        stage++;
+        stageLvTxt.text = (stage/4 + 1) + "-" + (stage % 4 + 1);
 
         nextBtn.gameObject.SetActive(true);
     }
@@ -133,24 +145,23 @@ public class GameMgr : MonoBehaviour
 
     IEnumerator MonsterSpawner()
     {
-        WaitForSeconds spanwTime = new WaitForSeconds(2.0f);
-        maxMonsterCount = stageDatas[stageLevel].monsterCount;
+        maxMonsterCount = stageDatas[stage].monsterCount;
         monsterKillCountTxt.text = "0 / " + maxMonsterCount;
         monsterkillCount = 0;
 
-        if(stageLevel == 0)
-        {
-            StartCoroutine(BossSpanw());
-        }
+        yield return new WaitForSeconds(2.0f);   
 
-        //test
-        maxMonsterCount = 1;
+        if(stage == 3)
+            StartCoroutine(BossSpanw());
+        
         int monsterSpawnCount = 0;
+
+        WaitForSeconds spanwTime = new WaitForSeconds(1.5f);
         while (maxMonsterCount > monsterSpawnCount)
         {
             yield return spanwTime;
             Monster newMonster = monsters_P.GetObj();
-            newMonster.SetStatus(stageDatas[stageLevel].monsterDatas[Random.Range(0, stageDatas[stageLevel].monsterDatas.Length)]);
+            newMonster.SetStatus(stageDatas[stage].monsterDatas[Random.Range(0, stageDatas[stage].monsterDatas.Length)]);
             newMonster.transform.position = RandomSpanw();
 
             monsterSpawnCount++;
@@ -199,15 +210,23 @@ public class GameMgr : MonoBehaviour
         monsterkillCount++;
         monsterKillCountTxt.text = monsterkillCount + " / " + maxMonsterCount;
 
-        if (monsterkillCount == maxMonsterCount)
+        if (monsterkillCount == maxMonsterCount && !bossSpawn)
             RoundEnd();
 
     }
 
+    public void BossKill()
+    {
+        GameMgr.Inst.bossSpawn = false;
+
+        if (monsterkillCount == maxMonsterCount && !bossSpawn)
+            RoundEnd();
+    }
 
     public void SpawnExpBall(Vector2 spawnPos, int expValue)
     {
-        expBall_P.GetObj().SetExpBall(spawnPos, hero, expValue);
+        spawnPos = spawnPos + Random.insideUnitCircle;
+            expBall_P.GetObj().SetExpBall(spawnPos, hero, expValue);
     }
 
     public void SpawnCoin(Vector2 spawnPos)
@@ -224,11 +243,7 @@ public class GameMgr : MonoBehaviour
 
     void OnLevelUpPanel()
     {
-        if (Test)
-            return;
-
         lvUpPanel.gameObject.SetActive(true);
-
     }
 
     public void AddAblilty(AbilityType abilityType , int value)
@@ -324,10 +339,11 @@ public class GameMgr : MonoBehaviour
             time += Time.deltaTime;
             bossSpawntxt.transform.position += Vector3.right;
 
-            if(spawn && time >= 1.5f)
+            if(spawn && time >= 2.5f)
             {
                 spawn = false;
-                GameObject boss = Instantiate(bossMonster[round], RandomSpanw(), Quaternion.identity);
+                bossSpawn = true;
+                GameObject boss = Instantiate(bossMonster[stage/4], RandomSpanw(), Quaternion.identity);
             }
 
             yield return null;
@@ -335,7 +351,26 @@ public class GameMgr : MonoBehaviour
         bossSpawntxt.transform.position = vector2;
         bossSpawntxt.gameObject.SetActive(false);
     }
-  
+
+    public void GameOver()
+    {
+        for (int i = 0; i < skills.Length; i++)
+        {
+            if (skills[i].getSkill)
+                skills[i].SkillRefresh();
+        }
+
+        GameOverPanel.SetActive(true);
+    }
+
+
+    private void ResetScore()
+    {
+        PlayerPrefs.DeleteAll();
+
+        bestScoreTxt.text = "-";
+        resetScoreBtn.gameObject.SetActive(false);
+    }
 
 }
 

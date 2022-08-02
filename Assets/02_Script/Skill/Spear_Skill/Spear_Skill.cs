@@ -47,8 +47,6 @@ public class Spear_Skill : Skill
 
     public override void SkillRefresh()
     {
-        Debug.Log("Refresh");
-
         for (int i = 0; i < Lv_Group.Length; i++)
             Lv_Group[i].SetActive(false);
       

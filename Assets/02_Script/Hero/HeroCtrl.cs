@@ -193,9 +193,19 @@ public class HeroCtrl : MonoBehaviour
         if (value - (def + AddDef) <= 0)
             return;
 
+        if (hp <= 0)
+            return;
+
+
         GameMgr.Inst.playerHitEffect_P.GetObj().SetEffect(transform.position, HitType.nomarl);
 
         Hp = Hp - (value - (def + AddDef));
+        if(Hp <= 0)
+        {
+            rigidbody.isKinematic = true;
+            GameMgr.Inst.GameOver();
+        }
+
           
     }
 

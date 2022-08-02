@@ -46,7 +46,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4134531443851467574
 Transform:
   m_ObjectHideFlags: 0
@@ -270,18 +270,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collider: {fileID: 0}
-  speed: 4
+  speed: 3
   hp: 10
   attackPower: 10
-  attakcDis: 70
+  attakcDis: 30
   damageTxtPos: {fileID: 4134531444148665977}
   heroLayer:
     serializedVersion: 2
     m_Bits: 64
   monster_State: 0
   atkCirclePoint: {fileID: 4134531442797449689}
-  atkCircleSize: 3.6
-  jumpDis: 0
+  atkCircleSize: 3.7
+  jumpDis: 200
   shawdow: {fileID: 4134531443851467577}
 --- !u!1 &4134531444148665976
 GameObject:

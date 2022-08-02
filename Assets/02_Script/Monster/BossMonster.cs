@@ -126,12 +126,19 @@ public class BossMonster : MonoBehaviour, ITakeDamage
 
   protected   IEnumerator Die_Co()
     {
-
+        GameMgr.Inst.BossKill();
         //경험치볼 생성
-        GameMgr.Inst.SpawnExpBall(transform.position, 2);
+        for (int i = 0; i < 5; i++)
+        {
+            GameMgr.Inst.SpawnExpBall(transform.position, 2);
+        }
         //코인 생성
-        if (Random.Range(0, 3) == 0)
-            GameMgr.Inst.SpawnCoin(transform.position);
+        for (int i = 0; i < 10; i++)
+        {
+            if (Random.Range(0, 3) == 0)
+                GameMgr.Inst.SpawnCoin(transform.position);
+        }
+     
 
         //넉백 타겟과의 반대 방향으로
         rigidbody.velocity = Vector2.zero;

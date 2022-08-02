@@ -11,8 +11,8 @@ public class SlimeBoss : BossMonster
     public GameObject shawdow;
     protected void FixedUpdate()
     {
-       // if (monster_State == Monster_State.Move || monster_State == Monster_State.Attack1)
-       //     rigidbody.MovePosition(transform.position + targetToThis.normalized * speed * Time.fixedDeltaTime);
+        if (monster_State == Monster_State.Move || monster_State == Monster_State.Attack1)
+            rigidbody.MovePosition(transform.position + targetToThis.normalized * speed * Time.fixedDeltaTime);
     }
 
     void Update()
@@ -25,12 +25,12 @@ public class SlimeBoss : BossMonster
         if (monster_State == Monster_State.Die || monster_State == Monster_State.Attack1 || monster_State == Monster_State.Attack2)
             return;
         //길이에 따른 상태 변환
-        
+
         if (dis <= attakcDis)
             MonsterState_Update(Monster_State.Attack1);
-        else if (dis > jumpDis)
+        else if (attakcDis + 100.0f  < dis &&dis < jumpDis)
             MonsterState_Update(Monster_State.Attack2);
-        else if(dis > jumpDis)
+        else 
             MonsterState_Update(Monster_State.Move);
 
         Flip_Update();//이미지 좌우변환

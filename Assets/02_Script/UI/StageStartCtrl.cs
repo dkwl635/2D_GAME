@@ -25,9 +25,10 @@ public class StageStartCtrl : MonoBehaviour
 
     private void OnEnable()
     {
+   
         monsterCardPanel.gameObject.SetActive(true);
         skillCardPanel.gameObject.SetActive(false);
-        stageLevel = GameMgr.Inst.stageLevel;
+        stageLevel = GameMgr.Inst.stage;
         stageData = GameMgr.Inst.stageDatas[stageLevel];
         skills = GameMgr.Inst.skills;
 
@@ -40,7 +41,8 @@ public class StageStartCtrl : MonoBehaviour
         }
     }
 
-   
+    
+
     void NextBtn()
     {
         monsterCardPanel.gameObject.SetActive(false);
