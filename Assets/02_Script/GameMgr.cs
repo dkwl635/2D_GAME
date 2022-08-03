@@ -60,6 +60,8 @@ public class GameMgr : MonoBehaviour
     public EquipmentItem startWeapon;
 
     public bool bossSpawn = false;
+    public bool gameClear = false;
+
 
     private void Awake()
     {
@@ -67,8 +69,7 @@ public class GameMgr : MonoBehaviour
     }
 
     private void Start()
-    {
-        
+    {      
         BestStage = PlayerPrefs.GetInt("BestStage", 0);
        
         if (BestStage == 0)
@@ -78,7 +79,7 @@ public class GameMgr : MonoBehaviour
         }
         else
         {
-            stageLvTxt.text = (BestStage / 4 + 1) + "-" + (BestStage % 4 + 1);
+            stageLvTxt.text = (BestStage / 5 + 1) + "-" + (BestStage % 5 + 1);
         }    
 
         gameStartBtn.onClick.AddListener(GameStart);
@@ -119,7 +120,13 @@ public class GameMgr : MonoBehaviour
         ShopMgr.Inst.Shop = true;
 
         stage++;
-        stageLvTxt.text = (stage/4 + 1) + "-" + (stage % 4 + 1);
+        if (stage == 5)//현재 지금 5스테이지이기때문에
+        {
+            gameClear = true;
+            GameOver();
+        }
+
+        stageLvTxt.text = (stage/5 + 1) + "-" + (stage % 5 + 1);
 
         nextBtn.gameObject.SetActive(true);
     }
@@ -149,11 +156,11 @@ public class GameMgr : MonoBehaviour
         monsterKillCountTxt.text = "0 / " + maxMonsterCount;
         monsterkillCount = 0;
 
-        yield return new WaitForSeconds(2.0f);   
+        yield return new WaitForSeconds(2.0f);
 
-        if(stage == 3)
+        if (stage == 4)
             StartCoroutine(BossSpanw());
-        
+
         int monsterSpawnCount = 0;
 
         WaitForSeconds spanwTime = new WaitForSeconds(1.5f);
@@ -165,6 +172,8 @@ public class GameMgr : MonoBehaviour
             newMonster.transform.position = RandomSpanw();
 
             monsterSpawnCount++;
+
+              
         }
     }
 
@@ -232,7 +241,6 @@ public class GameMgr : MonoBehaviour
     public void SpawnCoin(Vector2 spawnPos)
     {
         spawnPos = spawnPos + Random.insideUnitCircle * 2;
-
         coin_P.GetObj().SetCoin(spawnPos);
     }
 
@@ -328,6 +336,12 @@ public class GameMgr : MonoBehaviour
 
     IEnumerator BossSpanw()
     {
+        while(maxMonsterCount/2 > monsterkillCount)
+        {
+            yield return null;
+        }
+
+
         Vector2 vector2 = bossSpawntxt.transform.position;
         bossSpawntxt.SetActive(true);
 
@@ -343,7 +357,7 @@ public class GameMgr : MonoBehaviour
             {
                 spawn = false;
                 bossSpawn = true;
-                GameObject boss = Instantiate(bossMonster[stage/4], RandomSpanw(), Quaternion.identity);
+                GameObject boss = Instantiate(bossMonster[stage/5], RandomSpanw(), Quaternion.identity);
             }
 
             yield return null;

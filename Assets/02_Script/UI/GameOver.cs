@@ -9,21 +9,27 @@ public class GameOver : MonoBehaviour
 {
     public Button reStartBtn;
 
+    public TextMeshProUGUI lable;
     public TextMeshProUGUI bestScoreTxt;
     public TextMeshProUGUI currScoreTxt;
 
+    
     public GameObject newTxtObject;
 
     private void Start()
     {
-        if(GameMgr.BestStage < GameMgr.Inst.stage)
+        if (GameMgr.Inst.gameClear)
+            lable.text = "GameClear!!";
+
+        if (GameMgr.BestStage < GameMgr.Inst.stage)
         {
             GameMgr.BestStage = GameMgr.Inst.stage;
             PlayerPrefs.SetInt("BestStage", GameMgr.Inst.stage);
+            newTxtObject.SetActive(true);
         }
 
-        bestScoreTxt.text = (GameMgr.BestStage / 4 + 1) + " - " + (GameMgr.BestStage % 4 + 1);
-        currScoreTxt.text = (GameMgr.Inst.stage /4  +1) + " - " + (GameMgr.Inst.stage % 4 + 1);
+        bestScoreTxt.text = (GameMgr.BestStage / 5 + 1) + " - " + (GameMgr.BestStage % 5 + 1);
+        currScoreTxt.text = (GameMgr.Inst.stage /5  +1) + " - " + (GameMgr.Inst.stage % 5 + 1);
 
         reStartBtn.onClick.AddListener(ReStartGame);
 

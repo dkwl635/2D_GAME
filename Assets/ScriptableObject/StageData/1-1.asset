@@ -15,4 +15,5 @@ MonoBehaviour:
   monsterDatas:
   - {fileID: 11400000, guid: b3384bc1ff3ec964e9cd7ab3e66a877b, type: 2}
   - {fileID: 11400000, guid: a08a4f8a19ec7424fad24fe6a3f5d473, type: 2}
-  monsterCount: 5
+  - {fileID: 11400000, guid: 62eec3ee2c7892547977007e1c27efbd, type: 2}
+  monsterCount: 10

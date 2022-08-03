@@ -196,12 +196,12 @@ public class Monster : MonoBehaviour , ITakeDamage
         //경험치볼 생성
         GameMgr.Inst.SpawnExpBall(transform.position, 2);
         //코인 생성
-        if(Random.Range(0, 3) == 0)
+        if(Random.Range(0, 2) == 0)
             GameMgr.Inst.SpawnCoin(transform.position);
 
         //넉백 타겟과의 반대 방향으로
         rigidbody.velocity = Vector2.zero;
-        rigidbody.AddForce(targetToThis.normalized * -1 * 3000.0f);
+        rigidbody.AddForce(targetToThis.normalized * -1 * 300.0f);
 
         float a = 1;
         Color color = Color.white;
@@ -233,10 +233,8 @@ public class Monster : MonoBehaviour , ITakeDamage
         if(hit && hit.CompareTag("Player"))
         {
             //hit.SendMessage("TakeDamage", attackPower);      
-            targetHero.TakeDamage(attackPower);            
-           
+            targetHero.TakeDamage(attackPower);                   
         }
-
        
     }
 

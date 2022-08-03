@@ -135,8 +135,6 @@ public class HeroCtrl : MonoBehaviour
     public void SetJoyStickMv(Vector3 dir, bool sprint = false)
     {
         mvDir = dir; //이동 방향 적용
-      
-
         //애니메이터 적용
         if (mvDir.Equals(Vector3.zero)) animator.SetBool("move", false);
         else animator.SetBool("move", true);
@@ -153,6 +151,9 @@ public class HeroCtrl : MonoBehaviour
             speed = 2.0f;
         }
 
+
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+            return;
         //이미지 좌우 변경
         if (mvDir.x < 0)
             heroModelTr.localScale = originScale;

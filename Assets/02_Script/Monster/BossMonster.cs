@@ -14,7 +14,7 @@ public class BossMonster : MonoBehaviour, ITakeDamage
     }
 
 
-    protected HeroCtrl targetHero;
+    [HideInInspector] public HeroCtrl targetHero;
     protected Transform targetTr; //타겟 : 플레이어 
     protected SpriteRenderer spriteRenderer;
     protected Animator animator;
@@ -33,9 +33,11 @@ public class BossMonster : MonoBehaviour, ITakeDamage
 
     protected  Vector3 targetToThis = Vector3.zero; //타겟과의 거리를 구하기 위해
     protected  Vector3 dir = Vector3.zero; // 방향
+    protected float dis;
 
     public Monster_State monster_State;
 
+ 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -44,18 +46,26 @@ public class BossMonster : MonoBehaviour, ITakeDamage
         collider = GetComponent<Collider2D>();
     }
 
-    private void Start()
+    protected virtual  void Start()
     {
-        targetHero = GameObject.FindObjectOfType<HeroCtrl>();
+        targetHero = GameMgr.Inst.hero;
         targetTr = targetHero.transform;
 
     }
 
+    protected virtual void Update()
+    {
+        targetToThis = targetTr.position - transform.position; //타겟과의 거리관계
+        dir = targetToThis.normalized;     //방향값
+        dis = targetToThis.sqrMagnitude;  //거리 길이 변환
 
- 
+        Flip_Update();//이미지 좌우변환
+      
+    }
+
 
     protected virtual void  MonsterState_Update(Monster_State newStatue) //몬스터의 상태 변화에 따른 애니메이터 변환해주기
-    {
+    {       
         if (monster_State.Equals(newStatue)) return; //이전과 같은 상태면 리턴
 
         if (monster_State.Equals(Monster_State.Die)) return; //죽은 상태면
@@ -99,23 +109,21 @@ public class BossMonster : MonoBehaviour, ITakeDamage
 
 
     }
-  protected   void Flip_Update() //이미지 좌우 변환
+  protected void Flip_Update() //이미지 좌우 변환
     {
         if (targetToThis.x < 0)
             spriteRenderer.flipX = true;
         else if (targetToThis.x > 0)
             spriteRenderer.flipX = false;
 
+        //위아래 구분을 위한
+        spriteRenderer.sortingOrder = -1 * (int)transform.position.y;
     }
 
 
 
-   
-
     public virtual void TakeDamage(int value)
-    {
-        //if (hp <= 0)
-        //    return;  
+    {   
         hp -= value;
         //데미지 이펙트
         GameMgr.Inst.DamageTxtEffect.GetObj().SetDamageTxt(value, damageTxtPos.position);

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: 1-3
   m_EditorClassIdentifier: 
   monsterDatas:
-  - {fileID: 11400000, guid: b3384bc1ff3ec964e9cd7ab3e66a877b, type: 2}
-  - {fileID: 11400000, guid: 62eec3ee2c7892547977007e1c27efbd, type: 2}
+  - {fileID: 11400000, guid: d4c695d10c0687248b07c7ccbc99b5fc, type: 2}
+  - {fileID: 11400000, guid: 18127c9d7235ef248bcc9eb4c0bad3a9, type: 2}
   - {fileID: 11400000, guid: a08a4f8a19ec7424fad24fe6a3f5d473, type: 2}
-  monsterCount: 25
+  - {fileID: 11400000, guid: 709a6fdc92388ba4faa77ee0f34c9471, type: 2}
+  monsterCount: 10
