@@ -16,13 +16,21 @@ public class GameOver : MonoBehaviour
     
     public GameObject newTxtObject;
 
+    public AudioSource source;
+    public AudioClip[] audioClips;
     private void Start()
     {
         if (GameMgr.Inst.gameClear)
+        {
             lable.text = "GameClear!!";
+            source.clip = audioClips[0];
+        }
+        source.clip = audioClips[1];
+
 
         if (GameMgr.BestStage < GameMgr.Inst.stage)
         {
+            Debug.Log(GameMgr.Inst.stage);
             GameMgr.BestStage = GameMgr.Inst.stage;
             PlayerPrefs.SetInt("BestStage", GameMgr.Inst.stage);
             newTxtObject.SetActive(true);

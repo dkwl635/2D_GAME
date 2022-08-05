@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using CardHelp;
 using UnityEngine.UI;
 
 public class StageStartCtrl : MonoBehaviour
@@ -10,9 +12,11 @@ public class StageStartCtrl : MonoBehaviour
     public GameObject monsterCardPanel;
     public GameObject skillCardPanel;
 
+    public TextMeshProUGUI monsterCountTxt;
     public Button nextBtn;
 
-    public Card[] monstercards;
+    public Card[] monsterCards;
+    public Card bossCard;
     public SkillCard[] Skillcards;
 
     StageData stageData;
@@ -21,24 +25,40 @@ public class StageStartCtrl : MonoBehaviour
     private void Start()
     {
         nextBtn.onClick.AddListener(NextBtn);
+
+        for (int i = 0; i < Skillcards.Length; i++)
+        {
+            Skillcards[i].SetCard(skills[i].GetCard());
+            Skillcards[i].skill = skills[i];
+            Skillcards[i].gameObject.SetActive(true);
+        }
     }
+
+    
 
     private void OnEnable()
     {
-   
         monsterCardPanel.gameObject.SetActive(true);
         skillCardPanel.gameObject.SetActive(false);
-        stageLevel = GameMgr.Inst.stage;
-        stageData = GameMgr.Inst.stageDatas[stageLevel];
+      
+        stageData = GameMgr.Inst.StageData;
         skills = GameMgr.Inst.skills;
 
         nextBtn.gameObject.SetActive(true);
 
         for (int i = 0; i < stageData.monsterDatas.Length; i++)
         {
-            monstercards[i].SetCard(stageData.monsterDatas[i].GetCard());
-            monstercards[i].gameObject.SetActive(true);
+            monsterCards[i].SetCard(stageData.monsterDatas[i].GetCard());
+            monsterCards[i].gameObject.SetActive(true);
         }
+
+        if (GameMgr.Inst.StageData.bossMonsterPrefab)
+        {
+            bossCard.SetCard(GameMgr.Inst.StageData.bossMonsterPrefab.GetComponent<SetCard>().GetCard());
+            bossCard.gameObject.SetActive(true);
+        }
+
+        monsterCountTxt.text = stageData.monsterCount + "¸¶¸®";
     }
 
     
@@ -48,20 +68,16 @@ public class StageStartCtrl : MonoBehaviour
         monsterCardPanel.gameObject.SetActive(false);
         skillCardPanel.gameObject.SetActive(true);
 
+        
         for (int i = 0; i < Skillcards.Length; i++)
         {
-            if(skills[i].skill_MaxLv == skills[i].skill_Lv)
+            if (skills[i].skill_MaxLv == skills[i].skill_Lv)
             {
                 Skillcards[i].gameObject.SetActive(false);
                 continue;
             }
-
-            Skillcards[i].SetCard(skills[i].GetCard());
-            Skillcards[i].skill = skills[i];
-            Skillcards[i].gameObject.SetActive(true);
         }
-
-        nextBtn.gameObject.SetActive(false);
+            nextBtn.gameObject.SetActive(false);
     }
 
 

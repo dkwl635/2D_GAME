@@ -9,6 +9,9 @@ public class GameMgr : MonoBehaviour
     static public GameMgr Inst;
     public HeroCtrl hero;
     Transform heroTr;
+    AudioSource audioSource;
+    public AudioClip[] audioClips;
+    Dictionary<string, AudioClip> Dic_AudioClip = new Dictionary<string, AudioClip>();
 
     [Header("ObjPool")]
     public DamageTxtEffect DamageTxtEffect;
@@ -37,11 +40,16 @@ public class GameMgr : MonoBehaviour
  
 
     [Header("StageData")]
+    [SerializeField] private StageData[] stageDatas;
     public TextMeshProUGUI stageLvTxt;
-    public StageData[] stageDatas;
     public GameObject stageInfo;
     public int stage;
     public static int BestStage;
+
+    public StageData StageData
+    {
+        get { return stageDatas[stage]; }
+    }
 
     [Header("Skill")]
     public Skill[] skills;
@@ -66,6 +74,8 @@ public class GameMgr : MonoBehaviour
     private void Awake()
     {
         Inst = this;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -77,10 +87,13 @@ public class GameMgr : MonoBehaviour
             bestScoreTxt.text = "-";
             resetScoreBtn.gameObject.SetActive(false);
         }
-        else
-        {
-            stageLvTxt.text = (BestStage / 5 + 1) + "-" + (BestStage % 5 + 1);
-        }    
+        else   
+            bestScoreTxt.text = (BestStage / 5 + 1) + "-" + (BestStage % 5 + 1);
+
+        for (int i = 0; i < audioClips.Length; i++)   
+            Dic_AudioClip.Add(audioClips[i].name, audioClips[i]);
+        
+
 
         gameStartBtn.onClick.AddListener(GameStart);
         eqInfoBoxBtn.onClick.AddListener(OffEqItemInfoBox);
@@ -122,6 +135,7 @@ public class GameMgr : MonoBehaviour
         stage++;
         if (stage == 5)//현재 지금 5스테이지이기때문에
         {
+            stage = 4; //1-5 가 최대 스테이지
             gameClear = true;
             GameOver();
         }
@@ -152,7 +166,7 @@ public class GameMgr : MonoBehaviour
 
     IEnumerator MonsterSpawner()
     {
-        maxMonsterCount = stageDatas[stage].monsterCount;
+        maxMonsterCount = StageData.monsterCount;
         monsterKillCountTxt.text = "0 / " + maxMonsterCount;
         monsterkillCount = 0;
 
@@ -168,7 +182,7 @@ public class GameMgr : MonoBehaviour
         {
             yield return spanwTime;
             Monster newMonster = monsters_P.GetObj();
-            newMonster.SetStatus(stageDatas[stage].monsterDatas[Random.Range(0, stageDatas[stage].monsterDatas.Length)]);
+            newMonster.SetStatus(StageData.monsterDatas[Random.Range(0, StageData.monsterDatas.Length)]);
             newMonster.transform.position = RandomSpanw();
 
             monsterSpawnCount++;
@@ -246,6 +260,7 @@ public class GameMgr : MonoBehaviour
 
     public void GetCoin(int coin)
     {
+        SoundEffectPlay("GetCoin");
         hero.Coin += coin;
     }
 
@@ -294,14 +309,14 @@ public class GameMgr : MonoBehaviour
         eqInfoBox.SetActive(true);
         eqInfoTxt.text = "";
         string str = "";
-        str += hero.equipmentItems[type].itemName;
+        str += hero.EquipmentItems[type].itemName;
         if (type == EquipmentType.Weapon_L || type == EquipmentType.Weapon_R)
         {
-            str += "\n공격력 + " + hero.equipmentItems[type].value;
+            str += "\n공격력 + " + hero.EquipmentItems[type].value;
         }
         else if (type == EquipmentType.Shield || type == EquipmentType.Armor || type == EquipmentType.Plant)
         {
-            str += "\n방어력 + " + hero.equipmentItems[type].value;
+            str += "\n방어력 + " + hero.EquipmentItems[type].value;
         }
 
         eqInfoTxt.text = str;
@@ -384,6 +399,12 @@ public class GameMgr : MonoBehaviour
 
         bestScoreTxt.text = "-";
         resetScoreBtn.gameObject.SetActive(false);
+    }
+
+    public void SoundEffectPlay(string name)
+    {
+        if (Dic_AudioClip.ContainsKey(name))
+            audioSource.PlayOneShot(Dic_AudioClip[name]);
     }
 
 }

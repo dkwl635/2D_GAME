@@ -26,6 +26,7 @@ public class ExpBall : MonoBehaviour
             if(timer >= 1.0f)   //이동 완료
             {
                 hero.GetExp(exp);//경험치 
+                GameMgr.Inst.SoundEffectPlay("GetExp");
                 gameObject.SetActive(false);
                 GameMgr.Inst.expBall_P.ReturnObj(this);
             }

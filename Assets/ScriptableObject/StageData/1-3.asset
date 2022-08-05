@@ -17,4 +17,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 18127c9d7235ef248bcc9eb4c0bad3a9, type: 2}
   - {fileID: 11400000, guid: a08a4f8a19ec7424fad24fe6a3f5d473, type: 2}
   - {fileID: 11400000, guid: 709a6fdc92388ba4faa77ee0f34c9471, type: 2}
-  monsterCount: 10
+  monsterCount: 1
+  bossMonsterPrefab: {fileID: 0}

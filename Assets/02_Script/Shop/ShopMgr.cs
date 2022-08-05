@@ -92,6 +92,7 @@ public class ShopMgr : MonoBehaviour
    
     public void BuyPortion(PortionItem item)
     {
+        GameMgr.Inst.SoundEffectPlay("UesCoin");
         GameMgr.Inst.hero.Coin -= item.price;
         BuyEvent();
         switch (item.AbilityType)
@@ -111,13 +112,14 @@ public class ShopMgr : MonoBehaviour
     }
 
     public void BuyEqItem(EquipmentItem item)
-    {     
+    {
         waitItem = item;
         yesOrNoBox.gameObject.SetActive(true);
     }
 
     public void Ok_Btn()
     {
+        GameMgr.Inst.SoundEffectPlay("UesCoin");
         GameMgr.Inst.hero.Coin -= waitItem.price;
         BuyEvent();
         GameMgr.Inst.hero.SetEqItem(waitItem);

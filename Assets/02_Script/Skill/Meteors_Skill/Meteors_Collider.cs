@@ -5,6 +5,8 @@ using MonsterHelper;
 
 public class Meteors_Collider : SkillDamageCollider
 {
+   public AudioSource audioSource;
+
     Vector2 dir = new Vector2(1.0f, -1.0f).normalized;
 
     bool move = false;
@@ -22,6 +24,7 @@ public class Meteors_Collider : SkillDamageCollider
 
     public void Meteors_Evenet()
     {
+        audioSource.Play();
         collider2D.enabled = true;
         move = false;
     }

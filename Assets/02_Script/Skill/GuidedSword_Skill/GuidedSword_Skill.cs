@@ -55,6 +55,7 @@ public class GuidedSword_Skill : Skill
                 {
                     GuidedSword_Collider sword = sword_Qu.Dequeue();
                     sword.SetTarget(targetObj);
+                    audioSource.Play();
                 }             
             }
         }

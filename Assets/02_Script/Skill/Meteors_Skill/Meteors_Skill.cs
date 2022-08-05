@@ -21,6 +21,8 @@ public class Meteors_Skill : Skill
 
     public override IEnumerator SkillStart_Co()
     {
+        audioSource.Play();
+
         for (int i = 0; i < meteors[skill_Lv]; i++)
         {
             Vector2 startPos = (Vector2)hero.transform.position + Random.insideUnitCircle * 10;

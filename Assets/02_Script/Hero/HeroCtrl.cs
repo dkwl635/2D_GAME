@@ -5,41 +5,44 @@ using UnityEngine.Rendering;
 
 public class HeroCtrl : MonoBehaviour
 {
-    public Transform heroModelTr;
-    public HeroModel heroModel;
-    Transform tr;
-    Animator animator;
-    Rigidbody2D rigidbody;
-    HeroCtrlMgr HeroCtrlMgr; //UI용
-    SortingGroup sortingGroup;
+    //HeroCtrl 캐릭터의 움직임 및 능력치 관련
+    public Transform heroModelTr; //케릭터으 모델Transform
+    public HeroModel heroModel; //장비 장착을 위한 
 
-    Vector3 mvDir = Vector3.zero;
+    private HeroCtrlMgr HeroCtrlMgr; //캐릭터와 관련된 UI
+    private Animator animator; //애니메이터
+    private Rigidbody2D rigidbody; //이동 물리 
+    private SortingGroup sortingGroup; //캐릳터 이미지의 layerSort를 위하여
+
+    private Vector3 mvDir = Vector3.zero; //방향백터
 
     [Header("Move")]
-    [SerializeField] private float speed = 2;
+    [SerializeField] private float speed = 2; //이동속도
+    
+    //처음 시작시 원래 스케일저장
+    private Vector3 originScale; 
+    [Header("Attack")] //공격관련
+    [SerializeField] private GameObject attackPoint; //공격포인트(위치확인용)
+    [SerializeField] private Vector2 attackBox = new Vector2(3, 3);//공격 범위
 
-    private Vector3 originScale;
-    [Header("Attack")]
-    public GameObject attackPoint;
-    public Vector2 attackBox = new Vector2(3, 3);
 
-
-    [Header("PlayerAbility")]
-    [SerializeField] int hp = 100;
-    public int maxHp = 100;
+    [Header("PlayerAbility")] //능력치
+    [SerializeField] private int hp = 100;
+    public int maxHp = 100;            
     public int attackPower = 10;
     public int def = 0;
     public int skillPower = 1;
-    [SerializeField] int Lv = 1;
-    [SerializeField] int curExp = 0;
-    [SerializeField] int maxExp = 10;
-    [SerializeField] float skillCool = 100.0f;
+    [SerializeField] private int Lv = 1;
+    [SerializeField] private int curExp = 0;
+    [SerializeField] private int maxExp = 10;
+    [SerializeField] private float skillCool = 100.0f;
 
-    [Header("Inven")]
+    [Header("Inven")] //인벤
     [SerializeField] int coin = 0;
-    public Dictionary<EquipmentType, EquipmentItem> equipmentItems = new Dictionary<EquipmentType, EquipmentItem>();
-    
-    public int AddAttPw
+    //부위별 장착된 아이템 저장 딕셔너리 변수
+    Dictionary<EquipmentType, EquipmentItem> equipmentItems = new Dictionary<EquipmentType, EquipmentItem>();
+    public Dictionary<EquipmentType, EquipmentItem> EquipmentItems { get { return equipmentItems; } }
+    public int AddAttPw //장찯된 아이템의 데미지를 합산하여 반환
     {
         get 
         {
@@ -53,7 +56,7 @@ public class HeroCtrl : MonoBehaviour
         }
     }
 
-    public int AddDef
+    public int AddDef //장찯된 아이템의 방어력를 합산하여 반환
     {
         get
         {
@@ -69,7 +72,7 @@ public class HeroCtrl : MonoBehaviour
         }
     }
 
-    public int Coin
+    public int Coin //가지고 있는코인 반환, 코인의 변화가 생기면 관련 UI새로고침
     {
         get { return coin; }
         set
@@ -79,7 +82,7 @@ public class HeroCtrl : MonoBehaviour
         }
     }
 
-    public int Hp
+    public int Hp //체력 리턴, 체력의 변화가 생기면 채력UI 갱신
     {
         get { return hp; }
         set
@@ -95,15 +98,15 @@ public class HeroCtrl : MonoBehaviour
         set { skillCool = value; }
     }
 
-    public LayerMask monsterLayer;
+    public LayerMask monsterLayer; //몬스터 레이어
 
+    //레벨업 시 사용할 이벤트 함수
     public delegate void Event();
-    public Event LevelUP_Event;
+    public event Event LevelUP_Event;
 
 
     private void Awake()
-    {
-        tr = transform;       
+    {  //컴포넌트 등록
         animator = GetComponentInChildren<Animator>();
         HeroCtrlMgr = GetComponent<HeroCtrlMgr>();
         rigidbody = GetComponent<Rigidbody2D>();
@@ -113,32 +116,33 @@ public class HeroCtrl : MonoBehaviour
 
     private void Start()
     {
+        //기본 셋팅
         originScale = heroModelTr.localScale;
-
-        Hp = maxHp;
-        
+        Hp = maxHp;       
     }
 
     private void FixedUpdate()
-    {
+    { //이동 애니메이션일때 이동하기
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
             rigidbody.velocity = mvDir * speed ;
-        else
+        else//이동 애니메이션이 아니면 정지
             rigidbody.velocity = Vector2.zero;
     }
 
     private void Update()
-    {
-        sortingGroup.sortingOrder = -1 * (int)tr.position.y;
+    {   //이미지의 순서를 위치y값을 이용하여 조절
+        sortingGroup.sortingOrder = -1 * (int)transform.position.y;
     }
 
-    public void SetJoyStickMv(Vector3 dir, bool sprint = false)
+    public void SetJoyStickMv(Vector3 dir, bool sprint = false) //조이스틱을 이용한 이동함수
     {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+            return; //만약 공격중이면
+
         mvDir = dir; //이동 방향 적용
         //애니메이터 적용
         if (mvDir.Equals(Vector3.zero)) animator.SetBool("move", false);
         else animator.SetBool("move", true);
-
         //달리기 적용
         if (sprint)
         {
@@ -150,10 +154,7 @@ public class HeroCtrl : MonoBehaviour
             animator.speed = 1.0f;
             speed = 2.0f;
         }
-
-
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-            return;
+              
         //이미지 좌우 변경
         if (mvDir.x < 0)
             heroModelTr.localScale = originScale;
@@ -165,17 +166,18 @@ public class HeroCtrl : MonoBehaviour
         }
     }
 
-    public void Attack()
+    public void Attack() //공격
     {
         //현재 공격중이면 리턴
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-            return;
-
+            return;      
+        //공격 트리거 적용
         animator.SetTrigger("Attack");   
     }
 
     public void Attack_Event()
-    {
+    {//공격 애니메이션에 등록되는 함수
+        GameMgr.Inst.SoundEffectPlay("AtkSound");
         //공격포인터 중심에서 네모 크기 만큼 펼쳐 충동된 콜라이더 가져오기
         Collider2D[] hits = Physics2D.OverlapBoxAll(attackPoint.transform.position, attackBox, 0 , monsterLayer);
         
@@ -184,58 +186,51 @@ public class HeroCtrl : MonoBehaviour
         
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmos() //공격 박스를 보기위해
     {
         Gizmos.DrawWireCube(attackPoint.transform.position, attackBox);
     }
 
     public void TakeDamage(int value)
     {
-        if (value - (def + AddDef) <= 0)
-            return;
-
-        if (hp <= 0)
-            return;
-
-
+        if (hp <= 0) return; //이미 체력이 0이면
+        int resultValue = value - (def + AddDef);//최종 대미지
+        if (resultValue <= 0) return; //받는 데미지가 0이면
+        //피격 이펙트 뿌리기
         GameMgr.Inst.playerHitEffect_P.GetObj().SetEffect(transform.position, HitType.nomarl);
-
+        //데미지 적용
         Hp = Hp - (value - (def + AddDef));
-        if(Hp <= 0)
+        
+       if(Hp <= 0) //사망
         {
             rigidbody.isKinematic = true;
             GameMgr.Inst.GameOver();
-        }
-
-          
+        }      
     }
 
-    public void GetExp(int value)
+    public void GetExp(int value) //경험치+
     {
-        curExp += value;
-
-        if(maxExp <= curExp)
+        curExp += value; //현재 경험치++
+        if(maxExp <= curExp)//레벨업
         {
             curExp = 0;
-            maxExp = (int)(maxExp * 1.5f);
-
+            maxExp = (int)(maxExp * 1.3f);//다음 경험치 목표
             LevelUp();
         }
-
+        //경험치 UI 적용
         HeroCtrlMgr.SetExpImg(Lv, curExp == 0 ? 0 : (float)curExp / (float)maxExp );
-
     }
 
-    void LevelUp()
+    void LevelUp() //레벨업
     {
         Lv ++;
-        LevelUP_Event?.Invoke();
+        LevelUP_Event?.Invoke();//레벨업시 발동되는 함수 호출
     }
 
-    public void SetEqItem(EquipmentItem item)
+    public void SetEqItem(EquipmentItem item) //장비 장착
     {
-        heroModel.SetEqItem(item);
-
+        heroModel.SetEqItem(item); //모델(이미지) 적용
+        //인벤토리에 넣기
         if (equipmentItems.ContainsKey(item.Type))
             equipmentItems[item.Type] = item;
         else

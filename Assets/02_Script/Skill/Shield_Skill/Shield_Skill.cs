@@ -20,6 +20,7 @@ public class Shield_Skill : Skill
              
                 if (temp.magnitude < 5.0f)
                 {
+                    audioSource.Play();
                     Shield.SpawnShield(hero.transform.position, temp.normalized);
                 }
 

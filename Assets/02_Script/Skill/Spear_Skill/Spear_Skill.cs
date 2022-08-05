@@ -28,6 +28,7 @@ public class Spear_Skill : Skill
         float speed = 0.0f;
 
         CurSkillObj.SetActive(true);
+        audioSource.Play();
         while(timer <  5.0f)
         {           
             timer += Time.deltaTime;
@@ -37,6 +38,7 @@ public class Spear_Skill : Skill
 
             yield return null;
         }
+        audioSource.Stop();
         CurSkillObj.SetActive(false);
 
         yield return new WaitForSeconds(SkillCool);

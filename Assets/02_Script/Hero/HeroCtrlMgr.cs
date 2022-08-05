@@ -7,41 +7,37 @@ using TMPro;
 public class HeroCtrlMgr : MonoBehaviour
 {
     //HeroCtrlMgr => UI와 HeroCtrl를 연결하기 위한
-    JoyStick JoyStick;
     HeroCtrl HeroCtrl; //히어로 오브젝트에 관한
 
-
-    [Header("UI")]
-    public Button attackBtn;
+    [Header("Atk_UI")]
+    public Button attackBtn; //공격버튼
     [Header("HP_UI")]
-    public Image hpGage;
-    public TextMeshProUGUI hpTxt;
+    public Image hpGage; //체력바
+    public TextMeshProUGUI hpTxt;//체력 텍스트
     [Header("LV_UI")]
-    public Image lvGage;
-    public TextMeshProUGUI lvTxt;
+    public Image lvGage;//레벨비
+    public TextMeshProUGUI lvTxt;//레벨 텍스트
 
-    [Header("Inven")]
-    public Button infoBtn;
-    public GameObject infoBox;
-    public TextMeshProUGUI coin;
-    public TextMeshProUGUI infoTxt;
-    public GameObject[] EqUI;
-    public Image[] EqUISprite;
+    [Header("Inven_UI")]
+    public Button infoBtn;//정보 창을 여는 버튼
+    public GameObject infoBox;  //정보창 박스
+    public TextMeshProUGUI coin;    //코인갯수 텍스트
+    public TextMeshProUGUI infoTxt; //능력치 표시 텍스트
+    public GameObject[] EqUI;   //인벤에서 장착된 아이템 이미지_go
+    public Image[] EqUISprite;  //이미지 파츠별 
    
 
     private void Start()
     {
-        JoyStick = GameObject.FindObjectOfType<JoyStick>(true); //JoyStick 가져오기
         HeroCtrl = GetComponent<HeroCtrl>(); //HeroCtrl 가져오기
-
-        JoyStick.heroCtrl = HeroCtrl;
+     
 
         attackBtn.onClick.AddListener(AttackBtnFunc);
         infoBtn.onClick.AddListener(OnOffInfo);
     }
 
     void AttackBtnFunc()
-    {
+    {   
         HeroCtrl.Attack();
     }
 
@@ -88,7 +84,7 @@ public class HeroCtrlMgr : MonoBehaviour
             EqUI[i].SetActive(false);
         
 
-        foreach (var eq in HeroCtrl.equipmentItems)
+        foreach (var eq in HeroCtrl.EquipmentItems)
         {
             EquipmentType type = eq.Key;
             EquipmentItem item = eq.Value;

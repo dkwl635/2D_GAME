@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MonsterHelper;
-public class BossMonster : MonoBehaviour, ITakeDamage
+using CardHelp;
+
+public class BossMonster : MonoBehaviour, ITakeDamage ,SetCard
 {
     public enum Monster_State //보스 몬스터 상태
     {
@@ -22,10 +24,12 @@ public class BossMonster : MonoBehaviour, ITakeDamage
     public Collider2D collider;
 
     [Header("MonsterStatus")]
+    public Sprite monsterImg;
     public float speed = 2.0f; //이동 속도
     public int hp = 30;
     public int attackPower = 10;
     public float attakcDis = 4;
+
 
 
     public Transform damageTxtPos;
@@ -165,5 +169,13 @@ public class BossMonster : MonoBehaviour, ITakeDamage
         }
 
         Destroy(this.gameObject);
+    }
+
+    public CardData GetCard()
+    {
+        CardData card;
+        card.img = monsterImg;
+        card.info = "Hp : " + hp + "\nAttack : " + attackPower;
+        return card;
     }
 }

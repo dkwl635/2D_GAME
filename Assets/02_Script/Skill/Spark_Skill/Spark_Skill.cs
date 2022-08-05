@@ -17,12 +17,13 @@ public class Spark_Skill : Skill
     }
 
     public override IEnumerator SkillStart_Co()
-    {   
+    {
+        audioSource.Play();
         for (int i = 0; i < count[skill_Lv]; i++)
         {
             Vector2 dir =  Random.insideUnitCircle;
             sparkObj[i].transform.position = hero.transform.position;
-            sparkObj[i].SetSpark(dir);
+            sparkObj[i].SetSpark(dir.normalized);
             sparkObj[i].gameObject.SetActive(true);            
         }
 

@@ -15,6 +15,9 @@ public class Skill : MonoBehaviour , ICardLvUp
     public string[] skillLvInfo = new string[7];
 
     public int[] skillPw = { 1, 2, 2, 4, 4, 6, 6 };
+
+    public AudioSource audioSource;
+    
     public string SkillInfo
     {
         get { return skillLvInfo[skill_Lv]; }
@@ -40,7 +43,8 @@ public class Skill : MonoBehaviour , ICardLvUp
 
     private void Awake()
     {
-        hero = FindObjectOfType<HeroCtrl>();  
+        hero = FindObjectOfType<HeroCtrl>();
+        audioSource =GetComponent<AudioSource>();
     }
 
     private void Start()

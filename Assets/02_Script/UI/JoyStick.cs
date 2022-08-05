@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class JoyStick : MonoBehaviour ,  IDragHandler, IPointerUpHandler
 {
-    public HeroCtrl heroCtrl;
+    HeroCtrl heroCtrl;
 
     [Header("--- JoyStick ---")]
     public GameObject joySBackObj = null;
@@ -18,7 +18,9 @@ public class JoyStick : MonoBehaviour ,  IDragHandler, IPointerUpHandler
     float jsCacDist = 0.0f;
 
     private void Start()
-    {    
+    {
+        heroCtrl = GameMgr.Inst.hero;
+
         Vector3[] v = new Vector3[4];
         joySBackObj.GetComponent<RectTransform>().GetWorldCorners(v);
         //[0]:좌측하단 [1]:좌측상단 [2]:우측상단 [3]:우측하단
