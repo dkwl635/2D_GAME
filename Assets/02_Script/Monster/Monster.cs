@@ -5,9 +5,9 @@ using MonsterHelper;
 
 public class Monster : MonoBehaviour , ITakeDamage
 {
-    HeroCtrl targetHero;
+    HeroCtrl targetHero; //타겟 클레스
     Transform targetTr; //타겟 : 플레이어 
-    public SpriteRenderer spriteRenderer;
+    SpriteRenderer spriteRenderer;
     Animator animator;
     Rigidbody2D rigidbody;  //HIT 시 넉백을 구현하고자 넣어보았다.
     CircleCollider2D collider;
@@ -34,10 +34,7 @@ public class Monster : MonoBehaviour , ITakeDamage
     Vector3 dir = Vector3.zero; // 방향
 
     //몬스터별 애니메이터 변경하기 위한
-    public RuntimeAnimatorController runtimeAnimatorController;
-
-    public bool Test = false;
-
+    RuntimeAnimatorController runtimeAnimatorController;
 
 
 
@@ -51,35 +48,27 @@ public class Monster : MonoBehaviour , ITakeDamage
     }
 
     private void OnEnable()
-    {
-        if(GameMgr.Inst)
-        {
-            targetHero = GameMgr.Inst.hero;
-            targetTr = GameMgr.Inst.hero.transform;
-        }
-       
+    {//활성화시       
+        targetHero = GameMgr.Inst.hero;
+        targetTr = GameMgr.Inst.hero.transform;
+
         animator.runtimeAnimatorController = runtimeAnimatorController;
         collider.enabled = true;
     }
 
     private void FixedUpdate()
     {
-        if (Test) //테스트용 방지
-            return;
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
+        {//이동 애니메이션일때만 이동가능하게 하기 위해
+            rigidbody.velocity = Vector2.zero; //속도값은 한번 초기화
+            rigidbody.velocity = dir * speed; //이동    
+        }
 
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) //이동 애니메이션일때만 이동가능하게 하기 위해
-            {
-                rigidbody.velocity = Vector2.zero; //속도값은 한번 초기화
-                rigidbody.velocity = dir * speed; //이동    
-            }
-   
     }
 
     private void Update()
     {
-        if (Test) //테스트용 방지
-            return;
-
+        //방향과 거리 계산
         targetToThis = targetTr.position - transform.position; //타겟과의 거리관계
         dir = targetToThis.normalized;     //방향값
 
@@ -91,27 +80,20 @@ public class Monster : MonoBehaviour , ITakeDamage
             MonsterState_Update(Monster_State.Attack);
 
         Flip_Update();//이미지 좌우변환
-
-
-        spriteRenderer.sortingOrder = -1 * (int)transform.position.y;
-
-  
-
     }
 
-    public void SetStatus(MonsterData monsterData)
-    {
-        runtimeAnimatorController = monsterData.monsterAnimator;
-
-        collider.offset = monsterData.offset;
-        collider.radius = monsterData.coliderSize;
-
-        attackSize = monsterData.attackBoxSize;
-        attackPower = monsterData.AttPw;
+    public void SetStatus(MonsterData monsterData) 
+    {//몬스터 데이터를 가지고 셋팅
+        runtimeAnimatorController = monsterData.monsterAnimator; //애니메이터
+        collider.offset = monsterData.offset;   //몸체 콜라이더 
+        collider.radius = monsterData.coliderSize;  //사이즈
+        //공격박스
+        attackSize = monsterData.attackBoxSize; 
+        //능력치
+        attackPower = monsterData.AttPw;   
         this.hp = monsterData.hp;
-
         speed = monsterData.Speed;
-
+    
         monster_State = Monster_State.Idle;     
         gameObject.SetActive(true);
     }
@@ -127,11 +109,10 @@ public class Monster : MonoBehaviour , ITakeDamage
         //속도 초기화
         rigidbody.velocity = Vector2.zero;
 
-        switch (monster_State)
+        switch (monster_State)//상태별 애니메이션 
         {
             case Monster_State.Idle:
                 animator.SetBool("Move", false);
-
                 break;
             case Monster_State.Move:
                 animator.SetBool("Move", true);
@@ -139,8 +120,7 @@ public class Monster : MonoBehaviour , ITakeDamage
             case Monster_State.Attack:
                 {
                     animator.SetBool("Move", false);
-                    animator.SetTrigger("Attack");
-        
+                    animator.SetTrigger("Attack");   
                 }
                 break;
             case Monster_State.Die:
@@ -154,7 +134,6 @@ public class Monster : MonoBehaviour , ITakeDamage
                 break;
         }
 
-
     }
 
     void Flip_Update() //이미지 좌우 변환
@@ -162,8 +141,9 @@ public class Monster : MonoBehaviour , ITakeDamage
         if (targetToThis.x < 0)
             spriteRenderer.flipX = true;
         else if (targetToThis.x > 0)
-            spriteRenderer.flipX = false;        
-
+            spriteRenderer.flipX = false;
+        //이미지 위아래 결정
+        spriteRenderer.sortingOrder = -1 * (int)transform.position.y;
     }
 
   public  void TakeDamage(int value = 10) //데미지를 받는 함수
@@ -236,11 +216,6 @@ public class Monster : MonoBehaviour , ITakeDamage
             targetHero.TakeDamage(attackPower);                   
         }
        
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireCube(transform.position + targetToThis.normalized, attackSize);
     }
 
   

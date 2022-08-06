@@ -203,8 +203,8 @@ public class HeroCtrl : MonoBehaviour
         
        if(Hp <= 0) //사망
         {
-            rigidbody.isKinematic = true;
-            GameMgr.Inst.GameOver();
+            rigidbody.isKinematic = true; //캐릭터 고정시키기
+            GameMgr.Inst.GameOver();    //게임오버
         }      
     }
 
@@ -230,6 +230,7 @@ public class HeroCtrl : MonoBehaviour
     public void SetEqItem(EquipmentItem item) //장비 장착
     {
         heroModel.SetEqItem(item); //모델(이미지) 적용
+        
         //인벤토리에 넣기
         if (equipmentItems.ContainsKey(item.Type))
             equipmentItems[item.Type] = item;

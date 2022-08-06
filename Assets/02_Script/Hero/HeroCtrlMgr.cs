@@ -31,35 +31,34 @@ public class HeroCtrlMgr : MonoBehaviour
     {
         HeroCtrl = GetComponent<HeroCtrl>(); //HeroCtrl 가져오기
      
-
+        //버튼 함수 등록
         attackBtn.onClick.AddListener(AttackBtnFunc);
         infoBtn.onClick.AddListener(OnOffInfo);
     }
 
     void AttackBtnFunc()
-    {   
+    {   //공격 버튼
         HeroCtrl.Attack();
     }
 
-    public void SetHpImg(int hp, float value)
+    public void SetHpImg(int hp, float value) //HP바 갱신
     {
         hpGage.fillAmount = value;
         hpTxt.text = hp.ToString();
-
     }
 
-    public void SetExpImg(int lv, float value)
+    public void SetExpImg(int lv, float value)//EXP바 갱신
     {
         lvGage.fillAmount = value;
         lvTxt.text = "Lv " + lv;
     }
    
-    public void SetCoin(int coin)
+    public void SetCoin(int coin) //CoinTxt 갱신
     {
         this.coin.text = coin.ToString();
     }
 
-    void OnOffInfo()
+    void OnOffInfo() //상태창 On/Off
     {
         if (infoBox.activeSelf)
         {
@@ -70,20 +69,20 @@ public class HeroCtrlMgr : MonoBehaviour
         {
             infoBox.gameObject.SetActive(true);
             GameMgr.Inst.OffEqItemInfoBox();
-            SetInfoTxt();
-            EqUISet();
+            SetInfoTxt(); //능력치 셋팅
+            EqUISet();//장착된 장비 UI로 보여주기
         }
           
 
     
     }
 
-    public void EqUISet()
+    public void EqUISet() //장착된 장비 UI로 보여주기
     {
         for (int i = 0; i < EqUI.Length; i++) 
             EqUI[i].SetActive(false);
         
-
+        // 부위별 셋팅
         foreach (var eq in HeroCtrl.EquipmentItems)
         {
             EquipmentType type = eq.Key;
@@ -116,7 +115,7 @@ public class HeroCtrlMgr : MonoBehaviour
         }
     }
 
-    public void SetInfoTxt()
+    public void SetInfoTxt() //능력치 셋팅
     {
         string str = "능력치\n\n";
 

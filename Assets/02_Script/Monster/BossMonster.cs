@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MonsterHelper;
-using CardHelp;
+using MonsterHelper; //데미지함수
+using CardHelp;         //카드 함수
 
 public class BossMonster : MonoBehaviour, ITakeDamage ,SetCard
 {
@@ -15,31 +15,27 @@ public class BossMonster : MonoBehaviour, ITakeDamage ,SetCard
         Die
     }
 
-
-    [HideInInspector] public HeroCtrl targetHero;
+    protected HeroCtrl targetHero; //히어로 클레스
     protected Transform targetTr; //타겟 : 플레이어 
     protected SpriteRenderer spriteRenderer;
-    protected Animator animator;
+    protected Animator animator;            
     protected Rigidbody2D rigidbody;
-    public Collider2D collider;
+    protected Collider2D collider;
 
     [Header("MonsterStatus")]
-    public Sprite monsterImg;
-    public float speed = 2.0f; //이동 속도
-    public int hp = 30;
-    public int attackPower = 10;
-    public float attakcDis = 4;
+    [SerializeField] protected Sprite monsterImg; //카드에 사용할 몬스터 이미지
+    [SerializeField] protected float speed = 2.0f; //이동 속도
+    [SerializeField] protected int hp = 30;
+    [SerializeField] protected int attackPower = 10;
+    [SerializeField] protected float attakcDis = 4;
 
-
-
-    public Transform damageTxtPos;
-    public LayerMask heroLayer;
+    [SerializeField] protected Transform damageTxtPos;
+    [SerializeField] protected LayerMask heroLayer;
 
     protected  Vector3 targetToThis = Vector3.zero; //타겟과의 거리를 구하기 위해
     protected  Vector3 dir = Vector3.zero; // 방향
-    protected float dis;
-
-    public Monster_State monster_State;
+    protected float dis;                            //거리
+    protected Monster_State monster_State;
 
  
     private void Awake()
@@ -54,7 +50,6 @@ public class BossMonster : MonoBehaviour, ITakeDamage ,SetCard
     {
         targetHero = GameMgr.Inst.hero;
         targetTr = targetHero.transform;
-
     }
 
     protected virtual void Update()
@@ -62,9 +57,7 @@ public class BossMonster : MonoBehaviour, ITakeDamage ,SetCard
         targetToThis = targetTr.position - transform.position; //타겟과의 거리관계
         dir = targetToThis.normalized;     //방향값
         dis = targetToThis.sqrMagnitude;  //거리 길이 변환
-
         Flip_Update();//이미지 좌우변환
-      
     }
 
 
@@ -78,7 +71,7 @@ public class BossMonster : MonoBehaviour, ITakeDamage ,SetCard
         monster_State = newStatue;
         //속도 초기화
         rigidbody.velocity = Vector2.zero;
-
+        //상태별 애니메이션 적용
         switch (monster_State)
         {
             case Monster_State.Idle:
@@ -132,25 +125,21 @@ public class BossMonster : MonoBehaviour, ITakeDamage ,SetCard
         //데미지 이펙트
         GameMgr.Inst.DamageTxtEffect.GetObj().SetDamageTxt(value, damageTxtPos.position);
 
-        if (hp <= 0)
+        if (hp <= 0)//죽음
             MonsterState_Update(Monster_State.Die);
     }
 
   protected   IEnumerator Die_Co()
-    {
+    {//죽었을때
         GameMgr.Inst.BossKill();
-        //경험치볼 생성
+        //경험치볼 생성 (5의 경험치 5개 생성)
         for (int i = 0; i < 5; i++)
-        {
-            GameMgr.Inst.SpawnExpBall(transform.position, 2);
-        }
-        //코인 생성
-        for (int i = 0; i < 10; i++)
-        {
+            GameMgr.Inst.SpawnExpBall(transform.position, 5);
+
+        //코인 생성 시도 .. 15번 3분1 확률
+        for (int i = 0; i < 15; i++)
             if (Random.Range(0, 3) == 0)
-                GameMgr.Inst.SpawnCoin(transform.position);
-        }
-     
+                GameMgr.Inst.SpawnCoin(transform.position);      
 
         //넉백 타겟과의 반대 방향으로
         rigidbody.velocity = Vector2.zero;
@@ -168,10 +157,10 @@ public class BossMonster : MonoBehaviour, ITakeDamage ,SetCard
             spriteRenderer.color = color;
         }
 
-        Destroy(this.gameObject);
+        Destroy(this.gameObject); //오브젝트 파괴
     }
 
-    public CardData GetCard()
+    public CardData GetCard()//카드로 표기할시
     {
         CardData card;
         card.img = monsterImg;

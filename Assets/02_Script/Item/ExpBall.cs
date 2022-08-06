@@ -14,7 +14,8 @@ public class ExpBall : MonoBehaviour
 
     int exp = 0;    //적용 경험치
 
-    
+
+
     private void Update()
     {
         if (start)
@@ -25,21 +26,24 @@ public class ExpBall : MonoBehaviour
                    
             if(timer >= 1.0f)   //이동 완료
             {
-                hero.GetExp(exp);//경험치 
-                GameMgr.Inst.SoundEffectPlay("GetExp");
-                gameObject.SetActive(false);
+                hero.GetExp(exp);//경험치 획득
+                GameMgr.Inst.SoundEffectPlay("GetExp"); //효과음
+                gameObject.SetActive(false);    //오브젝트 비활성화
                 GameMgr.Inst.expBall_P.ReturnObj(this);
+                //오브젝트풀링을 위해 오브젝트풀에 오브젝트 리턴
             }
         }           
     }
 
     public void SetExpBall(Vector2 pos, HeroCtrl hero, int exp)
-    {
-        transform.position = pos;
-        originPos = pos;
-        this.exp = exp;
-        this.hero = hero;
-        timer = 0.0f;
+    {//경험치볼 활성화,위치,목표,
+        transform.position = pos; //스폰위치    
+        originPos = pos;              
+      
+        this.exp = exp;     //경험치 수치
+        this.hero = hero;   //목표
+        //초기화
+        timer = 0.0f;          
         start = false;
         gameObject.SetActive(true);
     }
@@ -57,14 +61,9 @@ public class ExpBall : MonoBehaviour
 
         if (collision.CompareTag("Player"))
         {
-            randPos = (Vector2)transform.position + Random.insideUnitCircle * 5; //좌표 만들기
-            
-            start = true;
+            //좌표 만들기  .. 곡선효과를 주기위해 랜덤값 만들기
+            randPos = (Vector2)transform.position + Random.insideUnitCircle * 5;        
+            start = true; //움직이기 시작
         }
-
-       
     }
-
-  
-
 }
