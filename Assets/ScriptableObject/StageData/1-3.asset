@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: 1-3
   m_EditorClassIdentifier: 
   monsterDatas:
-  - {fileID: 11400000, guid: d4c695d10c0687248b07c7ccbc99b5fc, type: 2}
+  - {fileID: 11400000, guid: e8735d7fdfd6cca45a46775e4bde9132, type: 2}
   - {fileID: 11400000, guid: 18127c9d7235ef248bcc9eb4c0bad3a9, type: 2}
-  - {fileID: 11400000, guid: a08a4f8a19ec7424fad24fe6a3f5d473, type: 2}
-  - {fileID: 11400000, guid: 709a6fdc92388ba4faa77ee0f34c9471, type: 2}
-  monsterCount: 1
+  - {fileID: 11400000, guid: 59b1500567b202346994a859fb9f6f42, type: 2}
+  - {fileID: 11400000, guid: cddf10777af6d2f42bee95b163dab8a1, type: 2}
+  monsterCount: 30
   bossMonsterPrefab: {fileID: 0}

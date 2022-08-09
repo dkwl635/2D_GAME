@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using CardHelp; //카드 관련 필요 인터페이스 사용을 위해
-using System;
 
 public class Card : MonoBehaviour
 {
@@ -16,6 +13,5 @@ public class Card : MonoBehaviour
         image.sprite = card.img;
         info.text = card.info;
     }
-
    
 }

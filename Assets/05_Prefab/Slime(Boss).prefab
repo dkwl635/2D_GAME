@@ -299,20 +299,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c511d937e4a205b4ead7c2285c04f905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetHero: {fileID: 0}
-  collider: {fileID: 0}
   monsterImg: {fileID: 21300000, guid: 7c12037aeb5d5964ab3188f39e587081, type: 3}
   speed: 3
-  hp: 1000
+  hp: 1500
   attackPower: 30
   attakcDis: 30
   damageTxtPos: {fileID: 4134531444148665977}
   heroLayer:
     serializedVersion: 2
     m_Bits: 64
-  monster_State: 0
-  atkCirclePoint: {fileID: 4134531442797449689}
-  atkCircleSize: 3.7
   jumpDis: 200
   shawdow: {fileID: 4134531443851467577}
   atkCollider: {fileID: 752595975254686435}

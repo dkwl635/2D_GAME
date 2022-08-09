@@ -16,5 +16,5 @@ MonoBehaviour:
   img:
   - {fileID: 21300000, guid: cb6eec158de39354499d790e08096483, type: 3}
   itemName: "\uB4C0\uC5BC\uC5D1\uC2A4"
-  value: 30
+  value: 20
   price: 30

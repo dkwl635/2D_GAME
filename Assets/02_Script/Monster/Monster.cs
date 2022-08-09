@@ -154,7 +154,7 @@ public class Monster : MonoBehaviour , ITakeDamage
         hp -= value;
         rigidbody.velocity = Vector2.zero;
         //데미지 이펙트
-        GameMgr.Inst.DamageTxtEffect.GetObj().SetDamageTxt(value, damageTxtPos.position);
+        GameMgr.Inst.DamageTxtEffect_P.GetObj().SetDamageTxt(value, damageTxtPos.position);
 
         //공격중이고 죽을체력이아니면
         if (monster_State.Equals(Monster_State.Attack) && hp > 0)

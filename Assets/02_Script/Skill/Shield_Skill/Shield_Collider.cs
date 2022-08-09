@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Shield_Collider : MonoBehaviour
 {
-    Rigidbody2D rigidbody;
-    public float speed = 0;
+    Rigidbody2D rigidbody; //밀치기 위한 물리 추가
+    public float speed = 0; //속도
 
-    Vector2 dir;
+    Vector2 dir; //밀치는 방향
 
     // Start is called before the first frame update
     private void Awake()
@@ -20,17 +20,15 @@ public class Shield_Collider : MonoBehaviour
         this.dir = dir;
         transform.position = spawnPos;
         gameObject.SetActive(true);
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(dir.x <0)
-         transform.right = -dir;
+        //방향에 따른 오브젝트 방향결정
+        if (dir.x < 0)
+            transform.right = -dir;
         else
             transform.right = dir;
 
         rigidbody.velocity = dir * speed;
-       
     }
+
+
 }

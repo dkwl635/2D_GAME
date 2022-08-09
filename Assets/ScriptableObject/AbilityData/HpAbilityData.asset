@@ -17,4 +17,5 @@ MonoBehaviour:
   Info: "\uCD5C\uB300 \uCCB4\uB825\uC744 \uC62C\uB824\uC900\uB2E4."
   lv: 0
   maxLv: 5
-  addAbility: 320000006400000096000000c80000002c010000
+  addAbility: 50
+  saveLv: 0

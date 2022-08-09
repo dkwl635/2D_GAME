@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8512d2681a1189f44976ce1d09f82584, type: 3}
-  m_Name: Mushroom(Hp10Att15)
+  m_Name: Mushroom(Hp40Att20)
   m_EditorClassIdentifier: 
   monsterImg: {fileID: 4723107735738678597, guid: f8b30c2afe165d645b54d500a9c30862, type: 3}
   monsterAnimator: {fileID: 9100000, guid: 7df99192c9aa0b84a96969850fb21aed, type: 2}
   offset: {x: 0, y: 0}
   coliderSize: 0.5
   attackBoxSize: {x: 1.5, y: 1.5}
-  hp: 10
-  AttPw: 15
+  hp: 40
+  AttPw: 20
   Speed: 2.5

@@ -18,13 +18,11 @@ public class LvUpCard : Card, IPointerClickHandler
             this.gameObject.SetActive(true);
     }
 
-
     public void OnPointerClick(PointerEventData eventData)
     {//카드를 눌렀을때 반응하는
         cardFunc.LevelUp(); //레벨업
         LevelUpPanel.inst.OffPanel(); //레벨업 패널 off
     }
 
-   
-
 }
+

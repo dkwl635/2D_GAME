@@ -16,5 +16,5 @@ MonoBehaviour:
   img:
   - {fileID: 21300000, guid: 464bf6c702fc37040af7867db839e00b, type: 3}
   itemName: "\uAC15\uCCA0\uBC29\uD328"
-  value: 20
-  price: 20
+  value: 7
+  price: 15

@@ -123,7 +123,7 @@ public class BossMonster : MonoBehaviour, ITakeDamage ,SetCard
     {   
         hp -= value;
         //µ•πÃ¡ˆ ¿Ã∆Â∆Æ
-        GameMgr.Inst.DamageTxtEffect.GetObj().SetDamageTxt(value, damageTxtPos.position);
+        GameMgr.Inst.DamageTxtEffect_P.GetObj().SetDamageTxt(value, damageTxtPos.position);
 
         if (hp <= 0)//¡◊¿Ω
             MonsterState_Update(Monster_State.Die);

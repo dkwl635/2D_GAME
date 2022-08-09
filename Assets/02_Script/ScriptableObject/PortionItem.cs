@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "PortionItem", menuName = "Scriptable Object Asset/PortionItem")]
 public class PortionItem : ScriptableObject
-{
+{//포션아이템을 만들기 위한
     public Sprite img;  //물건 이미지
     public  AbilityType AbilityType;    //어떤물약인지
     public string itemName; //아이템 이름
