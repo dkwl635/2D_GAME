@@ -6,7 +6,7 @@ public class ObjectPool_Stack<T> : MonoBehaviour where T : MonoBehaviour
 {
 	private Stack<T> poolList = new Stack<T>(); //硅凯
 	public GameObject classObj; //橇府普
-	[SerializeField]private int maxPoolSize = 10;   //积己肮荐
+	[SerializeField] private int maxPoolSize;   //积己肮荐
 
 	//按眉 积己
    private void Start()
@@ -40,3 +40,5 @@ public class ObjectPool_Stack<T> : MonoBehaviour where T : MonoBehaviour
 		
 	
 }
+
+

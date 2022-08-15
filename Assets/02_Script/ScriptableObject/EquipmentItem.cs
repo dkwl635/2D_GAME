@@ -13,3 +13,5 @@ public class EquipmentItem : ScriptableObject
     public int price; //АЁАн
 
 }
+
+

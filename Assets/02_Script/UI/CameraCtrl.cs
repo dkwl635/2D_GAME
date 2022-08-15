@@ -15,9 +15,7 @@ public class CameraCtrl : MonoBehaviour
     private float xVelocity = 0.0f; 
     private float yVelocity = 0.0f;
     private float smoothTime = 0.2f;
-
     public Tilemap tilemap; //타일맵(크기를 가져올려고)
-
     Vector3 mapSize;
 
     private void Awake()
@@ -30,8 +28,7 @@ public class CameraCtrl : MonoBehaviour
         mapSize.x = tilemap.size.x / 2; //타일맵 사이즈  
         mapSize.y = tilemap.size.y / 2; //시작이 중심(0,0)이기떄문에 나누기2를 했다.
 
-        camWMax = Camera.main.ViewportToWorldPoint(Vector3.one);
-    
+        camWMax = Camera.main.ViewportToWorldPoint(Vector3.one);  
         camSizeX =  camWMax.x - transform.position.x + 1;
         camSizeY = camWMax.y - transform.position.y + 1;
     }

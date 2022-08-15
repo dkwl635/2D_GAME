@@ -15,7 +15,6 @@ public class GuidedSword_Collider : SkillDamageCollider
     public float speed = 10.0f; //날아가는 속도
     Transform originPos;          //돌아와야하는 위치
     Vector2 dir = Vector2.zero; //방향   
-   
     private void Update()
     {
         if (move)
@@ -32,7 +31,6 @@ public class GuidedSword_Collider : SkillDamageCollider
         }
 
     }
-
     private void OnEnable()
     {
         //시작 위치 잡기
@@ -42,7 +40,6 @@ public class GuidedSword_Collider : SkillDamageCollider
         collider2D.enabled = false;
         move = false;
     }
-
     private void OnDisable()
     { //움직이고 있는도중 사라지면
         if (move)
@@ -52,7 +49,6 @@ public class GuidedSword_Collider : SkillDamageCollider
         }
        
     }
-
     public void SetTarget(GameObject target)
     {//타겟 설정시 움직이기 시작
         this.target = target;

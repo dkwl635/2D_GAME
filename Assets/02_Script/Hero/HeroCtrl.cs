@@ -56,7 +56,7 @@ public class HeroCtrl : MonoBehaviour
         }
     }
 
-    public int AddDef //장찯된 아이템의 방어력를 합산하여 반환
+    public int AddDef //장착된 아이템의 방어력를 합산하여 반환
     {
         get
         {
@@ -186,16 +186,12 @@ public class HeroCtrl : MonoBehaviour
         
     }
 
-    private void OnDrawGizmos() //공격 박스를 보기위해
-    {
-        Gizmos.DrawWireCube(attackPoint.transform.position, attackBox);
-    }
 
     public void TakeDamage(int value)
     {
         if (hp <= 0) return; //이미 체력이 0이면
         int resultValue = value - (def + AddDef);//최종 대미지
-        if (resultValue <= 0) return; //받는 데미지가 0이면
+        if (resultValue <= 0) resultValue = 1; //아무리 방어력이 높아도 1은 들어오도록
         //피격 이펙트 뿌리기
         GameMgr.Inst.playerHitEffect_P.GetObj().SetEffect(transform.position, HitType.nomarl);
         //데미지 적용

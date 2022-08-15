@@ -41,9 +41,9 @@ GameObject:
   - component: {fileID: 4515040684210334014}
   - component: {fileID: 4515040684210333953}
   - component: {fileID: 4515040684210333952}
-  - component: {fileID: 4515040684210333958}
   - component: {fileID: 4515040684210333959}
   - component: {fileID: 4258548580144210952}
+  - component: {fileID: 4515040684210333958}
   m_Layer: 7
   m_Name: Monster
   m_TagString: Monster
@@ -136,30 +136,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4515040684210333958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4515040684210333955}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd061b8ad7ef42f4c89f1c170d156665, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 0}
-  monster_State: 0
-  attakcDis: 4
-  speed: 2
-  hp: 30
-  attackPower: 10
-  attackSize: {x: 1.5, y: 1.5}
-  damageTxtPos: {fileID: 2745605466525376418}
-  heroLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  Test: 0
 --- !u!50 &4515040684210333959
 Rigidbody2D:
   serializedVersion: 4
@@ -197,3 +173,25 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &4515040684210333958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4515040684210333955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd061b8ad7ef42f4c89f1c170d156665, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monster_State: 0
+  attakcDis: 4
+  speed: 2
+  hp: 30
+  attackPower: 10
+  attackSize: {x: 1.5, y: 1.5}
+  damageTxtPos: {fileID: 2745605466525376418}
+  heroLayer:
+    serializedVersion: 2
+    m_Bits: 64

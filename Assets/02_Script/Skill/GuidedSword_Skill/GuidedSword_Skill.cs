@@ -16,8 +16,6 @@ public class GuidedSword_Skill : Skill
     //추적 칼을 발사할때 순서를 정하기 위한
     Queue<GuidedSword_Collider> sword_Qu = new Queue<GuidedSword_Collider>();
 
-  
-
     public override void Skill_Init()
     {
        for (int i = 0; i < swordObj.Length; i++) //추적 칼 오브젝트에서 필요한 정보 셋팅
@@ -43,8 +41,7 @@ public class GuidedSword_Skill : Skill
             swordObj[i].SetActive(true);
             sword_Qu.Enqueue(guidedSword_Colliders[i]); //큐에 넣기
         }
-
-       
+     
         while (true)
         {     
             yield return new WaitForSeconds(SkillCool);
@@ -66,6 +63,7 @@ public class GuidedSword_Skill : Skill
     public override void SkillRefresh()
     {
         StopAllCoroutines();
+        skill_Co = null;
 
         //오브젝트 끄기
         for (int i = 0; i < swordObj.Length; i++)
@@ -91,8 +89,10 @@ public class GuidedSword_Skill : Skill
     IEnumerator DequObj_Co(GuidedSword_Collider sword)
     {
         yield return new WaitForSeconds(SkillCool + 0.5f); //잠시 대기하고 넣어줌
+        
         if (skill_Co == null)
             yield break;
+
         sword_Qu.Enqueue(sword);
         sword.transform.gameObject.SetActive(true);
     }

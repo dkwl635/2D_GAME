@@ -65,7 +65,6 @@ public class GameMgr : MonoBehaviour
     float x, y; //위치 계산용
     
 
-
     public StageData StageData //현재 스테이지 정보를 리턴
     {
         get { return stageDatas[stage]; }
@@ -122,6 +121,9 @@ public class GameMgr : MonoBehaviour
 
     public void RoundEnd() //라운드 끝
     {
+        //체력 회복
+        hero.Hp = hero.maxHp;
+
         //스킬 전체 종료
         for (int i = 0; i < skills.Length; i++)
         {
@@ -249,7 +251,7 @@ public class GameMgr : MonoBehaviour
     {//몬스터 처치시 호출 
         //지정된 위치에서 원으로 랜덤한 위치 에 스폰
         spawnPos = spawnPos + Random.insideUnitCircle;
-            expBall_P.GetObj().SetExpBall(spawnPos, hero, expValue);
+        expBall_P.GetObj().SetExpBall(spawnPos, hero, expValue);
     }
 
     public void SpawnCoin(Vector2 spawnPos)

@@ -60,7 +60,8 @@ public class ShopMgr : MonoBehaviour
     {
         if (shopCanvas.activeSelf)
             return;
-     
+
+        RefreshCoin();
         yesOrNoBox.gameObject.SetActive(false);
         shopCanvas.gameObject.SetActive(true);        
     }
@@ -68,13 +69,12 @@ public class ShopMgr : MonoBehaviour
     void ShopOff() //상점 UI Off
     {
         GameMgr.Inst.OffEqItemInfoBox();
-        shopCanvas.gameObject.SetActive(false);
-        BuyEvent = null; //등록된 함수 비우기
+        shopCanvas.gameObject.SetActive(false); 
     }
 
    public void ShopSetting() //판매목록 셋팅
     {
-        RefreshCoin();
+        BuyEvent = null; //등록된 함수 비우기
         BuyEvent += RefreshCoin; //구매시 호출될 함수 넣어주기
         //판매목록 랜덤값을 이용하여 채워주기
         shopPortionCards[0].SetCard(portionItems[Random.Range(0, portionItems.Length)]);

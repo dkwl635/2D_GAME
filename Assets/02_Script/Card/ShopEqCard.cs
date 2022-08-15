@@ -75,6 +75,7 @@ public class ShopEqCard : Card,IPointerClickHandler
         ShopMgr.Inst.BuyEvent += Refresh;
     }
 
+
     void Refresh()//구매가 가능한지 판별
     {//구매 버튼을 활성할지 안할지
         if (GameMgr.Inst.hero.Coin >= buyItme.price)

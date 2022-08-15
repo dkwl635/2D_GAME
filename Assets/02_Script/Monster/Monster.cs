@@ -37,7 +37,6 @@ public class Monster : MonoBehaviour , ITakeDamage
     RuntimeAnimatorController runtimeAnimatorController;
 
 
-
     private void Awake()
     {
         //초기화
@@ -51,7 +50,7 @@ public class Monster : MonoBehaviour , ITakeDamage
     {//활성화시       
         targetHero = GameMgr.Inst.hero;
         targetTr = GameMgr.Inst.hero.transform;
-
+        //등록된 애니메이터 컨트롤러 바꾸기
         animator.runtimeAnimatorController = runtimeAnimatorController;
         collider.enabled = true;
     }
@@ -71,7 +70,6 @@ public class Monster : MonoBehaviour , ITakeDamage
         //방향과 거리 계산
         targetToThis = targetTr.position - transform.position; //타겟과의 거리관계
         dir = targetToThis.normalized;     //방향값
-
         float dis = targetToThis.sqrMagnitude;  //거리 길이 변환
         //길이에 따른 상태 변환
         if (dis > attakcDis)
@@ -146,7 +144,7 @@ public class Monster : MonoBehaviour , ITakeDamage
         spriteRenderer.sortingOrder = -1 * (int)transform.position.y;
     }
 
-  public  void TakeDamage(int value = 10) //데미지를 받는 함수
+  public void TakeDamage(int value = 10) //데미지를 받는 함수
     {
         if (hp <= 0)
             return;
@@ -197,7 +195,6 @@ public class Monster : MonoBehaviour , ITakeDamage
 
         Die_Event();
     }
-
     //DIE 이벤트
     public void Die_Event()
     {
@@ -205,18 +202,17 @@ public class Monster : MonoBehaviour , ITakeDamage
         spriteRenderer.color = Color.white;
         GameMgr.Inst.monsters_P.ReturnObj(this);
     }
-
     public void Attack_Event()
-    { 
+    {
         //공격포인터 중심에서 네모 크기 만큼 펼쳐 충동된 콜라이더 가져오기
-        Collider2D hit = Physics2D.OverlapBox(transform.position +  targetToThis.normalized , attackSize, 0, heroLayer) ;
-        if(hit && hit.CompareTag("Player"))
+        Collider2D hit = Physics2D.OverlapBox(transform.position + targetToThis.normalized, attackSize, 0, heroLayer);
+        if (hit && hit.CompareTag("Player"))
         {
             //hit.SendMessage("TakeDamage", attackPower);      
-            targetHero.TakeDamage(attackPower);                   
+            targetHero.TakeDamage(attackPower);
         }
-       
+
     }
 
-  
+   
 }

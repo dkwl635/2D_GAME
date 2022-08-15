@@ -25,7 +25,7 @@ public class Spark_Skill : Skill
             //캐릭터 중앙에서  랜덤한 방향으로 발사함       
             sparkObj[i].SetSpark(Random.insideUnitCircle.normalized);
             sparkObj[i].transform.position = hero.transform.position;          
-            sparkObj[i].gameObject.SetActive(true);            
+         
         }
 
         yield return new WaitForSeconds(SkillCool);
@@ -40,3 +40,7 @@ public class Spark_Skill : Skill
         StopAllCoroutines();
     }
 }
+
+
+
+
